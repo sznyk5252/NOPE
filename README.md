@@ -21,8 +21,30 @@ A major advantage of NOPE is that a single test file can seamlessly combine clas
 # Implementation
 Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C++ code, that can be compiled once again using standard C++ compiler.
 
+## Tokens
+
+|          Token         | TokenCode (Enum) |     Description     |     Example Matches     |
+|:----------------------:|:----------------:|:-------------------:|:-----------------------:|
+|     LEFT_PARENTESE     |        LP        |   Left parenthesis  |            (            |
+|     RIGHT_PARENTESE    |        RP        |  Right parenthesis  |            )            |
+|        SEPARATOR       |        SEP       |        Comma        |            ,            |
+|         NUMBER         |       NUMB       |       Numbers       |   10, -15, 12.3, -0.9   |
+|         STRING         |        STR       |       Strings       |     abc, x + y == 10    |
+|          SPACE         |       SPACE      |     Single space    |           ' '           |
+|         NEWLINE        |      NEWLINE     |  Newline character  |            \n           |
+|         COMMENT        |        COM       | Single-line comment |            #            |
+|        VAR(name)       |        TAG       |   Variable capture  |          VAR(x)         |
+|       FINALCHECK       |        TAG       |   Final assertion   | FINALCHECK(x + y == 10) |
+|     MATCH(pattern)     |        TAG       |  Felxible matching  |       MATCH(x > 0)      |
+| ANYOF(opt1, opt2, ...) |        TAG       |   Multiple choice   |   ANYOF(yes, YES, yES)  |
+|     DEF(var, value)    |        TAG       |  Constant definiton |   DEF(max_limit, 100)   |
+|         REP(n)         |        TAG       |   Loop validation   |         REP(10)         |
+|      THROWS(error)     |        TAG       |   Negative testing  |    THROWS(Exception)    |
+|     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
+
 # Dafault usage
 On default it is used to create C++ script for checking the output for each of the .nope file - so it can be efficently used with automated checkers  
+
 
 # Examples
 
