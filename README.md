@@ -35,10 +35,10 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C++ code,
 |         COMMENT        |        COM       | Single-line comment |            #            |
 |        VAR(name)       |        TAG       |   Variable capture  |          VAR(x)         |
 |       FINALCHECK       |        TAG       |   Final assertion   | FINALCHECK(x + y == 10) |
-|     MATCH(pattern)     |        TAG       |  Felxible matching  |       MATCH(x > 0)      |
+|     MATCH(pattern)     |        TAG       |  Regex matching  |       MATCH(x > 0)      |
 | ANYOF(opt1, opt2, ...) |        TAG       |   Multiple choice   |   ANYOF(yes, YES, yES)  |
-|     DEF(var, value)    |        TAG       |  Constant definiton |   DEF(max_limit, 100)   |
-|         REP(n)         |        TAG       |   Loop validation   |         REP(10)         |
+|     DEF(name, value)    |        TAG       |  Macro definiton |   DEF(YES, ANYOF(yes, YES, yES)) # can by invoke by using `YES()`  |
+|         REP(n, value)         |        TAG       |   Loop validation   |         REP(10, "a ")         |
 |      THROWS(error)     |        TAG       |   Negative testing  |    THROWS(Exception)    |
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
 
