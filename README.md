@@ -19,7 +19,7 @@ NOPE supports:
 A major advantage of NOPE is that a single test file can seamlessly combine classic, static text (evaluated via exact match) with dynamic scripting elements.
 
 # Implementation
-Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C++ code, that can be compiled once again using standard C++ compiler.
+Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, that can be compiled once again using standard C compiler.
 
 ## Tokens
 
@@ -34,7 +34,7 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C++ code,
 |         NEWLINE        |      ENDL     |  Newline character  |            \n           |
 |         COMMENT        |        COM       | Single-line comment |            #Any comment         |
 |        VAR(name)       |        TAG       |   Variable capture  |          VAR(x)         |
-|       CHECK       |        TAG       |    Assertion (C++ gramar inside)   | CHECK(x + y == 10) |
+|       CHECK       |        TAG       |    Assertion (C gramar inside)   | CHECK(x + y == 10) |
 |     MATCH(pattern)     |        TAG       |  Regex matching  |       MATCH(x > 0)      |
 | ANYOF(opt1, opt2, ...) |        TAG       |   Multiple choice   |   ANYOF(yes, YES, yES)  |
 |     DEF(name, value)    |        TAG       |  Macro definiton |   DEF(YES_M, ANYOF(yes, YES, yES)) # can by invoke by simply using `YES_M`  |
@@ -43,7 +43,7 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C++ code,
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
 
 # Dafault usage
-On default it is used to create C++ script for checking the output for each of the .nope file - so it can be efficently used with automated checkers  
+On default it is used to create C script for checking the output for each of the .nope file - so it can be efficently used with automated checkers  
 
 
 # Examples
