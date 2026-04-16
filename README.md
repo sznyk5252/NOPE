@@ -4,6 +4,8 @@
 ### P - Pattern
 ### E - Evaluation
 
+# TODO: Overview - z punktami z wymagań z UPELA
+
 # About the Project
 NOPE is a language designed for automated judging systems. Its primary goal is to speed up the creation of test cases, simplify their development, and improve the clarity of verifying a program's standard output.
 
