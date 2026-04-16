@@ -43,7 +43,7 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, t
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
 | C_HEADER(c_code)       |        TAG       |   code to include at the begining |   C_HEADER( #include <math.h> ) |
 
-# Dafault usage
+# Default usage
 On default it is used to create C script for checking the output for each of the .nope file - so it can be efficently used with automated checkers. The C script will return 0 if the input passed the rules or 1 if not.
 
 # Examples
