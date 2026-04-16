@@ -41,6 +41,7 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, t
 |         REP(n, value, iterator_name = i)         |        TAG       |   Loop definition   |         REP(10, "a ")         |
 |      THROWS(error)     |        TAG       |   Negative testing  |    THROWS(Exception)    |
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
+| C_HEADER(c_code)       |        TAG       |   code to include at the begining |   C_HEADER( #include <math.h> ) |
 
 # Dafault usage
 On default it is used to create C script for checking the output for each of the .nope file - so it can be efficently used with automated checkers  
