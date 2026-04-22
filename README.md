@@ -4,26 +4,26 @@
 ### P - Pattern
 ### E - Evaluation
 
-# TODO: Overview - z punktami z wymagań z UPELA
+## 1. Authors
+* Szymon Krężołek
+* Jakub Kosowicz
 
-# About the Project
-NOPE is a language designed for automated judging systems. Its primary goal is to speed up the creation of test cases, simplify their development, and improve the clarity of verifying a program's standard output.
+## 2. Contact
+* szkrezolek@student.agh.edu.pl
+* jkosowicz@student.agh.edu.pl
 
-This language was created to bridge the gap between simple, exact-match output checkers and complex, custom-written testing scripts.
+## 3. Program assumptions
+**3.1. General Goals:** NOPE is a language designed for automated judging systems. Its primary goal is to speed up the creation of test cases, simplify their development, and improve the clarity of verifying a program's standard output.
 
-# Key Features
-NOPE supports:
-- custom macros (as functions)
-- loops
-- comments
-- variables.
+**3.2. Translator Type:** Compiler
 
-A major advantage of NOPE is that a single test file can seamlessly combine classic, static text (evaluated via exact match) with dynamic scripting elements.
+**3.3. Planned Output:** Compiler evaluates NOPE scripts into standard **C code**. This C script evaluates the tested program's output and returns `0` if the output passes the rules, or `1` if it fails.
 
-# Implementation
-Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, that can be compiled once again using standard C compiler. 
+**3.4. Implementation Language:** Python 3.
 
-## Tokens
+**3.5. Scanner/Parser Implementation:** The scanner and parser are automatically generated using the **ANTLR4** tool based on a custom grammar file.
+
+## 4. Tokens
 
 |          Token         | TokenCode (Enum) |     Description     |     Example Matches     |
 |:----------------------:|:----------------:|:-------------------:|:-----------------------:|
@@ -45,30 +45,54 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, t
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
 | C_HEADER(c_code)       |        TAG       |   code to include at the begining |   C_HEADER( #include <math.h> ) |
 
-# Default usage
-On default it is used to create C script for checking the output for each of the .nope file - so it can be efficently used with automated checkers. The C script will return 0 if the input passed the rules or 1 if not.
+# 5. Format Grammar
+The structure of the language is defined in the standard ANTLR4 notation (`NOPE.g4`). 
 
-# Examples
+```antlr
+grammar NOPE;
 
-## Classic exact-match
+// PARSER RULES
+program   : (tag | comment | input | ws)* EOF ;
+tag       : tagname LP (arg | args)? RP ;
+args      : arg (SEP arg)* ;
+arg       : arg_part+ ;
+arg_part  : input | tag | LP args? RP | ws ;
+tagname   : 'RANGE' | 'MATCH' | 'ANYOF' | 'THROWS' | 'VAR' | 'CHECK' | 'DEF' | 'REP' | 'C_HEADER' ;
+input     : NUMB | STR ; 
+comment   : COM ; 
+ws        : (SPACE | ENDL)+ ;
+
+// LEXER RULES
+COM       : '#' ~[\r\n]* ; 
+SPACE     : [ \t]+ ;
+ENDL      : [\r\n]+ | '\n'+ ;
+SEP       : ',' ;
+LP        : '(' ;
+RP        : ')' ;
+NUMB      : '-'? [0-9]+ ('.' [0-9]*)? ;
+STR       : '\'' .*? '\'' | ~[ \t\r\n#(),]+ ;
+```
+# 6. External Generators & Packages
+* ANTLR4 - Parser generator used to build the Lexer and Parser from the .g4 grammar.
+* antlr4-python3-runtime - The runtime library required to execute the generated ANTLR Python code.
+* Graphviz - External package used for rendering the Abstract Syntax Tree (AST) visually.
+
+# 7. User Manual
+If you want to change the grammar, modify the NOPE.g4, and run
+```
+uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+```
+To see the resoult see ```uv run main.py -h```
+
+# 8. Examples
+* Classic exact-match
 ```
 5 %  abc
 ```
-Expect that program will print `5` followed by space, `%` folowed by double space and finaly `abc`
+Expect that program will print 5 followed by space, % folowed by double space and finaly abc
 
-## Range
+* Range
 ```
 Range(0, 10)
 ```
 Expect that program will print number between 0 and 10 (10 not included)
-
-## Including C libraries
-
-[test14.in](examples/in/test14.in)
-
-# Development
-If you want to change the grammar, modify the `NOPE.g4`, and run 
-```
-uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
-```
-To see the resoult see `uv run main.py -h`
