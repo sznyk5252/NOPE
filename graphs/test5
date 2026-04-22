@@ -1,0 +1,19 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\l( ())\l" labeljust=l labelloc=t
+	0 [label=program]
+	1 [label="("]
+	0 -> 1
+	2 [label=ws]
+	0 -> 2
+	3 [label=" "]
+	2 -> 3
+	4 [label="("]
+	0 -> 4
+	5 [label=")"]
+	0 -> 5
+	6 [label=")"]
+	0 -> 6
+	7 [label=<EOF>]
+	0 -> 7
+}

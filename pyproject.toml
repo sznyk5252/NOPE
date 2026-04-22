@@ -1,0 +1,11 @@
+[project]
+name = "nope"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "antlr4-python3-runtime==4.13.2",
+    "antlr4-tools>=0.2.2",
+    "graphviz>=0.21",
+]

@@ -39,7 +39,7 @@ Compiler was build using ANTLR4 and python. Compiler evaluates NOPE to C code, t
 |       CHECK       |        TAG       |    Assertion (C gramar inside)   | CHECK(x + y == 10) |
 |     MATCH(pattern)     |        TAG       |  Regex matching  |       MATCH(x > 0)      |
 | ANYOF(opt1, opt2, ...) |        TAG       |   Multiple choice   |   ANYOF(yes, YES, yES)  |
-|     DEF(name, value)    |        TAG       |  Macro definiton |   DEF(YES_M, ANYOF(yes, YES, yES)) # can by invoke by simply using `YES_M`  |
+|     DEF(name, value)    |        TAG       |  Macro definiton |   DEF(YES_M, ANYOF(yes, YES, yES)) # can by invoke by simply using `YES_M()`  |
 |         REP(n, value, iterator_name = i)         |        TAG       |   Loop definition   |         REP(10, "a ")         |
 |      THROWS(error)     |        TAG       |   Negative testing  |    THROWS(Exception)    |
 |     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
