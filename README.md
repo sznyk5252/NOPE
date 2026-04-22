@@ -1,6 +1,6 @@
 # NOPE
-### N - Notation
-### O - for Output
+### N - Notation for 
+### O - Output
 ### P - Pattern
 ### E - Evaluation
 
@@ -63,7 +63,8 @@ Range(0, 10)
 Expect that program will print number between 0 and 10 (10 not included)
 
 ## Including C libraries
-![examples/test14.in]
+
+[test14.in](examples/in/test14.in)
 
 # Development
 If you want to change the grammar, modify the `NOPE.g4`, and run 
