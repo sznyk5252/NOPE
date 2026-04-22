@@ -61,3 +61,13 @@ Expect that program will print `5` followed by space, `%` folowed by double spac
 Range(0, 10)
 ```
 Expect that program will print number between 0 and 10 (10 not included)
+
+## Including C libraries
+![examples/test14.in]
+
+# Development
+If you want to change the grammar, modify the `NOPE.g4`, and run 
+```
+uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+```
+To see the resoult see `uv run main.py -h`
