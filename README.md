@@ -25,25 +25,25 @@
 
 ## 4. Tokens
 
-|          Token         | TokenCode (Enum) |     Description     |     Example Matches     |
-|:----------------------:|:----------------:|:-------------------:|:-----------------------:|
-|     LEFT_PARENTESE     |        LP        |   Left parenthesis  |            (            |
-|     RIGHT_PARENTESE    |        RP        |  Right parenthesis  |            )            |
-|        SEPARATOR       |        SEP       |        Comma        |            ,            |
-|         NUMBER         |       NUMB       |       Numbers       |   10, -15, 12.3, -0.9   |
-|         STRING         |        STR       |       Strings       |     abc, 'x + y == 10'    |
-|          SPACE         |       SPACE      |     Single space    |           ' '           |
-|         NEWLINE        |      ENDL     |  Newline character  |            \n           |
-|         COMMENT        |        COM       | Single-line comment |            #Any comment         |
-|        VAR(name, type = int)       |        TAG       |   Variable capture  |          VAR(x)         |
-|       CHECK       |        TAG       |    Assertion (C gramar inside)   | CHECK(x + y == 10) |
-|     MATCH(pattern)     |        TAG       |  Regex matching  |       MATCH(x > 0)      |
-| ANYOF(opt1, opt2, ...) |        TAG       |   Multiple choice   |   ANYOF(yes, YES, yES)  |
-|     DEF(name, value)    |        TAG       |  Macro definiton |   DEF(YES_M, ANYOF(yes, YES, yES)) # can by invoke by simply using `YES_M()`  |
-|         REP(n, value, iterator_name = i)         |        TAG       |   Loop definition   |         REP(10, "a ")         |
-|      THROWS(error)     |        TAG       |   Negative testing  |    THROWS(Exception)    |
-|     RANGE(from, to)    |        TAG       |    Boundary check   |       RANGE(0, 10)      |
-| C_HEADER(c_code)       |        TAG       |   code to include at the begining |   C_HEADER( #include <math.h> ) |
+| Token | TokenCode | Description | Example Matches |
+| :--- | :--- | :--- | :--- |
+| **LEFT_PARENTESE** | `LP` | Left parenthesis for macro arguments | `(` |
+| **RIGHT_PARENTESE** | `RP` | Right parenthesis for macro arguments | `)` |
+| **SEPARATOR** | `SEP` | Comma separating multiple arguments | `,` |
+| **NUMBER** | `NUMB` | Integer and floating-point numbers | `10`, `-15`, `12.3` |
+| **STRING** | `STR` | Quoted strings or raw unquoted text | `'val'`, `x_var` |
+| **SPACE** | `SPACE` | White spaces (spaces and tabs) | `' '` |
+| **NEWLINE** | `ENDL` | Newline characters | `\n` |
+| **COMMENT** | `COM` | Single-line comment starting with `#` | `# text` |
+| **VAR(name)** | `TAG` | Variable capture | `VAR(x)` |
+| **CHECK(cond)** | `TAG` | Assertion (C grammar inside) | `CHECK(x + y == 10)` |
+| **MATCH(pattern)** | `TAG` | Regex matching | `MATCH(x > 0)` |
+| **ANYOF(opt1...)** | `TAG` | Multiple choice | `ANYOF(yes, YES)` |
+| **DEF(name, val)** | `TAG` | Macro definition | `DEF(YES_M, ANYOF(yes))` |
+| **REP(n, value)** | `TAG` | Loop definition | `REP(10, "a ")` |
+| **THROWS(error)** | `TAG` | Negative testing | `THROWS(Exception)` |
+| **RANGE(from, to)**| `TAG` | Boundary check | `RANGE(0, 10)` |
+| **C_HEADER(code)** | `TAG` | Code to include at the beginning | `C_HEADER(#include <math.h>)` |
 
 # 5. Format Grammar
 The structure of the language is defined in the standard ANTLR4 notation (`NOPE.g4`). 
@@ -82,14 +82,14 @@ If you want to change the grammar, modify the NOPE.g4, and run
 ```
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 ```
-To see the resoult see ```uv run main.py -h```
+To see the result see ```uv run main.py -h```
 
 # 8. Examples
 * Classic exact-match
 ```
 5 %  abc
 ```
-Expect that program will print 5 followed by space, % folowed by double space and finaly abc
+Expect that program will print 5 followed by space, % followed by double space and finally abc
 
 * Range
 ```
