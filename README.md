@@ -85,6 +85,7 @@ uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 To see the result see ```uv run main.py -h```
 
 # 8. Examples
+(To see more examples open folder `examples` and `graphs`) 
 * Classic exact-match
 ```
 5 %  abc
