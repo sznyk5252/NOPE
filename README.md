@@ -49,7 +49,7 @@
 The structure of the language is defined in the standard ANTLR4 notation (`NOPE.g4`). 
 
 ```antlr
-tu powinno się samo wkleić
+tu się samo powinno wkleić
 ```
 # 6. External Generators & Packages
 * ANTLR4 - Parser generator used to build the Lexer and Parser from the .g4 grammar.
