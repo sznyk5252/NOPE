@@ -16,21 +16,31 @@ sync_readme:
     - git config --global user.name "README Sync Bot"
     - git config --global --add safe.directory $CI_PROJECT_DIR
   script:
-    - uv run jinja2 $TEMPLATE_FILE > $OUTPUT_FILE
+    - |
+      for tpl_file in $(find . -name "*.tpl.md"); do
+
+        out_file="${tpl_file%.tpl.md}.md"
+        echo "⚙️ Przetwarzanie: $tpl_file -> $out_file"
+        uv run jinja2 -I ./ "$tpl_file" > "$out_file"
+        
+        git add "$out_file"
+      done
     
     - |
-      if [ -n "$(git status --porcelain $OUTPUT_FILE)" ]; then
-        echo "Wykryto zmiany w README.md, aktualizuję repozytorium..."
-        git add $OUTPUT_FILE
-        git commit -m "docs: automatyczna synchronizacja README [skip ci]"
-        git push "https://project_${CI_PROJECT_ID}_bot:${ACCES_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "Wykryto zmiany w plikach .md, aktualizuję repozytorium..."
+        git commit -m "docs: automatyczna synchronizacja plików Markdown [skip ci]"
+        
+        git push "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
       else
-        echo "README.md jest aktualny. Brak zmian."
+        echo "Wszystkie dokumenty są aktualne. Brak zmian."
       fi
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
         - "**/*.tpl.md"
+        - "**/*.md"
         - "**/*.g4"
         - "examples/*"
         - "**/*.yml"
+        - "**/*.nope"
