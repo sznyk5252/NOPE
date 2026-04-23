@@ -59,3 +59,4 @@ This expect that the program will print sth like:
 - `1 1 5 1 1`
 - `2 2 5 2 2`
 - `999 999 5 999 999`
+([see more about variables](docs/variables.md))

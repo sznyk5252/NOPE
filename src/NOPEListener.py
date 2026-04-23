@@ -17,6 +17,15 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#code.
+    def enterCode(self, ctx:NOPEParser.CodeContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#code.
+    def exitCode(self, ctx:NOPEParser.CodeContext):
+        pass
+
+
     # Enter a parse tree produced by NOPEParser#tag.
     def enterTag(self, ctx:NOPEParser.TagContext):
         pass
@@ -62,6 +71,15 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#ignore_ws.
+    def enterIgnore_ws(self, ctx:NOPEParser.Ignore_wsContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#ignore_ws.
+    def exitIgnore_ws(self, ctx:NOPEParser.Ignore_wsContext):
+        pass
+
+
     # Enter a parse tree produced by NOPEParser#input.
     def enterInput(self, ctx:NOPEParser.InputContext):
         pass
@@ -77,6 +95,15 @@ class NOPEListener(ParseTreeListener):
 
     # Exit a parse tree produced by NOPEParser#comment.
     def exitComment(self, ctx:NOPEParser.CommentContext):
+        pass
+
+
+    # Enter a parse tree produced by NOPEParser#single_ws.
+    def enterSingle_ws(self, ctx:NOPEParser.Single_wsContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#single_ws.
+    def exitSingle_ws(self, ctx:NOPEParser.Single_wsContext):
         pass
 
 
