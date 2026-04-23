@@ -5,8 +5,16 @@ grammar NOPE;
 // ==========================================
 
 program
-    : (tag | comment | input | ws)* EOF 
+    : code EOF 
     ;
+
+code: (
+        (ESCCHAR input) 
+        | tag
+        | comment
+        | input 
+        | ws
+    )*;
 
 tag
     : tagname LP (arg | args)? RP
@@ -39,6 +47,9 @@ tagname
     | 'C_HEADER'
     ;
 
+ignore_ws: 'IGNORE_WHITESPACE' LP code RP
+    ;
+
 input : NUMB | STR ; 
 comment : COM; 
 
@@ -65,3 +76,11 @@ NUMB : '-'? [0-9]+ ('.' [0-9]*)? ;
 STR : '\'' .*? '\''      
     | ~[ \t\r\n#(),]+    
     ;
+
+TYPE    
+    : 'INT'
+    | 'FLOAT'
+    | 'STR'
+    ;
+
+ESCCHAR : '\\';
