@@ -102,7 +102,7 @@ Expect that program will print number between 0 and 10 (10 not included)
 # TODO
 ### Zwiększyć złożoność gramatyki
 
-- opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
+- 2S -opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
 
 - K - przerobić REP żeby działało podobnie jak w Pythonie
 
@@ -110,8 +110,13 @@ Expect that program will print number between 0 and 10 (10 not included)
 
 - K - if else
 
-- DEF() - przerobić żeby działało podobnie jak w zwykłym języku
+- S - DEF() - przerobić żeby działało podobnie jak w zwykłym języku
 
-- Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
+- 1S - Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
 
 - K - Rozbić wszystkie tagi na osobne tokeny, żeby były lepsze komunikaty o błędach 
+
+## DEADLINE
+- 1S , 2S - 25.04
+- K - 28.04
+- S - 29.04
