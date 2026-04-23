@@ -16,7 +16,7 @@ sync_readme:
     - git config --global user.name "README Sync Bot"
     - git config --global --add safe.directory $CI_PROJECT_DIR
   script:
-    - uv run jinja2-cli $TEMPLATE_FILE > $OUTPUT_FILE
+    - uv run jinja2 $TEMPLATE_FILE > $OUTPUT_FILE
     
     - |
       if [ -n "$(git status --porcelain $OUTPUT_FILE)" ]; then
