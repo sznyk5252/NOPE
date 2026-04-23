@@ -1,0 +1,10 @@
+IGNORE_WHITESPACE(
+    0 1 
+    2 3
+)
+IGNORE_WHITESPACE(
+    0 SPACE 1 ENDL
+    2 SPACE 3 ENDL
+)
+0\ 1\
+2\ 3\
