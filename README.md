@@ -9,7 +9,7 @@
 * Jakub Kosowicz
 
 ## 2. Contact
-* szkrezolek@student.agh.edu.pl
+* skrezolek@student.agh.edu.pl
 * jkosowicz@student.agh.edu.pl
 
 ## 3. Program assumptions
