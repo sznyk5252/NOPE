@@ -171,13 +171,13 @@ Expect that program will print number between 0 and 10 (10 not included, pass 3'
 ```
 MATCH('-?[0-9]+\.?[0-9]*')
 ```
-Expect that program will string matching the regex.
+Expect that program will print string matching the regex.
 
 ### Throws
 ```
 THROWS(EXCEPTION)
 ```
-Expect that program will throw exception which name matches the argument.
+Expect that program will throw exception wich name matches the argument.
 
 ### Comment
 ```
