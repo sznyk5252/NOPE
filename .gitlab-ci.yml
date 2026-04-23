@@ -33,3 +33,4 @@ sync_readme:
         - "**/*.tpl.md"
         - "**/*.g4"
         - "examples/*"
+        - "**/*.yml"
