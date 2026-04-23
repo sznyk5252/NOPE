@@ -9,7 +9,7 @@ program
     ;
 
 code: (
-        (ESCCHAR input) 
+        (ESCCHAR (input|single_ws)) 
         | tag
         | comment
         | input 
@@ -53,6 +53,7 @@ ignore_ws: 'IGNORE_WHITESPACE' LP code RP
 input : NUMB | STR ; 
 comment : COM; 
 
+single_ws : SPACE | ENDL;
 ws  : (SPACE | ENDL)+;
 
 // ==========================================
