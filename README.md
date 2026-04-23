@@ -155,7 +155,7 @@ Visit [quick start](docs/quick_start.md)
 # TODO
 ### Zwiększyć złożoność gramatyki
 
-- 2S -opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
+[x] 2S -opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
 
 - K - przerobić REP żeby działało podobnie jak w Pythonie
 
@@ -165,11 +165,11 @@ Visit [quick start](docs/quick_start.md)
 
 - S - DEF() - przerobić żeby działało podobnie jak w zwykłym języku
 
-- 1S - Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
+[x] 1S - Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
 
 - K - Rozbić wszystkie tagi na osobne tokeny, żeby były lepsze komunikaty o błędach. Pamiętaj o typach, powinna być możliwość nie pisania typów - domyślny byłby np int.
 
-- ESCCHAR - tak żeby można było wymusić wpisanie słów kluczowych, `'` itp. 
+[x] ESCCHAR - tak żeby można było wymusić wpisanie słów kluczowych, `'` itp. 
 
 ## DEADLINE
 - 1S , 2S - 25.04
