@@ -29,9 +29,9 @@ sync_readme:
     - |
       if [ -n "$(git status --porcelain)" ]; then
         echo "Wykryto zmiany w plikach .md, aktualizuję repozytorium..."
-        git commit -m "docs: automatyczna synchronizacja plików Markdown [skip ci]"
+        git commit -m "docs: Automatic sync [skip ci]"
         
-        git push "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
+        git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
       else
         echo "Wszystkie dokumenty są aktualne. Brak zmian."
       fi
