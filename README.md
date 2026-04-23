@@ -97,3 +97,21 @@ Expect that program will print 5 followed by space, % followed by double space a
 Range(0, 10)
 ```
 Expect that program will print number between 0 and 10 (10 not included)
+
+
+# TODO
+### Zwiększyć złożoność gramatyki
+
+- opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
+
+- K - przerobić REP żeby działało podobnie jak w Pythonie
+
+- K - expr (logiczne i arytmetyczne)
+
+- K - if else
+
+- DEF() - przerobić żeby działało podobnie jak w zwykłym języku
+
+- Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
+
+- K - Rozbić wszystkie tagi na osobne tokeny, żeby były lepsze komunikaty o błędach 

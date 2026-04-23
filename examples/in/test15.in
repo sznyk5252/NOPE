@@ -1,4 +1,0 @@
-VAR(x)
-VAR(buff)
-REP(x,(VAR(buff), CHECK(x < buff)))
-# Check if program will print ascending numbers

@@ -1,0 +1,25 @@
+# Here all white chars matter (expecte like f'{sth} 0') 
+VAR(x) 0 
+VAR(buff) << -1
+
+IGNORE_WHITESPACE( 
+    # Now all whitespaces all ignore 
+    # If we write here 
+    # 0 1 
+    # it is expected that program will print '01'
+    # SPACE will be expected if we wrote
+    # 0 SPACE 1 
+
+    REP licznik in (x,0,-1)(
+        licznik SPACE
+    )
+    # Check if program will print x x-1 ... 0 
+
+    ENDL
+    REP(0,x,-1,licznik)(
+        VAR(cur),
+        CHECK(cur > buff),
+        buff = cur
+    )
+    # Check if program will print ascending numbers
+)

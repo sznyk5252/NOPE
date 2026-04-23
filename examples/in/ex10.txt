@@ -1,0 +1,5 @@
+# Test Comment
+C_HEADER('#include <cmath>')
+VAR(x)
+VAR(y)
+CHECK(sqrt(x) > y)
