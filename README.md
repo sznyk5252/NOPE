@@ -40,7 +40,7 @@
 | **MATCH(pattern)** | `TAG` | Regex matching | `MATCH(x > 0)` |
 | **ANYOF(opt1...)** | `TAG` | Multiple choice | `ANYOF(yes, YES)` |
 | **DEF(name, val)** | `TAG` | Macro definition | `DEF(YES_M, ANYOF(yes))` |
-| **REP(n, value)** | `TAG` | Loop definition | `REP(10, "a ")` |
+| **REP(n, value, iter_name = i)** | `TAG` | Loop definition | `REP(10, "a ")` |
 | **THROWS(error)** | `TAG` | Negative testing | `THROWS(Exception)` |
 | **RANGE(from, to)**| `TAG` | Boundary check | `RANGE(0, 10)` |
 | **C_HEADER(code)** | `TAG` | Code to include at the beginning | `C_HEADER(#include <math.h>)` |
