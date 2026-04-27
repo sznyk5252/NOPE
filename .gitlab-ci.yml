@@ -35,7 +35,7 @@ sync_readme:
 
     - rm graphs/*
     - uv run main.py examples/in/* --no-view
-    - git add graphs/*
+    - git add -A graphs/
     
     - |
       if [ -n "$(git status --porcelain)" ]; then
