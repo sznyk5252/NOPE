@@ -26,21 +26,29 @@ block
     ;
 
 if_stmt
-    : 'IF' ws? LP ws? expr ws? RP ws? block (ws? 'ELSE' ws? block)?
+    : 'IF' ws? LP ws? logic_expr ws? RP ws? block (ws? 'ELSE' ws? block)?
+    | 'IF' ws? LP ws? logic_expr ws? RP ws? block (ws? 'ELSE' ws? if_stmt)?
     ;
 
 rep_loop
-    : 'REP' ws? LP ws? (STR ws? SEP ws?)? expr ws? RP ws? block
+    : 'REP' ws? LP ws? (expr ws? SEP ws?)? expr ws? RP ws? block 
     ;
+
+any_expr : expr | logic_expr;
 
 expr: expr ws? ('*' | '/') ws? expr
     | expr ws? ('+' | '-') ws? expr
-    | expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr
-    | expr ws? ('AND' | 'OR') ws? expr
     | LP ws? expr ws? RP
     | macro_call
     | input
     ;
+
+logic_expr:
+    | expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr
+    | logic_expr ws? ('AND' | 'OR') ws? logic_expr
+    | LP ws? logic_expr ws? RP
+    ;
+
 
 opt_type: (TYPE ws)? ;
 
@@ -55,14 +63,16 @@ macro_call
     | def_macro
     ;
 
-range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; // TODO step + zmienna iteracyjna
+range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; 
 match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? STR ws? RP ;
 var_macro    : 'VAR' ws? LP ws? opt_type STR ws? RP ;
-check_macro  : 'CHECK' ws? LP ws? expr ws? RP ;
-header_macro : 'C_HEADER' ws? LP ws? expr ws? RP ;
+check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
+header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;
 def_macro    : 'DEF' ws? LP ws? STR ws? SEP ws? expr ws? RP ;
+
+custom_macro : STR ws? LP ws? (expr ws? (SEP ws? expr ws?)* )? ws? RP ;
 
 ignore_ws: 'IGNORE_WHITESPACE' LP code RP
     ;
