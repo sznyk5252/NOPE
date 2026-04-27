@@ -62,12 +62,30 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#any_expr.
+    def enterAny_expr(self, ctx:NOPEParser.Any_exprContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#any_expr.
+    def exitAny_expr(self, ctx:NOPEParser.Any_exprContext):
+        pass
+
+
     # Enter a parse tree produced by NOPEParser#expr.
     def enterExpr(self, ctx:NOPEParser.ExprContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#expr.
     def exitExpr(self, ctx:NOPEParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by NOPEParser#logic_expr.
+    def enterLogic_expr(self, ctx:NOPEParser.Logic_exprContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#logic_expr.
+    def exitLogic_expr(self, ctx:NOPEParser.Logic_exprContext):
         pass
 
 
@@ -158,6 +176,15 @@ class NOPEListener(ParseTreeListener):
 
     # Exit a parse tree produced by NOPEParser#def_macro.
     def exitDef_macro(self, ctx:NOPEParser.Def_macroContext):
+        pass
+
+
+    # Enter a parse tree produced by NOPEParser#custom_macro.
+    def enterCustom_macro(self, ctx:NOPEParser.Custom_macroContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#custom_macro.
+    def exitCustom_macro(self, ctx:NOPEParser.Custom_macroContext):
         pass
 
 
