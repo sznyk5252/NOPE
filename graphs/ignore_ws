@@ -1,111 +1,207 @@
 // ANTLR Parse Tree
 digraph {
-	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\lIGNORE_WHITESPACE(\l    0 1 \l    2 3\l)\lIGNORE_WHITESPACE(\l    0 SPACE 1 ENDL\l    2 SPACE 3 ENDL\l)\l0\ 1\\l2\ 3\\l\l" labeljust=l labelloc=t
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\lIGNORE_WHITESPACE(\l    0 1 \l    2 3\l)\lIGNORE_WHITESPACE(\l    0 SPACE 1 ENDL\l    2 SPACE 3 ENDL\l)\l0\\ 1\\\l2\\ 3\\\l\l" labeljust=l labelloc=t
 	0 [label=program]
 	1 [label=code]
 	0 -> 1
-	2 [label=IGNORE_WHITESPACE]
-	0 -> 2
-	3 [label="("]
-	0 -> 3
-	4 [label="
-"]
-	0 -> 4
-	5 [label="    "]
-	0 -> 5
-	6 [label=0]
-	0 -> 6
-	7 [label=" "]
-	0 -> 7
-	8 [label=1]
-	0 -> 8
-	9 [label=" "]
-	0 -> 9
-	10 [label="
-"]
-	0 -> 10
-	11 [label="    "]
-	0 -> 11
-	12 [label=2]
-	0 -> 12
-	13 [label=" "]
-	0 -> 13
-	14 [label=3]
-	0 -> 14
-	15 [label="
-"]
-	0 -> 15
-	16 [label=")"]
-	0 -> 16
-	17 [label="
-"]
-	0 -> 17
-	18 [label=IGNORE_WHITESPACE]
-	0 -> 18
-	19 [label="("]
-	0 -> 19
-	20 [label="
-"]
-	0 -> 20
-	21 [label="    "]
-	0 -> 21
-	22 [label=0]
-	0 -> 22
-	23 [label=" "]
-	0 -> 23
-	24 [label=SPACE]
-	0 -> 24
-	25 [label=" "]
-	0 -> 25
-	26 [label=1]
-	0 -> 26
-	27 [label=" "]
-	0 -> 27
-	28 [label=ENDL]
-	0 -> 28
-	29 [label="
-"]
-	0 -> 29
-	30 [label="    "]
-	0 -> 30
-	31 [label=2]
-	0 -> 31
-	32 [label=" "]
-	0 -> 32
-	33 [label=SPACE]
-	0 -> 33
-	34 [label=" "]
-	0 -> 34
-	35 [label=3]
-	0 -> 35
-	36 [label=" "]
-	0 -> 36
-	37 [label=ENDL]
-	0 -> 37
-	38 [label="
-"]
-	0 -> 38
-	39 [label=")"]
-	0 -> 39
-	40 [label="
-"]
-	0 -> 40
-	41 [label="0\"]
-	0 -> 41
-	42 [label=" "]
-	0 -> 42
-	43 [label="1\"]
-	0 -> 43
-	44 [label="
-"]
-	0 -> 44
-	45 [label="2\"]
-	0 -> 45
-	46 [label=" "]
-	0 -> 46
-	47 [label="3\"]
-	0 -> 47
-	48 [label="
-"]
-	0 -> 48
+	2 [label=ignore_ws]
+	1 -> 2
+	3 [label=IGNORE_WHITESPACE]
+	2 -> 3
+	4 [label="("]
+	2 -> 4
+	5 [label=code]
+	2 -> 5
+	6 [label=ws]
+	5 -> 6
+	7 [label="\n"]
+	6 -> 7
+	8 [label="    "]
+	6 -> 8
+	9 [label=input]
+	5 -> 9
+	10 [label=0]
+	9 -> 10
+	11 [label=ws]
+	5 -> 11
+	12 [label=" "]
+	11 -> 12
+	13 [label=input]
+	5 -> 13
+	14 [label=1]
+	13 -> 14
+	15 [label=ws]
+	5 -> 15
+	16 [label=" "]
+	15 -> 16
+	17 [label="\n"]
+	15 -> 17
+	18 [label="    "]
+	15 -> 18
+	19 [label=input]
+	5 -> 19
+	20 [label=2]
+	19 -> 20
+	21 [label=ws]
+	5 -> 21
+	22 [label=" "]
+	21 -> 22
+	23 [label=input]
+	5 -> 23
+	24 [label=3]
+	23 -> 24
+	25 [label=ws]
+	5 -> 25
+	26 [label="\n"]
+	25 -> 26
+	27 [label=")"]
+	2 -> 27
+	28 [label=ws]
+	1 -> 28
+	29 [label="\n"]
+	28 -> 29
+	30 [label=ignore_ws]
+	1 -> 30
+	31 [label=IGNORE_WHITESPACE]
+	30 -> 31
+	32 [label="("]
+	30 -> 32
+	33 [label=code]
+	30 -> 33
+	34 [label=ws]
+	33 -> 34
+	35 [label="\n"]
+	34 -> 35
+	36 [label="    "]
+	34 -> 36
+	37 [label=input]
+	33 -> 37
+	38 [label=0]
+	37 -> 38
+	39 [label=ws]
+	33 -> 39
+	40 [label=" "]
+	39 -> 40
+	41 [label=input]
+	33 -> 41
+	42 [label=expl_ws]
+	41 -> 42
+	43 [label=SPACE]
+	42 -> 43
+	44 [label=ws]
+	33 -> 44
+	45 [label=" "]
+	44 -> 45
+	46 [label=input]
+	33 -> 46
+	47 [label=1]
+	46 -> 47
+	48 [label=ws]
+	33 -> 48
+	49 [label=" "]
+	48 -> 49
+	50 [label=input]
+	33 -> 50
+	51 [label=expl_ws]
+	50 -> 51
+	52 [label=ENDL]
+	51 -> 52
+	53 [label=ws]
+	33 -> 53
+	54 [label="\n"]
+	53 -> 54
+	55 [label="    "]
+	53 -> 55
+	56 [label=input]
+	33 -> 56
+	57 [label=2]
+	56 -> 57
+	58 [label=ws]
+	33 -> 58
+	59 [label=" "]
+	58 -> 59
+	60 [label=input]
+	33 -> 60
+	61 [label=expl_ws]
+	60 -> 61
+	62 [label=SPACE]
+	61 -> 62
+	63 [label=ws]
+	33 -> 63
+	64 [label=" "]
+	63 -> 64
+	65 [label=input]
+	33 -> 65
+	66 [label=3]
+	65 -> 66
+	67 [label=ws]
+	33 -> 67
+	68 [label=" "]
+	67 -> 68
+	69 [label=input]
+	33 -> 69
+	70 [label=expl_ws]
+	69 -> 70
+	71 [label=ENDL]
+	70 -> 71
+	72 [label=ws]
+	33 -> 72
+	73 [label="\n"]
+	72 -> 73
+	74 [label=")"]
+	30 -> 74
+	75 [label=ws]
+	1 -> 75
+	76 [label="\n"]
+	75 -> 76
+	77 [label=input]
+	1 -> 77
+	78 [label=0]
+	77 -> 78
+	79 [label=input_in_escape]
+	1 -> 79
+	80 [label="\\"]
+	79 -> 80
+	81 [label=single_ws]
+	79 -> 81
+	82 [label=" "]
+	81 -> 82
+	83 [label=input]
+	1 -> 83
+	84 [label=1]
+	83 -> 84
+	85 [label=input_in_escape]
+	1 -> 85
+	86 [label="\\"]
+	85 -> 86
+	87 [label=single_ws]
+	85 -> 87
+	88 [label="\n"]
+	87 -> 88
+	89 [label=input]
+	1 -> 89
+	90 [label=2]
+	89 -> 90
+	91 [label=input_in_escape]
+	1 -> 91
+	92 [label="\\"]
+	91 -> 92
+	93 [label=single_ws]
+	91 -> 93
+	94 [label=" "]
+	93 -> 94
+	95 [label=input]
+	1 -> 95
+	96 [label=3]
+	95 -> 96
+	97 [label=input_in_escape]
+	1 -> 97
+	98 [label="\\"]
+	97 -> 98
+	99 [label=single_ws]
+	97 -> 99
+	100 [label="\n"]
+	99 -> 100
+	101 [label=<EOF>]
+	0 -> 101
 }

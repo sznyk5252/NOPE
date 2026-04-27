@@ -4,117 +4,94 @@ digraph {
 	0 [label=program]
 	1 [label=code]
 	0 -> 1
-	2 [label=tag]
+	2 [label=macro_call]
 	1 -> 2
-	3 [label=tagname]
+	3 [label=var_macro]
 	2 -> 3
 	4 [label=VAR]
 	3 -> 4
 	5 [label="("]
-	2 -> 5
-	6 [label=arg]
-	2 -> 6
-	7 [label=arg_part]
-	6 -> 7
-	8 [label=input]
-	7 -> 8
-	9 [label=x]
-	8 -> 9
-	10 [label=")"]
-	2 -> 10
-	11 [label=ws]
+	3 -> 5
+	6 [label=opt_type]
+	3 -> 6
+	7 [label=x]
+	3 -> 7
+	8 [label=")"]
+	3 -> 8
+	9 [label=ws]
+	1 -> 9
+	10 [label=" "]
+	9 -> 10
+	11 [label=macro_call]
 	1 -> 11
-	12 [label=" "]
+	12 [label=var_macro]
 	11 -> 12
-	13 [label=tag]
-	1 -> 13
-	14 [label=tagname]
-	13 -> 14
-	15 [label=VAR]
-	14 -> 15
-	16 [label="("]
-	13 -> 16
-	17 [label=arg]
-	13 -> 17
-	18 [label=arg_part]
-	17 -> 18
-	19 [label=input]
+	13 [label=VAR]
+	12 -> 13
+	14 [label="("]
+	12 -> 14
+	15 [label=opt_type]
+	12 -> 15
+	16 [label=y]
+	12 -> 16
+	17 [label=")"]
+	12 -> 17
+	18 [label=ws]
+	1 -> 18
+	19 [label="\n"]
 	18 -> 19
-	20 [label=y]
-	19 -> 20
-	21 [label=")"]
-	13 -> 21
-	22 [label=ws]
-	1 -> 22
-	23 [label="
-"]
-	22 -> 23
-	24 [label=tag]
-	1 -> 24
-	25 [label=tagname]
+	20 [label=macro_call]
+	1 -> 20
+	21 [label=check_macro]
+	20 -> 21
+	22 [label=CHECK]
+	21 -> 22
+	23 [label="("]
+	21 -> 23
+	24 [label=expr]
+	21 -> 24
+	25 [label=expr]
 	24 -> 25
-	26 [label=CHECK]
+	26 [label=expr]
 	25 -> 26
-	27 [label="("]
-	24 -> 27
-	28 [label=arg]
-	24 -> 28
-	29 [label=arg_part]
-	28 -> 29
-	30 [label=input]
+	27 [label=input]
+	26 -> 27
+	28 [label=x]
+	27 -> 28
+	29 [label=ws]
+	25 -> 29
+	30 [label=" "]
 	29 -> 30
-	31 [label=x]
-	30 -> 31
-	32 [label=arg_part]
-	28 -> 32
-	33 [label=ws]
+	31 [label="+"]
+	25 -> 31
+	32 [label=ws]
+	25 -> 32
+	33 [label=" "]
 	32 -> 33
-	34 [label=" "]
-	33 -> 34
-	35 [label=arg_part]
-	28 -> 35
-	36 [label=input]
+	34 [label=expr]
+	25 -> 34
+	35 [label=input]
+	34 -> 35
+	36 [label=y]
 	35 -> 36
-	37 [label="+"]
-	36 -> 37
-	38 [label=arg_part]
-	28 -> 38
-	39 [label=ws]
-	38 -> 39
-	40 [label=" "]
-	39 -> 40
-	41 [label=arg_part]
-	28 -> 41
-	42 [label=input]
-	41 -> 42
-	43 [label=y]
+	37 [label=ws]
+	24 -> 37
+	38 [label=" "]
+	37 -> 38
+	39 [label="=="]
+	24 -> 39
+	40 [label=ws]
+	24 -> 40
+	41 [label=" "]
+	40 -> 41
+	42 [label=expr]
+	24 -> 42
+	43 [label=input]
 	42 -> 43
-	44 [label=arg_part]
-	28 -> 44
-	45 [label=ws]
-	44 -> 45
-	46 [label=" "]
-	45 -> 46
-	47 [label=arg_part]
-	28 -> 47
-	48 [label=input]
-	47 -> 48
-	49 [label="=="]
-	48 -> 49
-	50 [label=arg_part]
-	28 -> 50
-	51 [label=ws]
-	50 -> 51
-	52 [label=" "]
-	51 -> 52
-	53 [label=arg_part]
-	28 -> 53
-	54 [label=input]
-	53 -> 54
-	55 [label=10]
-	54 -> 55
-	56 [label=")"]
-	24 -> 56
-	57 [label=<EOF>]
-	0 -> 57
+	44 [label=10]
+	43 -> 44
+	45 [label=")"]
+	21 -> 45
+	46 [label=<EOF>]
+	0 -> 46
 }

@@ -43,18 +43,19 @@ class GraphRenderer:
         return cls(parser, dot)
 
     def _build_nodes(self, tree: ParseTree, parent_id: Optional[str] = None) -> str:
-        """Internal recursive method traversing the ANTLR tree."""
-        node_id = str(self._counter)
-        self._counter += 1
-
-        # Determine the label for the node
         if isinstance(tree, TerminalNode):
             label = tree.getText()
         else:
             rule_index = tree.getRuleIndex()
             label = self.parser.ruleNames[rule_index]
 
-        self.graph.node(node_id, label)
+        safe_label = label.replace("\\", "\\\\").replace('"', '\\"')
+        safe_label = safe_label.replace("\n", "\\n").replace("\r", "")
+
+        node_id = str(self._counter)
+        self._counter += 1
+
+        self.graph.node(node_id, safe_label)
 
         if parent_id is not None:
             self.graph.edge(parent_id, node_id)

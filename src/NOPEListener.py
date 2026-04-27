@@ -26,6 +26,15 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#input_in_escape.
+    def enterInput_in_escape(self, ctx:NOPEParser.Input_in_escapeContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#input_in_escape.
+    def exitInput_in_escape(self, ctx:NOPEParser.Input_in_escapeContext):
+        pass
+
+
     # Enter a parse tree produced by NOPEParser#block.
     def enterBlock(self, ctx:NOPEParser.BlockContext):
         pass
@@ -194,6 +203,15 @@ class NOPEListener(ParseTreeListener):
 
     # Exit a parse tree produced by NOPEParser#ws.
     def exitWs(self, ctx:NOPEParser.WsContext):
+        pass
+
+
+    # Enter a parse tree produced by NOPEParser#expl_ws.
+    def enterExpl_ws(self, ctx:NOPEParser.Expl_wsContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#expl_ws.
+    def exitExpl_ws(self, ctx:NOPEParser.Expl_wsContext):
         pass
 
 

@@ -4,42 +4,34 @@ digraph {
 	0 [label=program]
 	1 [label=code]
 	0 -> 1
-	2 [label=tag]
+	2 [label=macro_call]
 	1 -> 2
-	3 [label=tagname]
+	3 [label=range_macro]
 	2 -> 3
 	4 [label=RANGE]
 	3 -> 4
 	5 [label="("]
-	2 -> 5
-	6 [label=args]
-	2 -> 6
-	7 [label=arg]
+	3 -> 5
+	6 [label=expr]
+	3 -> 6
+	7 [label=input]
 	6 -> 7
-	8 [label=arg_part]
+	8 [label=0]
 	7 -> 8
-	9 [label=input]
-	8 -> 9
-	10 [label=0]
-	9 -> 10
-	11 [label=","]
-	6 -> 11
-	12 [label=arg]
-	6 -> 12
-	13 [label=arg_part]
+	9 [label=","]
+	3 -> 9
+	10 [label=ws]
+	3 -> 10
+	11 [label=" "]
+	10 -> 11
+	12 [label=expr]
+	3 -> 12
+	13 [label=input]
 	12 -> 13
-	14 [label=ws]
+	14 [label=10]
 	13 -> 14
-	15 [label=" "]
-	14 -> 15
-	16 [label=arg_part]
-	12 -> 16
-	17 [label=input]
-	16 -> 17
-	18 [label=10]
-	17 -> 18
-	19 [label=")"]
-	2 -> 19
-	20 [label=<EOF>]
-	0 -> 20
+	15 [label=")"]
+	3 -> 15
+	16 [label=<EOF>]
+	0 -> 16
 }

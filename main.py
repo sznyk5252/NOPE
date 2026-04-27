@@ -57,13 +57,20 @@ def parse_arguments():
     return cli_parser.parse_args()
 
 
-def process_code(input_text: str, input_stream: InputStream, output_name: str, args: any, output_dir: Path, should_view: bool):
+def process_code(
+    input_text: str,
+    input_stream: InputStream,
+    output_name: str,
+    args: any,
+    output_dir: Path,
+    should_view: bool,
+):
     """Core logic to parse the stream and generate the Graphviz output."""
-    
+
     # 1. Create lexer and token stream
     lexer = NOPELexer(input_stream)
     stream = CommonTokenStream(lexer)
-    
+
     # 2. Create parser and build the tree
     parser = NOPEParser(stream)
     tree = parser.program()
@@ -79,34 +86,36 @@ def process_code(input_text: str, input_stream: InputStream, output_name: str, a
     # ---------------------------------------------------------
     # NEW: ADD SOURCE CODE TO THE TOP OF THE GRAPH
     # ---------------------------------------------------------
-    
-    # Graphviz uses '\l' instead of '\n' for left-aligned text
+
     header = "Source Code:\n" + "-" * 40 + "\n"
     formatted_code = header + input_text
-    
-    # Replace standard Python newlines with Graphviz left-align newlines
-    graphviz_label = formatted_code.replace('\n', '\\l') + '\\l'
-    
-    # Apply the label to the graph
+
+    safe_text = formatted_code.replace("\\", r"\\").replace('"', r"\"")
+
+    graphviz_label = safe_text.replace("\n", r"\l") + r"\l"
+
     renderer.graph.attr(
         label=graphviz_label,
-        labelloc="t",          # Place label at the 'top'
-        labeljust="l",         # Justify label to the 'left'
+        labelloc="t",  # Place label at the 'top'
+        labeljust="l",  # Justify label to the 'left'
         fontname="monospace",  # Use code-friendly font
-        fontsize="12"
+        fontsize="12",
     )
     # ---------------------------------------------------------
 
     # 4. Render the graph
     renderer.render(
-        tree, 
-        filename=output_name, 
-        file_format=args.format,  
-        directory=output_dir, 
-        view=should_view  
+        tree,
+        filename=output_name,
+        file_format=args.format,
+        directory=output_dir,
+        view=should_view,
     )
-    
-    print(f"Generated {output_name}.{args.format} successfully in: {output_dir.resolve()}\n")
+
+    print(
+        f"Generated {output_name}.{args.format} successfully in: {output_dir.resolve()}\n"
+    )
+
 
 def main():
     args = parse_arguments()
@@ -117,37 +126,54 @@ def main():
         for file_path_str in args.input_files:
             file_path = Path(file_path_str)
             print(f"--- Processing file: {file_path} ---")
-            
+
             try:
                 # Read the file to a string first so we can attach it to the image
-                with open(file_path, 'r', encoding='utf-8') as f:
+                with open(file_path, "r", encoding="utf-8") as f:
                     input_text = f.read()
-                
+
                 # Convert the string to an ANTLR InputStream
                 input_stream = InputStream(input_text)
-                
+
                 if len(args.input_files) == 1 and args.name != "tree":
                     graph_name = args.name
                 else:
-                    graph_name = file_path.stem 
+                    graph_name = file_path.stem
 
                 # Pass BOTH the raw text and the stream
-                process_code(input_text, input_stream, graph_name, args, output_dir, should_view=not args.no_view)
-            
+                process_code(
+                    input_text,
+                    input_stream,
+                    graph_name,
+                    args,
+                    output_dir,
+                    should_view=not args.no_view,
+                )
+
             except Exception as e:
                 print(f"Error processing {file_path}: {e}\n")
 
     # Scenario 2: No files provided, read from standard input
     else:
-        print("Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):")
+        print(
+            "Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):"
+        )
         input_text = sys.stdin.read()
-        
+
         if not input_text.strip():
             print("No input provided. Exiting.")
             return
 
         input_stream = InputStream(input_text)
-        process_code(input_text, input_stream, args.name, args, output_dir, should_view=not args.no_view)
+        process_code(
+            input_text,
+            input_stream,
+            args.name,
+            args,
+            output_dir,
+            should_view=not args.no_view,
+        )
+
 
 if __name__ == "__main__":
     main()

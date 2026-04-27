@@ -26,8 +26,7 @@ digraph {
 	10 -> 11
 	12 [label=ws]
 	1 -> 12
-	13 [label="
-"]
+	13 [label="\n"]
 	12 -> 13
 	14 [label=input]
 	1 -> 14
@@ -43,8 +42,7 @@ digraph {
 	18 -> 19
 	20 [label=ws]
 	1 -> 20
-	21 [label="
-"]
+	21 [label="\n"]
 	20 -> 21
 	22 [label=input]
 	1 -> 22
