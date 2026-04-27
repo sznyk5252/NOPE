@@ -13,7 +13,6 @@ stages:
     - git config --global user.name "README Sync Bot"
     - git config --global --add safe.directory $CI_PROJECT_DIR
     
-    - cp $ENV_FILE .env
     - export $(grep -v '^#' .env | xargs)
 
 sync_readme:
