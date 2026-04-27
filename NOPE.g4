@@ -51,6 +51,7 @@ logic_expr:
     | expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr
     | logic_expr ws? ('AND' | 'OR') ws? logic_expr
     | LP ws? logic_expr ws? RP
+    | macro_call
     ;
 
 
