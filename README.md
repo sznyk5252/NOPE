@@ -91,7 +91,7 @@ expr: expr ws? ('*' | '/') ws? expr
     | input
     ;
 
-opt_type: (TYPE ws?)? ;
+opt_type: (TYPE ws)? ;
 
 macro_call
     : range_macro
@@ -104,14 +104,14 @@ macro_call
     | def_macro
     ;
 
-range_macro  : 'RANGE' ws? LP ws? opt_type expr ws? SEP ws? opt_type expr ws? RP ;
+range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; // TODO step + zmienna iteracyjna
 match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? STR ws? RP ;
 var_macro    : 'VAR' ws? LP ws? opt_type STR ws? RP ;
 check_macro  : 'CHECK' ws? LP ws? expr ws? RP ;
 header_macro : 'C_HEADER' ws? LP ws? expr ws? RP ;
-def_macro    : 'DEF' ws? LP ws? STR ws? SEP ws? expr ws? RP ; // podstawowa forma
+def_macro    : 'DEF' ws? LP ws? STR ws? SEP ws? expr ws? RP ;
 
 ignore_ws: 'IGNORE_WHITESPACE' LP code RP
     ;
