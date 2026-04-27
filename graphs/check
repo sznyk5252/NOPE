@@ -48,7 +48,7 @@ digraph {
 	21 -> 22
 	23 [label="("]
 	21 -> 23
-	24 [label=expr]
+	24 [label=logic_expr]
 	21 -> 24
 	25 [label=expr]
 	24 -> 25
