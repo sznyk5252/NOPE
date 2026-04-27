@@ -20,7 +20,7 @@ code: (
         | ws
     )*;
 
-input_in_escape: ESCCHAR (ESCCHAR|input|single_ws); 
+input_in_escape: ESCCHAR (ESCCHAR|QUOTE|ANY_SINGLE_CHAR); 
 
 block
     : LBRACE code RBRACE
@@ -124,7 +124,9 @@ TYPE
 
 AND : 'AND' ;
 OR  : 'OR' ;
-
-STR : '\'' .*? '\''      
+QUOTE: '\'';
+STR : QUOTE ~[\r\n]*? QUOTE      
     | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
     ;
+
+ANY_SINGLE_CHAR: '.';
