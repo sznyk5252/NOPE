@@ -35,6 +35,7 @@ sync_readme:
 
     - rm graphs/*
     - uv run main.py examples/in/* --no-view
+    - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
     
     - |
