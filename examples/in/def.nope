@@ -1,0 +1,9 @@
+DEF(SUM,a, INT b){
+    VAR(STR c) << 'Sum of a and b is: '
+    VAR(sum) << a + b
+    c SPACE sum
+}
+VAR(a1) VAR(b1)
+VAR(a2) VAR(b2)
+SUM(a1, b1) 
+SUM(a2, b2)
