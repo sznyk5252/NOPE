@@ -83,7 +83,7 @@ if_stmt
     ;
 
 rep_loop
-    : 'REP' ws? LP ws? (expr ws? SEP ws?)? expr ws? RP ws? block 
+    : 'REP' ws? LP ws? (expr ws? SEP ws?)? expr (ws? SEP ws? expr)? ws? RP ws? block // tu dodalem kolejny blok () jako krok i powinno dzialac jako np. REP(i, 10, 2)
     ;
 
 def : 'DEF' ws? LP ws? (opt_type STR ws? (SEP ws? opt_type STR ws?)* )? RP ws?
@@ -98,8 +98,7 @@ expr: expr ws? ('*' | '/') ws? expr
     | input
     ;
 
-logic_expr:
-    | expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr
+logic_expr: expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr // usunięcie | zeby wyrazenie nie moglo byc niczym
     | logic_expr ws? ('AND' | 'OR') ws? logic_expr
     | LP ws? logic_expr ws? RP
     | macro_call
