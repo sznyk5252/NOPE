@@ -58,7 +58,7 @@ grammar_update:
     - git commit -m "Auto compiler sync"
     - git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
   rules:
-      changes:
+      - changes:
         - "**/*.g4"
         - "src/*"
         - "**/*.yml"
@@ -74,7 +74,7 @@ graph_update:
     - git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
     
   rules:
-      changes:
+      - changes:
         - "**/*.g4"
         - "src/*"
         - "**/*.yml"
