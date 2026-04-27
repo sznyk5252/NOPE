@@ -60,7 +60,7 @@ program
     ;
 
 code: (
-         (ESCCHAR (input|single_ws))
+        input_in_escape
         | macro_call
         | if_stmt
         | rep_loop
@@ -69,6 +69,8 @@ code: (
         | input
         | ws
     )*;
+
+input_in_escape: ESCCHAR (ESCCHAR|input|single_ws); 
 
 block
     : LBRACE code RBRACE
@@ -116,17 +118,22 @@ def_macro    : 'DEF' ws? LP ws? STR ws? SEP ws? expr ws? RP ;
 ignore_ws: 'IGNORE_WHITESPACE' LP code RP
     ;
 
-input : NUMB | STR ; 
+input : NUMB | expl_ws | STR ; 
 comment : COM; 
 
 single_ws : SPACE | ENDL;
 ws  : (SPACE | ENDL)+;
+
+expl_ws: EXPL_SPACE | EXPL_ENDL;
 
 // ==========================================
 // LEKSER
 // ==========================================
 
 COM : '#' ~[\r\n]* ; 
+
+EXPL_SPACE: 'SPACE';
+EXPL_ENDL: 'ENDL';
 
 SPACE : [ \t]+ ;
 
@@ -154,7 +161,7 @@ AND : 'AND' ;
 OR  : 'OR' ;
 
 STR : '\'' .*? '\''      
-    | ~[ \t\r\n#(),{}*+/=<>!-]+
+    | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
     ;
 ```
 # 6. External Generators & Packages
