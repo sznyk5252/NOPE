@@ -1,7 +1,5 @@
 stages:
-  - README_SYNC
-  - GRAMMAR_UPDATE
-  - GRAPH_UPDATE
+  - SYNC
 
 .sys_image:
   image: alpine:latest
@@ -17,7 +15,7 @@ stages:
 
 sync_readme:
   extends: .sys_image
-  stage: README_SYNC
+  stage: SYNC
   variables:
     TEMPLATE_FILE: "README.tpl.md"
     OUTPUT_FILE: "README.md"
@@ -31,11 +29,18 @@ sync_readme:
         
         git add "$out_file"
       done
+
+    - uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+    - git add src/*
+
+    - rm graphs/*
+    - uv run main.py examples/in/* --no-view
+    - git add graphs/*
     
     - |
       if [ -n "$(git status --porcelain)" ]; then
         echo "Wykryto zmiany w plikach .md, aktualizuję repozytorium..."
-        git commit -m "docs: Automatic sync [skip ci]"
+        git commit -m "Automatic docs + grammar sync"
         
         git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
       else
@@ -50,35 +55,5 @@ sync_readme:
         - "examples/*"
         - "**/*.yml"
         - "**/*.nope"
-
-
-grammar_update:
-  extends: .sys_image
-  stage: GRAMMAR_UPDATE
-  script:
-    - uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
-    - git add src/*
-    - git commit -m "Auto compiler sync"
-    - git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
-  rules:
-      - changes:
-        - "**/*.g4"
-        - "src/*"
-        - "**/*.yml"
-
-graph_update:
-  extends: .sys_image
-  stage: GRAPH_UPDATE
-  script:
-    - rm graphs/*
-    - uv run main.py examples/in/* --no-view
-    - git add graphs/*
-    - git commit -m "Auto graphs sync"
-    - git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
-    
-  rules:
-      - changes:
-        - "**/*.g4"
-        - "src/*"
-        - "**/*.yml"
         - "graphs/*"
+        - "src/*"
