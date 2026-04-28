@@ -242,5 +242,14 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#type.
+    def enterType(self, ctx:NOPEParser.TypeContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#type.
+    def exitType(self, ctx:NOPEParser.TypeContext):
+        pass
+
+
 
 del NOPEParser

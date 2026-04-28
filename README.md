@@ -105,7 +105,7 @@ logic_expr: expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr // usunię
     ;
 
 
-opt_type: (TYPE ws)? ;
+opt_type: (type ws)? ;
 
 macro_call
     : range_macro
@@ -121,8 +121,10 @@ range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ;
 match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? STR ws? RP ;
+
 var_macro    : 'VAR' ws? LP ws? opt_type STR ws? RP
                 ( ws? ASSIGN ws? any_expr)?;
+
 check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
 header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;
 
@@ -138,6 +140,13 @@ single_ws : SPACE | ENDL;
 ws  : (SPACE | ENDL)+;
 
 expl_ws: EXPL_SPACE | EXPL_ENDL;
+
+type
+    : 'INT'
+    | 'FLOAT'
+    | 'STR'
+    | type '[' expr ']' 
+    ;
 
 // ==========================================
 // LEKSER
@@ -166,11 +175,6 @@ ESCCHAR : '\\';
 
 ASSIGN : '<<';
 
-TYPE
-    : 'INT'
-    | 'FLOAT'
-    | 'STR'
-    ;
 
 AND : 'AND' ;
 OR  : 'OR' ;
