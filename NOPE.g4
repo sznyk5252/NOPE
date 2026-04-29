@@ -62,15 +62,27 @@ expr: expr ws? (MUL | DIV) ws? expr
     | LP ws? expr ws? RP
     | macro_call
     | input
+    | ID
     ;
 
-logic_expr: NEGATION ws? logic_expr ws?
-    | expr ws? comparator ws? expr 
-    | logic_expr ws? comparator ws? logic_expr 
-    | logic_expr ws? (AND | OR) ws? logic_expr
-    | LP ws? logic_expr ws? RP
+// logic_expr: NEGATION ws? logic_expr ws?
+//     | expr ws? comparator ws? expr 
+//     | logic_expr ws? comparator ws? logic_expr 
+//     | logic_expr ws? (AND | OR) ws? logic_expr
+//     | LP ws? logic_expr ws? RP
+//     | macro_call 
+//     | ID
+//     ;
+
+logic_expr
+    : LP ws? logic_expr ws? RP
     | macro_call 
     | ID
+    | NEGATION ws? logic_expr
+    | expr ws? comparator ws? expr 
+    | logic_expr ws? comparator ws? logic_expr 
+    | logic_expr ws? AND ws? logic_expr
+    | logic_expr ws? OR ws? logic_expr
     ;
 
 
@@ -149,14 +161,10 @@ ESCCHAR : '\\';
 
 ASSIGN : '<<';
 
-ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable/macro/c++function with this ID this will be later interpreted as STR
 
 AND : 'AND' ;
 OR  : 'OR' ;
 QUOTE: '\'';
-STR : QUOTE ~[\r\n]*? QUOTE      
-    | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
-    ;
 
 comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 
@@ -179,3 +187,8 @@ SUB : '-' ;
 RETURN: 'RETURN';
 RETURN_TYPING_ARROW: '->';
 
+ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable/macro/c++function with this ID this will be later interpreted as STR
+
+STR : QUOTE ~[\r\n]*? QUOTE      
+    | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
+    ;

@@ -1,0 +1,181 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\lDEF(SUM,a, INT b){\l    VAR(STR c) << 'Sum of a and b is: '\l    VAR(sum) << a + b\l    c SPACE sum\l}\lVAR(a1) VAR(b1)\lVAR(a2) VAR(b2)\lSUM(a1, b1) \lSUM(a2, b2)\l" labeljust=l labelloc=t
+	0 [label=program fontcolor=black]
+	1 [label=code fontcolor=black]
+	0 -> 1
+	2 [label=def fontcolor=black]
+	1 -> 2
+	3 [label=def fontcolor=black]
+	1 -> 3
+	4 [label="TOKEN\n'DEF'" color=lightgreen fontcolor=black shape=box style=filled]
+	3 -> 4
+	5 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	3 -> 5
+	6 [label=input fontcolor=black]
+	1 -> 6
+	7 [label="ID\n'SUM'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 7
+	8 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 8
+	9 [label="ID\n'a'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 9
+	10 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 10
+	11 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 11 [color=lightgray]
+	12 [label="TOKEN\n'INT'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 12
+	13 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 13 [color=lightgray]
+	14 [label="ID\n'b'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 14
+	15 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 15
+	16 [label="LBRACE\n'{'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 16
+	17 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 17 [color=lightgray]
+	18 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 18 [color=lightgray]
+	19 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 19
+	20 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 20
+	21 [label="TOKEN\n'STR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 21
+	22 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 22 [color=lightgray]
+	23 [label="ID\n'c'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 23
+	24 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 24
+	25 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 25 [color=lightgray]
+	26 [label="ASSIGN\n'<<'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 26
+	27 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 27 [color=lightgray]
+	28 [label="STR\n''Sum of a and b is: ''" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 28
+	29 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 29 [color=lightgray]
+	30 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 30 [color=lightgray]
+	31 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 31
+	32 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 32
+	33 [label="ID\n'sum'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 33
+	34 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 34
+	35 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 35 [color=lightgray]
+	36 [label="ASSIGN\n'<<'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 36
+	37 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 37 [color=lightgray]
+	38 [label="ID\n'a'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 38
+	39 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 39 [color=lightgray]
+	40 [label="ADD\n'+'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 40
+	41 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 41 [color=lightgray]
+	42 [label="ID\n'b'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 42
+	43 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 43 [color=lightgray]
+	44 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 44 [color=lightgray]
+	45 [label="ID\n'c'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 45
+	46 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 46 [color=lightgray]
+	47 [label="EXPL_SPACE\n'SPACE'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 47
+	48 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 48 [color=lightgray]
+	49 [label="ID\n'sum'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 49
+	50 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 50 [color=lightgray]
+	51 [label="RBRACE\n'}'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 51
+	52 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 52 [color=lightgray]
+	53 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 53
+	54 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 54
+	55 [label="ID\n'a1'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 55
+	56 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 56
+	57 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 57 [color=lightgray]
+	58 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 58
+	59 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 59
+	60 [label="ID\n'b1'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 60
+	61 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 61
+	62 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 62 [color=lightgray]
+	63 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 63
+	64 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 64
+	65 [label="ID\n'a2'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 65
+	66 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 66
+	67 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 67 [color=lightgray]
+	68 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 68
+	69 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 69
+	70 [label="ID\n'b2'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 70
+	71 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 71
+	72 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 72 [color=lightgray]
+	73 [label="ID\n'SUM'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 73
+	74 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 74
+	75 [label="ID\n'a1'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 75
+	76 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 76
+	77 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 77 [color=lightgray]
+	78 [label="ID\n'b1'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 78
+	79 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 79
+	80 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 80 [color=lightgray]
+	81 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 81 [color=lightgray]
+	82 [label="ID\n'SUM'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 82
+	83 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 83
+	84 [label="ID\n'a2'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 84
+	85 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 85
+	86 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	0 -> 86 [color=lightgray]
+	87 [label="ID\n'b2'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 87
+	88 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 88
+}
