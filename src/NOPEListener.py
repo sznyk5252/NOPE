@@ -44,6 +44,15 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#block_with_return.
+    def enterBlock_with_return(self, ctx:NOPEParser.Block_with_returnContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#block_with_return.
+    def exitBlock_with_return(self, ctx:NOPEParser.Block_with_returnContext):
+        pass
+
+
     # Enter a parse tree produced by NOPEParser#if_stmt.
     def enterIf_stmt(self, ctx:NOPEParser.If_stmtContext):
         pass
@@ -68,6 +77,15 @@ class NOPEListener(ParseTreeListener):
 
     # Exit a parse tree produced by NOPEParser#def.
     def exitDef(self, ctx:NOPEParser.DefContext):
+        pass
+
+
+    # Enter a parse tree produced by NOPEParser#rtype.
+    def enterRtype(self, ctx:NOPEParser.RtypeContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#rtype.
+    def exitRtype(self, ctx:NOPEParser.RtypeContext):
         pass
 
 

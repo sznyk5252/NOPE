@@ -77,18 +77,34 @@ block
     : LBRACE code RBRACE
     ;
 
+block_with_return
+    : LBRACE code RETURN expr RBRACE
+    ;
+
 if_stmt
     : 'IF' ws? LP ws? logic_expr ws? RP ws? block (ws? 'ELSE' ws? block)?
     | 'IF' ws? LP ws? logic_expr ws? RP ws? block (ws? 'ELSE' ws? if_stmt)?
     ;
 
 rep_loop
-    : 'REP' ws? LP ws? (ID ws? SEP ws?)? expr (ws? SEP ws? expr)? ws? RP ws? 
+    : 'REP' ws? LP ws? (ID ws? SEP ws?)?    // iterator ID
+     expr                                   // upper bound       
+     (ws? SEP ws? expr)?                    // lower bound
+     (ws? SEP ws? expr)?                    // step
+      ws? RP ws? 
         block 
            ;
 
-def : 'DEF' ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
-                block;
+def 
+    : 'DEF' SPACE+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
+                block
+    | 'DEF' SPACE+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws? rtype ws?
+                block_with_return
+        ;
+
+
+
+rtype: RETURN_TYPING_ARROW ws? type ws?;
 
 any_expr : expr | logic_expr;
 
@@ -193,8 +209,6 @@ STR : QUOTE ~[\r\n]*? QUOTE
     | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
     ;
 
-// ANY_SINGLE_CHAR: '.';
-
 comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 
 EQ: '==';
@@ -212,6 +226,10 @@ MUL : '*' ;
 DIV : '/' ;
 ADD : '+' ;
 SUB : '-' ;
+
+RETURN: 'RETURN';
+RETURN_TYPING_ARROW: '->';
+
 
 ```
 # 6. External Generators & Packages
