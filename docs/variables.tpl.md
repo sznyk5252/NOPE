@@ -53,4 +53,4 @@ extra rules for arrayes:
 - You can't acces array all at once - this mean no assignment and no specifying expected output
 
 To pass this limitations use 
-([see more about variables](docs/loops.md))
+([see more about variables](loops.md))
