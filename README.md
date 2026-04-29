@@ -71,7 +71,7 @@ code: (
         | ws
     )*;
 
-input_in_escape: ESCCHAR (ESCCHAR|COM|QUOTE|ANY_SINGLE_CHAR); 
+input_in_escape: ESCCHAR (ESCCHAR|COM|QUOTE|ws|ANY_SINGLE_CHAR); 
 
 block
     : LBRACE code RBRACE
