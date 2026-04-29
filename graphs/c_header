@@ -1,0 +1,115 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\l# Test Comment\lC_HEADER('#include <cmath>')\lVAR(x)\lVAR(y)\lCHECK(sqrt(x) > y)\l" labeljust=l labelloc=t
+	0 [label=program]
+	1 [label=code]
+	0 -> 1
+	2 [label=comment]
+	1 -> 2
+	3 [label="COM\n'# Test Comment'" color=green shape=box]
+	2 -> 3
+	4 [label=ws]
+	1 -> 4
+	5 [label="ENDL\n'\n'" color=green shape=box]
+	4 -> 5
+	6 [label=macro_call]
+	1 -> 6
+	7 [label=header_macro]
+	6 -> 7
+	8 [label="TOKEN\n'C_HEADER'" color=green shape=box]
+	7 -> 8
+	9 [label="LP\n'('" color=green shape=box]
+	7 -> 9
+	10 [label="STR\n''#include <cmath>''" color=green shape=box]
+	7 -> 10
+	11 [label="RP\n')'" color=green shape=box]
+	7 -> 11
+	12 [label=ws]
+	1 -> 12
+	13 [label="ENDL\n'\n'" color=green shape=box]
+	12 -> 13
+	14 [label=macro_call]
+	1 -> 14
+	15 [label=var_macro]
+	14 -> 15
+	16 [label="TOKEN\n'VAR'" color=green shape=box]
+	15 -> 16
+	17 [label="LP\n'('" color=green shape=box]
+	15 -> 17
+	18 [label=opt_type]
+	15 -> 18
+	19 [label="ID\n'x'" color=green shape=box]
+	15 -> 19
+	20 [label="RP\n')'" color=green shape=box]
+	15 -> 20
+	21 [label=ws]
+	1 -> 21
+	22 [label="ENDL\n'\n'" color=green shape=box]
+	21 -> 22
+	23 [label=macro_call]
+	1 -> 23
+	24 [label=var_macro]
+	23 -> 24
+	25 [label="TOKEN\n'VAR'" color=green shape=box]
+	24 -> 25
+	26 [label="LP\n'('" color=green shape=box]
+	24 -> 26
+	27 [label=opt_type]
+	24 -> 27
+	28 [label="ID\n'y'" color=green shape=box]
+	24 -> 28
+	29 [label="RP\n')'" color=green shape=box]
+	24 -> 29
+	30 [label=ws]
+	1 -> 30
+	31 [label="ENDL\n'\n'" color=green shape=box]
+	30 -> 31
+	32 [label=macro_call]
+	1 -> 32
+	33 [label=check_macro]
+	32 -> 33
+	34 [label="TOKEN\n'CHECK'" color=green shape=box]
+	33 -> 34
+	35 [label="LP\n'('" color=green shape=box]
+	33 -> 35
+	36 [label=logic_expr]
+	33 -> 36
+	37 [label=expr]
+	36 -> 37
+	38 [label=macro_call]
+	37 -> 38
+	39 [label=custom_macro]
+	38 -> 39
+	40 [label="ID\n'sqrt'" color=green shape=box]
+	39 -> 40
+	41 [label="LP\n'('" color=green shape=box]
+	39 -> 41
+	42 [label=expr]
+	39 -> 42
+	43 [label=input]
+	42 -> 43
+	44 [label="ID\n'x'" color=green shape=box]
+	43 -> 44
+	45 [label="RP\n')'" color=green shape=box]
+	39 -> 45
+	46 [label=ws]
+	36 -> 46
+	47 [label="SPACE\n' '" color=green shape=box]
+	46 -> 47
+	48 [label="TOKEN\n'>'" color=green shape=box]
+	36 -> 48
+	49 [label=ws]
+	36 -> 49
+	50 [label="SPACE\n' '" color=green shape=box]
+	49 -> 50
+	51 [label=expr]
+	36 -> 51
+	52 [label=input]
+	51 -> 52
+	53 [label="ID\n'y'" color=green shape=box]
+	52 -> 53
+	54 [label="RP\n')'" color=green shape=box]
+	33 -> 54
+	55 [label=EOF color=green shape=box]
+	0 -> 55
+}
