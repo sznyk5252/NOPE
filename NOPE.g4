@@ -20,7 +20,7 @@ code: (
         | ws
     )*;
 
-input_in_escape: ESCCHAR (ESCCHAR|QUOTE|ANY_SINGLE_CHAR); 
+input_in_escape: ESCCHAR (ESCCHAR|COM|QUOTE|ANY_SINGLE_CHAR); 
 
 block
     : LBRACE code RBRACE
@@ -87,7 +87,8 @@ ignore_ws: 'IGNORE_WHITESPACE' LP code RP
 input : NUMB 
     | expl_ws
     | ID
-    | STR ; 
+    | STR ;
+
 comment : COM; 
 
 single_ws : SPACE | ENDL;
@@ -130,7 +131,7 @@ ESCCHAR : '\\';
 
 ASSIGN : '<<';
 
-ID : [a-zA-Z_] [a-zA-Z0-9_]* ;
+ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable with this ID this will be later interpreted as STR
 
 AND : 'AND' ;
 OR  : 'OR' ;
