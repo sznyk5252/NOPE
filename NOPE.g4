@@ -49,7 +49,7 @@ expr: expr ws? (MUL | DIV) ws? expr
     ;
 
 logic_expr: NEGATION ws? logic_expr ws?
-    | expr ws? COMPARATOR ws? expr 
+    | any_expr ws? COMPARATOR ws? any_expr 
     | logic_expr ws? (AND | OR) ws? logic_expr
     | LP ws? logic_expr ws? RP
     | macro_call
