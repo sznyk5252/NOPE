@@ -1,0 +1,97 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\lVAR(x) VAR(y)\lCHECK(x + y == 10)\l" labeljust=l labelloc=t
+	0 [label=program]
+	1 [label=code]
+	0 -> 1
+	2 [label=macro_call]
+	1 -> 2
+	3 [label=var_macro]
+	2 -> 3
+	4 [label="TOKEN\n'VAR'" color=green shape=box]
+	3 -> 4
+	5 [label="LP\n'('" color=green shape=box]
+	3 -> 5
+	6 [label=opt_type]
+	3 -> 6
+	7 [label="ID\n'x'" color=green shape=box]
+	3 -> 7
+	8 [label="RP\n')'" color=green shape=box]
+	3 -> 8
+	9 [label=ws]
+	1 -> 9
+	10 [label="SPACE\n' '" color=green shape=box]
+	9 -> 10
+	11 [label=macro_call]
+	1 -> 11
+	12 [label=var_macro]
+	11 -> 12
+	13 [label="TOKEN\n'VAR'" color=green shape=box]
+	12 -> 13
+	14 [label="LP\n'('" color=green shape=box]
+	12 -> 14
+	15 [label=opt_type]
+	12 -> 15
+	16 [label="ID\n'y'" color=green shape=box]
+	12 -> 16
+	17 [label="RP\n')'" color=green shape=box]
+	12 -> 17
+	18 [label=ws]
+	1 -> 18
+	19 [label="ENDL\n'\n'" color=green shape=box]
+	18 -> 19
+	20 [label=macro_call]
+	1 -> 20
+	21 [label=check_macro]
+	20 -> 21
+	22 [label="TOKEN\n'CHECK'" color=green shape=box]
+	21 -> 22
+	23 [label="LP\n'('" color=green shape=box]
+	21 -> 23
+	24 [label=logic_expr]
+	21 -> 24
+	25 [label=expr]
+	24 -> 25
+	26 [label=expr]
+	25 -> 26
+	27 [label=input]
+	26 -> 27
+	28 [label="ID\n'x'" color=green shape=box]
+	27 -> 28
+	29 [label=ws]
+	25 -> 29
+	30 [label="SPACE\n' '" color=green shape=box]
+	29 -> 30
+	31 [label="TOKEN\n'+'" color=green shape=box]
+	25 -> 31
+	32 [label=ws]
+	25 -> 32
+	33 [label="SPACE\n' '" color=green shape=box]
+	32 -> 33
+	34 [label=expr]
+	25 -> 34
+	35 [label=input]
+	34 -> 35
+	36 [label="ID\n'y'" color=green shape=box]
+	35 -> 36
+	37 [label=ws]
+	24 -> 37
+	38 [label="SPACE\n' '" color=green shape=box]
+	37 -> 38
+	39 [label="TOKEN\n'=='" color=green shape=box]
+	24 -> 39
+	40 [label=ws]
+	24 -> 40
+	41 [label="SPACE\n' '" color=green shape=box]
+	40 -> 41
+	42 [label=expr]
+	24 -> 42
+	43 [label=input]
+	42 -> 43
+	44 [label="NUMB\n'10'" color=green shape=box]
+	43 -> 44
+	45 [label="RP\n')'" color=green shape=box]
+	21 -> 45
+	46 [label=EOF color=green shape=box]
+	0 -> 46
+}

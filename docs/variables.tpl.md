@@ -26,6 +26,16 @@ To create variable and asign value to it instead of reading from stdout use assi
 ```
 VAR(x) << 10
 ```
+
+### Example
+```
+{% include "examples/in/var2.nope" %}
+```
+this will expect:
+```
+1 1 5 1 1
+```
+
 # How to use it as expected input
 
 Once you have created a viariable, let's say `x`, to specify that on output, just type
