@@ -71,7 +71,7 @@ code: (
         | ws
     )*;
 
-input_in_escape: ESCCHAR (ESCCHAR|COM|QUOTE|ws|LP|RP|LBRACE|RBRACE|ADD|SUB|DIV|MUL|'='|'<'|'>'); 
+input_in_escape: ESCCHAR (ESCCHAR|COM|QUOTE|ws|LP|RP|LBRACE|RBRACE|ADD|SUB|DIV|MUL|LS|GR); 
 
 block
     : LBRACE code RBRACE
@@ -100,10 +100,11 @@ expr: expr ws? (MUL | DIV) ws? expr
     ;
 
 logic_expr: NEGATION ws? logic_expr ws?
-    | expr ws? COMPARATOR ws? expr 
+    | expr ws? comparator ws? expr 
+    | logic_expr ws? comparator ws? logic_expr 
     | logic_expr ws? (AND | OR) ws? logic_expr
     | LP ws? logic_expr ws? RP
-    | macro_call
+    | macro_call 
     | ID
     ;
 
@@ -194,8 +195,18 @@ STR : QUOTE ~[\r\n]*? QUOTE
 
 // ANY_SINGLE_CHAR: '.';
 
-COMPARATOR: '==' | '!=' | '>' | '<' | '>=' | '<=';
+comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
+
+EQ: '==';
+NEQ: '!=';
+LS: '<';
+GR: '>';
+LSEQ: '<=';
+GREQ: '>=';
+
+
 NEGATION: 'NOT';
+
 
 MUL : '*' ;
 DIV : '/' ;
