@@ -46,7 +46,7 @@
 | **C_HEADER(code)** | `TAG` | Code to include at the beginning | `C_HEADER(#include <math.h>)` |
 
 # 5. Formal Grammar
-The structure of the language is defined in the standard ANTLR4 notation (`NOPE.g4`). 
+The structure of the language is defined in the standard ANTLR4 notation (file: `NOPE.g4`). 
 
 ```antlr
 grammar NOPE;
