@@ -27,8 +27,6 @@
 
 ### Identifiers and Literals
 
-### Identifiers and Literals
-
 | Name | Description | Regex / ANTLR Definition | Example |
 | :--- | :--- | :--- | :--- |
 | **`ID`** | Variable/function identifier | `[a-zA-Z_][a-zA-Z0-9_]*` | `punkty`, `_temp`, `x1` |
