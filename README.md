@@ -25,25 +25,80 @@
 
 ## 4. Tokens
 
-| Token | TokenCode | Description | Example Matches |
+### Identifiers and Literals
+
+### Identifiers and Literals
+
+| Name | Description | Regex / ANTLR Definition | Example |
 | :--- | :--- | :--- | :--- |
-| **LEFT_PARENTESE** | `LP` | Left parenthesis for macro arguments | `(` |
-| **RIGHT_PARENTESE** | `RP` | Right parenthesis for macro arguments | `)` |
-| **SEPARATOR** | `SEP` | Comma separating multiple arguments | `,` |
-| **NUMBER** | `NUMB` | Integer and floating-point numbers | `10`, `-15`, `12.3` |
-| **STRING** | `STR` | Quoted strings or raw unquoted text | `'val'`, `x_var` |
-| **SPACE** | `SPACE` | White spaces (spaces and tabs) | `' '` |
-| **NEWLINE** | `ENDL` | Newline characters | `\n` |
-| **COMMENT** | `COM` | Single-line comment starting with `#` | `# text` |
-| **VAR(name)** | `TAG` | Variable capture | `VAR(x)` |
-| **CHECK(cond)** | `TAG` | Assertion (C grammar inside) | `CHECK(x + y == 10)` |
-| **MATCH(pattern)** | `TAG` | Regex matching | `MATCH(x > 0)` |
-| **ANYOF(opt1...)** | `TAG` | Multiple choice | `ANYOF(yes, YES)` |
-| **DEF(name, val)** | `TAG` | Macro definition | `DEF(YES_M, ANYOF(yes))` |
-| **REP(n, value, iter_name = i)** | `TAG` | Loop definition | `REP(10, "a ")` |
-| **THROWS(error)** | `TAG` | Negative testing | `THROWS(Exception)` |
-| **RANGE(from, to)**| `TAG` | Boundary check | `RANGE(0, 10)` |
-| **C_HEADER(code)** | `TAG` | Code to include at the beginning | `C_HEADER(#include <math.h>)` |
+| **`ID`** | Variable/function identifier | `[a-zA-Z_][a-zA-Z0-9_]*` | `punkty`, `_temp`, `x1` |
+| **`NUMB`** | Numeric literal (integer and floating-point) | `'-'?[0-9]+('.'[0-9]*)?` | `42`, `-15`, `3.14` |
+| **`STR`** | String literal (quoted or raw text) | `'\'' ~[\r\n]*? '\''` \| `~[ \t\r\n#(),{}*+/=<>!\-\\]+` | `'Hello'`, `Zaliczone` |
+| **`TYPE`** | Data type keywords | `'INT'` \| `'FLOAT'` \| `'STR'` \| `'BOOL'` | `INT`, `BOOL` |
+
+### Arithmetic Operators
+
+| Name | Description | Regex / ANTLR Definition | Example |
+| :--- | :--- | :--- | :--- |
+| **`ADD`** | Addition | `'+'` | `+` |
+| **`SUB`** | Subtraction | `'-'` | `-` |
+| **`MUL`** | Multiplication | `'*'` | `*` |
+| **`DIV`** | Division | `'/'` | `/` |
+
+### Relational and Logical Operators
+
+| Name | Description | Regex / ANTLR Definition | Example |
+| :--- | :--- | :--- | :--- |
+| **`EQ`** | Equality | `'=='` | `==` |
+| **`NEQ`** | Inequality | `'!='` | `!=` |
+| **`LS`** | Less than | `'<'` | `<` |
+| **`GR`** | Greater than | `'>'` | `>` |
+| **`LSEQ`** | Less than or equal to | `'<='` | `<=` |
+| **`GREQ`** | Greater than or equal to | `'>='` | `>=` |
+| **`AND`** | Logical conjunction (AND) | `'AND'` | `AND` |
+| **`OR`** | Logical disjunction (OR) | `'OR'` | `OR` |
+| **`NEGATION`** | Logical negation (NOT) | `'NOT'` | `NOT` |
+
+### Structural Symbols and Assignments
+
+| Name | Description | Regex / ANTLR Definition | Example |
+| :--- | :--- | :--- | :--- |
+| **`ASSIGN`** | Value assignment operator | `'<<'` | `<<` |
+| **`RETURN`** | Function return keyword | `'RETURN'` | `RETURN` |
+| **`RETURN_TYPING_ARROW`**| Return value typing arrow | `'->'` | `->` |
+| **`LP`** | Left parenthesis | `'('` | `(` |
+| **`RP`** | Right parenthesis | `')'` | `)` |
+| **`LBRACE`** | Left brace (block start) | `'{'` | `{` |
+| **`RBRACE`** | Right brace (block end) | `'}'` | `}` |
+| **`SEP`** | Argument separator | `','` | `,` |
+| **`QUOTE`** | Single quote character | `'\''` | `'` |
+| **`ESCCHAR`** | Escape character | `'\\'` | `\` |
+
+### Whitespaces and Comments
+
+| Name | Description | Regex / ANTLR Definition | Example |
+| :--- | :--- | :--- | :--- |
+| **`COM`** | Single-line comment | `'#' ~[\r\n]*` | `# this is a test` |
+| **`SPACE`** | Spaces and tabs | `[ \t]+` | ` ` (space) |
+| **`ENDL`** | Newline character | `[\r\n]+` \| `'\n'+` | `\n` |
+| **`EXPL_SPACE`** | Explicitly defined space for the parser | `'SPACE'` | `SPACE` |
+| **`EXPL_ENDL`** | Explicitly defined newline for the parser | `'ENDL'` | `ENDL` |
+
+### Macros and Structures (Parser Rules)
+
+| Construction | Rule Type | Description | Example |
+| :--- | :--- | :--- | :--- |
+| **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x << 10)` |
+| **`REP`** | `rep_loop` | Loop with iterator, limits, step, and code block | `REP(i, 10, 0, 2) { ... }` |
+| **`DEF`** | `def` | Custom macro/function definition | `DEF MY_FUNC(INT a) -> INT { ... }` |
+| **`IF / ELSE`** | `if_stmt` | Conditional logic flow | `IF (x > 0) { ... } ELSE { ... }` |
+| **`CHECK`** | `check_macro` | Assertion evaluating logical expressions | `CHECK(x + y >= 10 AND x < 20)` |
+| **`MATCH`** | `match_macro` | Exact or regex matching | `MATCH('Passed')` |
+| **`ANYOF`** | `anyof_macro` | Multiple choice matching | `ANYOF('yes', 'YES')` |
+| **`THROWS`** | `throws_macro`| Negative testing (expects an error) | `THROWS('Exception')` |
+| **`RANGE`** | `range_macro` | Boundary check | `RANGE(0, 100)` |
+| **`C_HEADER`** | `header_macro`| Code to include at the beginning | `C_HEADER('#include <math.h>')` |
+| **`IGNORE_WHITESPACE`**| `ignore_ws` | Disables strict whitespace checking for a block | `IGNORE_WHITESPACE { MATCH('A') }` |
 
 # 5. Formal Grammar
 The structure of the language is defined in the standard ANTLR4 notation (file: `NOPE.g4`). 
@@ -260,28 +315,3 @@ To see the result see ```uv run main.py -h```
 
 # 8. Learn NOPE
 Visit [quick start](docs/quick_start.md)
-
-
-# TODO
-### Zwiększyć złożoność gramatyki
-
-[x] 2S -opcja IGNORE_WHITESPACE - domyślnie spacje, endl między elementami mają znaczenie, a w tej sekcji by nie miały - ułatwiałoby to zapisywanie części logicznej
-
-- K - przerobić REP żeby działało podobnie jak w Pythonie
-
-- K - expr (logiczne i arytmetyczne)
-
-- K - if else
-
-- S - DEF() - przerobić żeby działało podobnie jak w zwykłym języku
-
-[x] 1S - Typowanie, ale najlepiej z jakimś domyślnym np int, dobrze by było dodać tag do zmienienia domyślnego typu 
-
-- K - Rozbić wszystkie tagi na osobne tokeny, żeby były lepsze komunikaty o błędach. Pamiętaj o typach, powinna być możliwość nie pisania typów - domyślny byłby np int.
-
-[x] ESCCHAR - tak żeby można było wymusić wpisanie słów kluczowych, `'` itp. 
-
-## DEADLINE
-- 1S , 2S - 25.04
-- K - 28.04
-- S - 29.04
