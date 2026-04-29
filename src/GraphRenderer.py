@@ -44,18 +44,39 @@ class GraphRenderer:
 
     def _build_nodes(self, tree: ParseTree, parent_id: Optional[str] = None) -> str:
         if isinstance(tree, TerminalNode):
-            label = tree.getText()
+            symbol = tree.getSymbol()
+            
+            if symbol.type == Token.EOF:
+                token_name = "EOF"
+                text = ""
+            else:
+
+                token_name = self.parser.symbolicNames[symbol.type]
+                text = tree.getText()
+
+                if not token_name or token_name == "<INVALID>":
+                    token_name = "TOKEN"
+
+            if token_name == "EOF":
+                label = "EOF"
+            else:
+                label = f"{token_name}\n'{text}'"
         else:
             rule_index = tree.getRuleIndex()
             label = self.parser.ruleNames[rule_index]
 
+        # Bezpieczne escape'owanie dla Graphviza
         safe_label = label.replace("\\", "\\\\").replace('"', '\\"')
         safe_label = safe_label.replace("\n", "\\n").replace("\r", "")
 
         node_id = str(self._counter)
         self._counter += 1
 
-        self.graph.node(node_id, safe_label)
+
+        if isinstance(tree, TerminalNode):
+            self.graph.node(node_id, safe_label, shape="box", color="green")
+        else:
+            self.graph.node(node_id, safe_label)
 
         if parent_id is not None:
             self.graph.edge(parent_id, node_id)
