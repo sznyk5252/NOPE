@@ -10,7 +10,7 @@ Expect that program will print exactly what is provided.
 ```
 {% include "examples/in/range.nope" %}
 ```
-Expect that program will print number between 0 and 10 ([see more on that](docs/range.md))
+Expect that program will print number between 0 and 10 ([see more on that](range.md))
 
 ## Match
 ```
@@ -49,7 +49,7 @@ this will be same as writing:
 2 3
 0123
 ```
-([Learn more about variables](docs/escape_char.md))
+([Learn more about escape character](escape_char.md))
 
 ## Simple variables
 Deafault type for the variables is `INT`
@@ -60,11 +60,11 @@ This expect that the program will print sth like:
 - `1 1 5 1 1`
 - `2 2 5 2 2`
 - `999 999 5 999 999`
-([Learn more about variables](docs/variables.md))
+([Learn more about variables](variables.md))
 
 
 # More advanced:
-- ([Functions](docs/def.md))
-- ([If statements](docs/if_else.md))
-- ([Loops](docs/loops.md))
+- ([Functions](def.md))
+- ([If statements](if_else.md))
+- ([Loops](loops.md))
 
