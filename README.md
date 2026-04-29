@@ -32,7 +32,7 @@
 | **`ID`** | Variable/function identifier | `[a-zA-Z_][a-zA-Z0-9_]*` | `punkty`, `_temp`, `x1` |
 | **`NUMB`** | Numeric literal (integer and floating-point) | `'-'?[0-9]+('.'[0-9]*)?` | `42`, `-15`, `3.14` |
 | **`STR`** | String literal (quoted or raw text) | `'\'' ~[\r\n]*? '\''` \| `~[ \t\r\n#(),{}*+/=<>!\-\\]+` | `'Hello'`, `Zaliczone` |
-| **`TYPE`** | Data type keywords | `'INT'` \| `'FLOAT'` \| `'STR'` \| `'BOOL'` | `INT`, `BOOL` |
+| **`TYPE`** | Data type keywords & Arrays | `'INT'` \| `'FLOAT'` \| `'STR'` \| `'BOOL'` \| `type[size]` | `INT`, `BOOL`, `INT[10]` |
 
 ### Arithmetic Operators
 
@@ -89,6 +89,7 @@
 | **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x << 10)` |
 | **`REP`** | `rep_loop` | Loop with iterator, limits, step, and code block | `REP(i, 10, 0, 2) { ... }` |
 | **`DEF`** | `def` | Custom macro/function definition | `DEF MY_FUNC(INT a) -> INT { ... }` |
+| **`CUSTOM`** | `custom_macro` | Calling a user-defined macro/function | `MY_FUNC(10, 'text')` |
 | **`IF / ELSE`** | `if_stmt` | Conditional logic flow | `IF (x > 0) { ... } ELSE { ... }` |
 | **`CHECK`** | `check_macro` | Assertion evaluating logical expressions | `CHECK(x + y >= 10 AND x < 20)` |
 | **`MATCH`** | `match_macro` | Exact or regex matching | `MATCH('Passed')` |
