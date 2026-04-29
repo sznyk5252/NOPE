@@ -43,11 +43,11 @@ def parse_arguments():
         help="Output file format (default: png).",
     )
 
-    cli_parser.add_argument(
-        "--styled",
-        action="store_true",
-        help="Generate a styled graph (colors, rounded boxes) instead of the default white one.",
-    )
+    # cli_parser.add_argument(
+    #     "--styled",
+    #     action="store_true",
+    #     help="Generate a styled graph (colors, rounded boxes) instead of the default white one.",
+    # )
     cli_parser.add_argument(
         "--no-view",
         action="store_true",
@@ -78,10 +78,10 @@ def process_code(
     print(f"Parse tree (LISP): {tree.toStringTree(recog=parser)}")
 
     # 3. Initialize Renderer based on CLI flags
-    if args.styled:
-        renderer = GraphRenderer.create_styled_digraph(parser)
-    else:
-        renderer = GraphRenderer.create_default_digraph(parser)
+    # if args.styled:
+    #     renderer = GraphRenderer.create_styled_digraph(parser)
+    # else:
+    renderer = GraphRenderer.create_default_digraph(parser)
 
     # ---------------------------------------------------------
     # NEW: ADD SOURCE CODE TO THE TOP OF THE GRAPH

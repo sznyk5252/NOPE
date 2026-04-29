@@ -33,8 +33,8 @@ if_stmt
 
 rep_loop
     : 'REP' ws? LP ws? (ID ws? SEP ws?)? expr (ws? SEP ws? expr)? ws? RP ws? 
-        block // tu dodalem kolejny blok () jako krok i powinno dzialac jako np. REP(i, 10, 2)
-    ;
+        block 
+           ;
 
 def : 'DEF' ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
                 block;
