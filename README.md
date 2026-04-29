@@ -135,7 +135,10 @@ custom_macro : ID ws? LP ws? (expr ws? (SEP ws? expr ws?)* )? ws? RP ;
 ignore_ws: 'IGNORE_WHITESPACE' LP code RP
     ;
 
-input : NUMB | expl_ws | ID | STR ; 
+input : NUMB 
+    | expl_ws
+    | ID
+    | STR ; 
 comment : COM; 
 
 single_ws : SPACE | ENDL;
