@@ -92,15 +92,15 @@ def : 'DEF' ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
 
 any_expr : expr | logic_expr;
 
-expr: expr ws? ('*' | '/') ws? expr
-    | expr ws? ('+' | '-') ws? expr
+expr: expr ws? (MUL | DIV) ws? expr
+    | expr ws? (ADD | SUB) ws? expr
     | LP ws? expr ws? RP
     | macro_call
     | input
     ;
 
-logic_expr: expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr // usunięcie | zeby wyrazenie nie moglo byc niczym
-    | logic_expr ws? ('AND' | 'OR') ws? logic_expr
+logic_expr: expr ws? COMPARATOR ws? expr 
+    | logic_expr ws? (AND | OR) ws? logic_expr
     | LP ws? logic_expr ws? RP
     | macro_call
     | ID
@@ -117,6 +117,7 @@ macro_call
     | var_macro
     | check_macro
     | header_macro
+    | custom_macro
     ;
 
 range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; 
@@ -175,14 +176,13 @@ LP  : '(' ;
 RP  : ')' ;
 LBRACE : '{' ;
 RBRACE : '}' ;
-
 NUMB : '-'? [0-9]+ ('.' [0-9]*)? ;
 
 ESCCHAR : '\\';
 
 ASSIGN : '<<';
 
-ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable with this ID this will be later interpreted as STR
+ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable/macro/c++function with this ID this will be later interpreted as STR
 
 AND : 'AND' ;
 OR  : 'OR' ;
@@ -192,6 +192,14 @@ STR : QUOTE ~[\r\n]*? QUOTE
     ;
 
 ANY_SINGLE_CHAR: '.';
+
+COMPARATOR: '==' | '!=' | '>' | '<' | '>=' | '<=';
+
+MUL : '*' ;
+DIV : '/' ;
+ADD : '+' ;
+SUB : '-' ;
+
 ```
 # 6. External Generators & Packages
 * ANTLR4 - Parser generator used to build the Lexer and Parser from the .g4 grammar.
