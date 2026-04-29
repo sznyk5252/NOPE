@@ -1,0 +1,5 @@
+# Prints indices from 0 to 9 separated by '\n'
+REP (i, 10) {
+    'Index: '
+    i ENDL
+}

@@ -1,0 +1,5 @@
+DEF prints_separator() {
+    '-----'
+    ENDL
+    'Result:' SPACE
+}

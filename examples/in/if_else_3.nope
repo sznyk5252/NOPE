@@ -1,0 +1,11 @@
+VAR(INT x)
+VAR(INT y)
+IF (x > 0) {
+    IF (y > 0) {
+        'First quadrant of the coordinate system'
+    } ELSE {
+        'Fourth quadrant of the coordinate system'
+    }
+} ELSE {
+    'Left side of the coordinate system'
+}

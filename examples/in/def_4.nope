@@ -1,0 +1,5 @@
+# Macro that calculates and returns the area of a rectangle
+# No stdout is specified here 
+DEF calculate_area(INT width, INT height) -> INT {
+    RETURN width * height
+}

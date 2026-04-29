@@ -1,0 +1,10 @@
+VAR(INT status)
+IF (status == 1) {
+    'Initialization'
+} ELSE IF (status == 2) {
+    'Processing'
+} ELSE IF (status == 3) {
+    'Finished'
+} ELSE {
+    'Unknown status'
+}

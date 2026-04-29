@@ -1,0 +1,6 @@
+# Loop with iterator 'i', upper bound 10, lower bound 0, and step 2
+REP (i, 10, 0, 2) {
+    'Value: '
+    i
+    ENDL
+}

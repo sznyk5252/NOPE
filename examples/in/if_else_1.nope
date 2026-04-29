@@ -1,0 +1,8 @@
+VAR(INT score)
+IF (score >= 50) {
+    'Passed'
+    ENDL
+} ELSE {
+    'Failed'
+    ENDL
+}

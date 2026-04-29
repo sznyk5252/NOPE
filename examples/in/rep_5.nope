@@ -1,0 +1,6 @@
+# Countdown loop: upper bound 0, lower bound 10, step -1
+REP (j, 0, 10, -1) {
+    'Countdown: '
+    j
+    ENDL
+}

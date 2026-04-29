@@ -1,0 +1,3 @@
+IF (MATCH('Critical error')) {
+    THROWS('The program threw an exception before terminating')
+}

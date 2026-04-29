@@ -1,0 +1,4 @@
+DEF Custom_Range(expected, margin) {
+    VAR(FLOAT result) SPACE
+    CHECK(result >= expected - margin AND result <= expected + margin)
+}

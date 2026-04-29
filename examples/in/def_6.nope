@@ -1,0 +1,8 @@
+# Macro that calculates a final price after applying a discount
+DEF apply_discount(FLOAT base_price, FLOAT discount) -> FLOAT {
+    'Applying discount...'
+    ENDL
+    # Returns the price reduced by the discount percentage
+    # Uses LP and RP from your expr rule: LP ws? expr ws? RP
+    RETURN base_price - (base_price * discount)
+}

@@ -1,0 +1,4 @@
+# Prints the same word with a single space 5 times
+REP (5) {
+    'Test' SPACE
+}

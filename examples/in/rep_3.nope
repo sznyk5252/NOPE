@@ -1,0 +1,5 @@
+# Loop from 1 to 5
+REP (idx, 1, 5) {
+    VAR(INT x) SPACE
+    CHECK(x == idx * 2)
+}

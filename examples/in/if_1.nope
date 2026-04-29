@@ -1,0 +1,5 @@
+VAR(INT x)
+IF (x > 10) {
+    CHECK(x != 100)
+    'The number is greater than 10, but it is not 100'
+}

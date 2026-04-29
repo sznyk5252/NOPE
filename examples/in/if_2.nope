@@ -1,0 +1,5 @@
+VAR(FLOAT temp)
+IF (NOT temp <= 0.0 AND temp < 100.0) {
+    'Water is in a liquid state'
+    SPACE
+}

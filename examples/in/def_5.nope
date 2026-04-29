@@ -1,0 +1,11 @@
+# Macro that extracts a sensor reading, validates it, and returns the variable
+DEF get_sensor_data() -> FLOAT {
+    'Sensor value: '
+    VAR(FLOAT reading)
+    
+    IF (reading < 0.0) {
+        THROWS('Sensor reading cannot be negative')
+    }
+    
+    RETURN reading
+}
