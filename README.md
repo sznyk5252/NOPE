@@ -83,10 +83,11 @@ if_stmt
     ;
 
 rep_loop
-    : 'REP' ws? LP ws? (expr ws? SEP ws?)? expr (ws? SEP ws? expr)? ws? RP ws? block // tu dodalem kolejny blok () jako krok i powinno dzialac jako np. REP(i, 10, 2)
+    : 'REP' ws? LP ws? (ID ws? SEP ws?)? expr (ws? SEP ws? expr)? ws? RP ws? 
+        block // tu dodalem kolejny blok () jako krok i powinno dzialac jako np. REP(i, 10, 2)
     ;
 
-def : 'DEF' ws? LP ws? (opt_type STR ws? (SEP ws? opt_type STR ws?)* )? RP ws?
+def : 'DEF' ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
                 block;
 
 any_expr : expr | logic_expr;
@@ -102,6 +103,7 @@ logic_expr: expr ws? ('==' | '!=' | '>' | '<' | '>=' | '<=') ws? expr // usunię
     | logic_expr ws? ('AND' | 'OR') ws? logic_expr
     | LP ws? logic_expr ws? RP
     | macro_call
+    | ID
     ;
 
 
@@ -122,18 +124,18 @@ match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? STR ws? RP ;
 
-var_macro    : 'VAR' ws? LP ws? opt_type STR ws? RP
+var_macro    : 'VAR' ws? LP ws? opt_type ID ws? RP
                 ( ws? ASSIGN ws? any_expr)?;
 
 check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
 header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;
 
-custom_macro : STR ws? LP ws? (expr ws? (SEP ws? expr ws?)* )? ws? RP ;
+custom_macro : ID ws? LP ws? (expr ws? (SEP ws? expr ws?)* )? ws? RP ;
 
 ignore_ws: 'IGNORE_WHITESPACE' LP code RP
     ;
 
-input : NUMB | expl_ws | STR ; 
+input : NUMB | expl_ws | ID | STR ; 
 comment : COM; 
 
 single_ws : SPACE | ENDL;
@@ -145,6 +147,7 @@ type
     : 'INT'
     | 'FLOAT'
     | 'STR'
+    | 'BOOL'
     | type '[' expr ']' 
     ;
 
@@ -175,6 +178,7 @@ ESCCHAR : '\\';
 
 ASSIGN : '<<';
 
+ID : [a-zA-Z_] [a-zA-Z0-9_]* ;
 
 AND : 'AND' ;
 OR  : 'OR' ;
