@@ -61,3 +61,10 @@ This expect that the program will print sth like:
 - `2 2 5 2 2`
 - `999 999 5 999 999`
 ([Learn more about variables](docs/variables.md))
+
+
+# More advanced:
+- ([Functions](docs/def.md))
+- ([If statements](docs/if_else.md))
+- ([Loops](docs/loops.md))
+
