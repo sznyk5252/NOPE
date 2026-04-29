@@ -251,5 +251,14 @@ class NOPEListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by NOPEParser#comparator.
+    def enterComparator(self, ctx:NOPEParser.ComparatorContext):
+        pass
+
+    # Exit a parse tree produced by NOPEParser#comparator.
+    def exitComparator(self, ctx:NOPEParser.ComparatorContext):
+        pass
+
+
 
 del NOPEParser
