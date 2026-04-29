@@ -27,7 +27,7 @@ block
     ;
 
 block_with_return
-    : LBRACE code RETURN expr RBRACE
+    : LBRACE code RETURN ws? expr ws? RBRACE
     ;
 
 if_stmt
@@ -57,12 +57,13 @@ rtype: RETURN_TYPING_ARROW ws? type ws?;
 
 any_expr : expr | logic_expr;
 
-expr: expr ws? (MUL | DIV) ws? expr
-    | expr ws? (ADD | SUB) ws? expr
-    | LP ws? expr ws? RP
+expr
+    : LP ws? expr ws? RP
     | macro_call
-    | input
+    | expr ws? (MUL | DIV) ws? expr
+    | expr ws? (ADD | SUB) ws? expr
     | ID
+    | input
     ;
 
 // logic_expr: NEGATION ws? logic_expr ws?
@@ -80,7 +81,7 @@ logic_expr
     | ID
     | NEGATION ws? logic_expr
     | expr ws? comparator ws? expr 
-    | logic_expr ws? comparator ws? logic_expr 
+    // | logic_expr ws? (comparator) ws? logic_expr 
     | logic_expr ws? AND ws? logic_expr
     | logic_expr ws? OR ws? logic_expr
     ;
@@ -102,7 +103,7 @@ macro_call
 range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; 
 match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
-throws_macro : 'THROWS' ws? LP ws? STR ws? RP ;
+throws_macro : 'THROWS' ws? LP ws? (STR|ID) ws? RP ;
 
 var_macro    : 'VAR' ws? LP ws? opt_type ID ws? RP
                 ( ws? ASSIGN ws? any_expr)?;
