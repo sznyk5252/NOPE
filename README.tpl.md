@@ -86,7 +86,7 @@
 
 | Construction | Rule Type | Description | Example |
 | :--- | :--- | :--- | :--- |
-| **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x << 10)` |
+| **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x) << 10` |
 | **`REP`** | `rep_loop` | Loop with iterator, limits, step, and code block | `REP(i, 10, 0, 2) { ... }` |
 | **`DEF`** | `def` | Custom macro/function definition | `DEF MY_FUNC(INT a) -> INT { ... }` |
 | **`CUSTOM`** | `custom_macro` | Calling a user-defined macro/function | `MY_FUNC(10, 'text')` |
@@ -111,11 +111,14 @@ The structure of the language is defined in the standard ANTLR4 notation (file: 
 * Graphviz - External package used for rendering the Abstract Syntax Tree (AST) visually.
 
 # 7. User Manual
-If you want to change the grammar, modify the NOPE.g4, and run
+If you want to change the grammar, modify the NOPE.g4 and push a commit - changes will be aplied by CI/CD,  or run
 ```
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 ```
-To see the result see ```uv run main.py -h```
+
+To see the result use ```uv run main.py -h```
+
+
 
 # 8. Learn NOPE
 Visit [quick start](docs/quick_start.md)

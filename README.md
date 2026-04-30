@@ -86,7 +86,7 @@
 
 | Construction | Rule Type | Description | Example |
 | :--- | :--- | :--- | :--- |
-| **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x << 10)` |
+| **`VAR`** | `var_macro` | Variable capture and optional assignment | `VAR(INT x) << 10` |
 | **`REP`** | `rep_loop` | Loop with iterator, limits, step, and code block | `REP(i, 10, 0, 2) { ... }` |
 | **`DEF`** | `def` | Custom macro/function definition | `DEF MY_FUNC(INT a) -> INT { ... }` |
 | **`CUSTOM`** | `custom_macro` | Calling a user-defined macro/function | `MY_FUNC(10, 'text')` |
