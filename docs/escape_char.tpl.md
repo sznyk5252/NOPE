@@ -1,10 +1,10 @@
-# Why to use it?
-You can use `\` to specify you want on stdout some of the special chars that are used in the grammar - like:
-- `#` - used to command
-- `'` - used to specify `STR`
-- `\` - escchar itself
+# When to use it?
+You can use `\` to escape special grammar characters so they can be printed to standard output (stdout). Examples include:
+- `#` - used for comments
+- `'` - used to specify strings (`STR`)
+- `\` - the escape character itself
 
-Or if you want to ignore any whitespace 
+It can also be used to ignore whitespace.
 ### For example
 
 ```
@@ -20,12 +20,11 @@ Or if you want to ignore any whitespace
 ```
 
 # When not to use it? 
-If you want to specify you want some of the keyword on the stdout
-Please NOT use:
+If you want to print a keyword to stdout, please **DO NOT** use:
 ```
 \RANGE
 ```
-Insteade use explicit `STR`:
+Instead, use an explicit `STR`:
 ```
 'RANGE'
 ```

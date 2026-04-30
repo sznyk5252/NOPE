@@ -17,7 +17,7 @@
 
 **3.2. Translator Type:** Compiler
 
-**3.3. Planned Output:** Compiler evaluates NOPE scripts into standard **C code**. This C script evaluates the tested program's output and returns `0` if the output passes the rules, or `1` if it fails.
+**3.3. Planned Output:** The compiler translates NOPE scripts into standard **C** code. This C program evaluates the tested program's output and returns `0` if the output passes the rules, or `1` if it fails.
 
 **3.4. Implementation Language:** Python 3.
 
@@ -111,14 +111,14 @@ The structure of the language is defined in the standard ANTLR4 notation (file: 
 * Graphviz - External package used for rendering the Abstract Syntax Tree (AST) visually.
 
 # 7. User Manual
-If you want to change the grammar, modify the NOPE.g4 and push a commit - changes will be aplied by CI/CD,  or run
+If you want to change the grammar, modify `NOPE.g4` and push a commit. Changes will be applied by CI/CD. Alternatively, you can run:
 ```
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 ```
 
-To see the result use ```uv run main.py -h```
+To see the results, use ```uv run main.py -h```
 
 
 
 # 8. Learn NOPE
-Visit [quick start](docs/quick_start.md)
+Visit the [quick start guide](docs/quick_start.md)

@@ -1,28 +1,27 @@
-# How to crate a variables?
+# How to create variables?
 ## Usage
 ```
 VAR( [TYPE] NAME ) [<< EXPR]
 ```
 ## Default usage
-by default typing 
+By default, typing:
 ```
 VAR(x)
 ```
-create and capture `x` from stdin as integer 
+creates and captures `x` from stdout as an integer.
 
 ## Typing
-To create variable of different type than `INT` use 
+To create a variable of a different type than `INT`, use:
 ```
-VAR( <TYPE> <NAME>)
+VAR( <TYPE> <NAME> )
 ```
-for example:
+For example:
 ```
 VAR(STR x)
 ```
 
-## Asign
-
-To create variable and asign value to it instead of reading from stdout use assignment like that:
+## Assignment
+To create a variable and assign a value to it instead of reading from stdout, use an assignment like this:
 ```
 VAR(x) << 10
 ```
@@ -31,26 +30,25 @@ VAR(x) << 10
 ```
 {% include "examples/in/var2.nope" %}
 ```
-this will expect:
+This will expect:
 ```
 1 1 5 1 1
 ```
 
-# How to use it as expected input
-
-Once you have created a viariable, let's say `x`, to specify that on output, just type
+# How to use it as expected output
+Once you have created a variable (let's say `x`), to specify it in the expected output, just type:
 ```
 x
 ```
-This way it will be expected that on the stdout to found whatever is in `x`.
+This way, the script expects to find whatever value is stored in `x` on stdout.
 
 # Arrays
 ```
 VAR( <TYPE>[EXPR] NAME )
 ```
-extra rules for arrayes:
-- Arrays are NOT read from stdout as Variables
-- You can't acces array all at once - this mean no assignment and no specifying expected output
+Extra rules for arrays:
+- Arrays are NOT implicitly read from stdout like regular variables.
+- You can't access an entire array all at once - this means no direct assignment and no specifying it directly as expected output.
 
-To pass this limitations use 
-([see more about variables](loops.md))
+To bypass these limitations, use loops. 
+[See more about loops](loops.md)
