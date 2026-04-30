@@ -231,6 +231,8 @@ type
     | type '[' expr ']' 
     ;
 
+comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
+
 // ==========================================
 // LEKSER
 // ==========================================
@@ -262,7 +264,6 @@ AND : 'AND' ;
 OR  : 'OR' ;
 QUOTE: '\'';
 
-comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 
 EQ: '==';
 NEQ: '!=';
