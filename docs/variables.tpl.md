@@ -52,3 +52,11 @@ Extra rules for arrays:
 
 To bypass these limitations, use loops. 
 [See more about loops](loops.md)
+
+## Examples:
+```
+{% include "examples/in/arr_1.nope" %}
+```
+```
+{% include "examples/in/arr_2.nope" %}
+```

@@ -43,17 +43,12 @@ def parse_arguments():
         help="Output file format (default: png).",
     )
 
-    # cli_parser.add_argument(
-    #     "--styled",
-    #     action="store_true",
-    #     help="Generate a styled graph (colors, rounded boxes) instead of the default white one.",
-    # )
     cli_parser.add_argument(
         "--no-view",
         action="store_true",
         help="Disable automatically opening the generated graph file.",
     )
-
+    # TODO: --ignore-ws
     return cli_parser.parse_args()
 
 

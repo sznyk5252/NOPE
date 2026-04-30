@@ -1,0 +1,12 @@
+# Read the size from the input
+VAR(INT size)
+# Create a FLOAT array with the size specified by the variable
+VAR(FLOAT[size] buffer)\
+# Loop to read elements separated by spaces
+REP (i, size) {
+    # Read the value into the current element
+    VAR(FLOAT current_val)
+    VAR(buffer[i]) << current_val
+    ENDL
+}
+# Now we have values in the buffer - do with it what you want

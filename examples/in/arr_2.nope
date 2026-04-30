@@ -1,0 +1,12 @@
+# Function accepting a 10x10 grid
+DEF check_grid(INT[10][10] grid) {
+    REP (i, 10) {
+        REP (j, 10) {
+            IF(i == j){
+                CHECK(grid[i] == grid[j])
+            }
+            SPACE
+        }
+        ENDL
+    }
+}
