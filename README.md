@@ -306,11 +306,14 @@ STR : QUOTE ~[\r\n]*? QUOTE
 * Graphviz - External package used for rendering the Abstract Syntax Tree (AST) visually.
 
 # 7. User Manual
-If you want to change the grammar, modify the NOPE.g4, and run
+If you want to change the grammar, modify the NOPE.g4 and push a commit - changes will be aplied by CI/CD,  or run
 ```
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 ```
-To see the result see ```uv run main.py -h```
+
+To see the result use ```uv run main.py -h```
+
+
 
 # 8. Learn NOPE
 Visit [quick start](docs/quick_start.md)
