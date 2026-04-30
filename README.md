@@ -171,22 +171,12 @@ expr
     | input
     ;
 
-// logic_expr: NEGATION ws? logic_expr ws?
-//     | expr ws? comparator ws? expr 
-//     | logic_expr ws? comparator ws? logic_expr 
-//     | logic_expr ws? (AND | OR) ws? logic_expr
-//     | LP ws? logic_expr ws? RP
-//     | macro_call 
-//     | ID
-//     ;
-
 logic_expr
     : LP ws? logic_expr ws? RP
     | macro_call 
     | ID
     | NEGATION ws? logic_expr
     | expr ws? comparator ws? expr 
-    // | logic_expr ws? (comparator) ws? logic_expr 
     | logic_expr ws? AND ws? logic_expr
     | logic_expr ws? OR ws? logic_expr
     ;
