@@ -53,3 +53,33 @@ Extra rules for arrays:
 
 To bypass these limitations, use loops. 
 [See more about loops](loops.md)
+
+## Examples:
+```
+# Read the size from the input
+VAR(INT size)
+# Create a FLOAT array with the size specified by the variable
+VAR(FLOAT[size] buffer)\
+# Loop to read elements separated by spaces
+REP (i, size) {
+    # Read the value into the current element
+    VAR(FLOAT current_val)
+    VAR(buffer[i]) << current_val
+    ENDL
+}
+# Now we have values in the buffer - do with it what you want
+```
+```
+# Function accepting a 10x10 grid
+DEF check_grid(INT[10][10] grid) {
+    REP (i, 10) {
+        REP (j, 10) {
+            IF(i == j){
+                CHECK(grid[i] == grid[j])
+            }
+            SPACE
+        }
+        ENDL
+    }
+}
+```
