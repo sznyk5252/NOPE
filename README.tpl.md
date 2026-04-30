@@ -105,6 +105,8 @@ The structure of the language is defined in the standard ANTLR4 notation (file: 
 ```antlr
 {% include "NOPE.g4" %}
 ```
+You can see results of the grammar in `graphs/`
+
 # 6. External Generators & Packages
 * ANTLR4 - Parser generator used to build the Lexer and Parser from the .g4 grammar.
 * antlr4-python3-runtime - The runtime library required to execute the generated ANTLR Python code.
