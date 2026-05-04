@@ -4,6 +4,8 @@ from antlr4 import *
 from antlr4.tree.Tree import ParseTree, TerminalNode
 from pathlib import Path
 import graphviz
+from src.NOPEParser import NOPEParser
+from src.NOPELexer import NOPELexer
 
 
 class GraphRenderer:

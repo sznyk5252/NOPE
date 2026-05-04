@@ -124,3 +124,7 @@ To see the results, use ```uv run main.py -h```
 
 # 8. Learn NOPE
 Visit the [quick start guide](docs/quick_start.md)
+
+# 9. TODO:
+- naprawić działanie tablic (przykłady arr_*) - można je zmienić żeby gramatyka była prostsza
+- Czy mamy napewno wszystko na najbliższy czwartek? 
