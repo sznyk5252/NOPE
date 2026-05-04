@@ -150,9 +150,9 @@ rep_loop
            ;
 
 def 
-    : 'DEF' SPACE+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
+    : 'DEF' ws+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws?
                 block
-    | 'DEF' SPACE+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws? rtype ws?
+    | 'DEF' ws+ ID ws? LP ws? (opt_type ID ws? (SEP ws? opt_type ID ws?)* )? RP ws? rtype ws?
                 block_with_return
         ;
 
@@ -167,14 +167,14 @@ expr
     | macro_call
     | expr ws? (MUL | DIV) ws? expr
     | expr ws? (ADD | SUB) ws? expr
-    | ID
+    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)?
     | input
     ;
 
 logic_expr
     : LP ws? logic_expr ws? RP
     | macro_call 
-    | ID
+    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)?
     | NEGATION ws? logic_expr
     | expr ws? comparator ws? expr 
     | logic_expr ws? AND ws? logic_expr
@@ -201,7 +201,10 @@ anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? (STR|ID) ws? RP ;
 
 var_macro    : 'VAR' ws? LP ws? opt_type ID ws? RP
+                ( ws? ASSIGN ws? any_expr)?
+                | 'VAR' ws? LP ws? ID ws? RIDXBR expr LBRACE RP
                 ( ws? ASSIGN ws? any_expr)?;
+
 
 check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
 header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;
@@ -228,7 +231,7 @@ type
     | 'FLOAT'
     | 'STR'
     | 'BOOL'
-    | type '[' expr ']' 
+    | type LIDXBR expr RIDXBR 
     ;
 
 comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
@@ -253,6 +256,9 @@ LP  : '(' ;
 RP  : ')' ;
 LBRACE : '{' ;
 RBRACE : '}' ;
+LIDXBR : '[';
+RIDXBR : ']';
+
 NUMB : '-'? [0-9]+ ('.' [0-9]*)? ;
 
 ESCCHAR : '\\';
@@ -287,7 +293,7 @@ RETURN_TYPING_ARROW: '->';
 ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable/macro/c++function with this ID this will be later interpreted as STR
 
 STR : QUOTE ~[\r\n]*? QUOTE      
-    | ~[ \t\r\n#(),{}*+/=<>!\-\\]+
+    |   ~[ \t\r\n#(),{}*+/=<>!\-[\]]+
     ;
 
 ```
@@ -310,3 +316,7 @@ To see the results, use ```uv run main.py -h```
 
 # 8. Learn NOPE
 Visit the [quick start guide](docs/quick_start.md)
+
+# 9. TODO:
+- naprawić działanie tablic (przykłady arr_*) - można je zmienić żeby gramatyka była prostsza
+- Czy mamy napewno wszystko na najbliższy czwartek? 
