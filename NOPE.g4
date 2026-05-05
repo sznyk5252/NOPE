@@ -62,14 +62,14 @@ expr
     | macro_call
     | expr ws? (MUL | DIV) ws? expr
     | expr ws? (ADD | SUB) ws? expr
-    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)?
+    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)*
     | input
     ;
 
 logic_expr
     : LP ws? logic_expr ws? RP
     | macro_call 
-    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)?
+    | ID ( ws? LIDXBR ws? expr ws? RIDXBR)*
     | NEGATION ws? logic_expr
     | expr ws? comparator ws? expr 
     | logic_expr ws? AND ws? logic_expr
@@ -95,11 +95,7 @@ match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
 throws_macro : 'THROWS' ws? LP ws? (STR|ID) ws? RP ;
 
-var_macro    : 'VAR' ws? LP ws? opt_type ID ws? RP
-                ( ws? ASSIGN ws? any_expr)?
-                | 'VAR' ws? LP ws? ID ws? RIDXBR expr LBRACE RP
-                ( ws? ASSIGN ws? any_expr)?;
-
+var_macro    : 'VAR' ws? LP ws? opt_type ID (ws? LIDXBR ws? expr ws? RIDXBR)* ws? RP (ws? ASSIGN ws? any_expr)? ;
 
 check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
 header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;

@@ -1,0 +1,26 @@
+# Function accepting a 10x10 grid
+DEF check_grid(INT[10][10] grid) {
+    REP (i, 10) {
+        REP (j, 10) {
+            IF(i == j){
+                CHECK(grid[i][j] == grid[j][i])
+            }
+            SPACE
+        }
+        ENDL
+    }
+}
+
+# Read the size from the input
+VAR(INT size)
+
+# Create a FLOAT array with the size specified by the variable
+VAR(FLOAT[size] buffer)
+
+# Loop to read elements separated by spaces
+REP (i, size) {
+    # Read the value into the current element
+    VAR(FLOAT current_val)
+    VAR(buffer[i]) << current_val
+    ENDL
+}
