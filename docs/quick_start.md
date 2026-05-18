@@ -20,12 +20,6 @@ MATCH('-?[0-9]+\.?[0-9]*')
 ```
 Expect that the program will print a string matching the regex.
 
-## Throws
-```
-THROWS(EXCEPTION)
-```
-Expect that the program will throw an exception whose name matches the argument.
-
 ## Comment
 ```
 # This is comment line 
