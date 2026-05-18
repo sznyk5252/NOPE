@@ -30,7 +30,7 @@ sync_readme:
         git add "$out_file"
       done
 
-    - uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+    - uv run antlr4 -Dlanguage=Python3 -visitor -o src NOPE.g4
     - git add src/*
 
     - rm graphs/*
