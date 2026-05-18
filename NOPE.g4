@@ -83,22 +83,18 @@ macro_call
     : range_macro
     | match_macro
     | anyof_macro
-    | throws_macro
     | var_macro
     | check_macro
-    | header_macro
     | custom_macro
     ;
 
 range_macro  : 'RANGE' ws? LP ws? expr ws? SEP ws? expr ws? RP ; 
 match_macro  : 'MATCH' ws? LP ws? expr ws? RP ;
 anyof_macro  : 'ANYOF' ws? LP ws? expr (ws? SEP ws? expr)* ws? RP ;
-throws_macro : 'THROWS' ws? LP ws? (STR|ID) ws? RP ;
 
 var_macro    : 'VAR' ws? LP ws? opt_type ID (ws? LIDXBR ws? expr ws? RIDXBR)* ws? RP (ws? ASSIGN ws? any_expr)? ;
 
 check_macro  : 'CHECK' ws? LP ws? logic_expr ws? RP ;
-header_macro : 'C_HEADER' ws? LP ws? STR ws? RP ;
 
 custom_macro : ID ws? LP ws? (expr ws? (SEP ws? expr ws?)* )? ws? RP ;
 

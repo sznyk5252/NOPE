@@ -18,12 +18,6 @@ Expect that the program will print a number between 0 and 10 ([see more on that]
 ```
 Expect that the program will print a string matching the regex.
 
-## Throws
-```
-{% include "examples/in/throws.nope" %}
-```
-Expect that the program will throw an exception whose name matches the argument.
-
 ## Comment
 ```
 {% include "examples/in/comment.nope" %}
