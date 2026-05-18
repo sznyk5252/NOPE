@@ -418,12 +418,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProgram" ):
-                return visitor.visitProgram(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -526,12 +520,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCode" ):
                 listener.exitCode(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCode" ):
-                return visitor.visitCode(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -673,12 +661,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitInput_in_escape" ):
                 listener.exitInput_in_escape(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInput_in_escape" ):
-                return visitor.visitInput_in_escape(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -789,12 +771,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitBlock" ):
                 listener.exitBlock(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBlock" ):
-                return visitor.visitBlock(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -860,12 +836,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBlock_with_return" ):
                 listener.exitBlock_with_return(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBlock_with_return" ):
-                return visitor.visitBlock_with_return(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -957,12 +927,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIf_stmt" ):
                 listener.exitIf_stmt(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIf_stmt" ):
-                return visitor.visitIf_stmt(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1181,12 +1145,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitRep_loop" ):
                 listener.exitRep_loop(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRep_loop" ):
-                return visitor.visitRep_loop(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1387,12 +1345,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDef" ):
                 listener.exitDef(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDef" ):
-                return visitor.visitDef(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1654,12 +1606,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitRtype" ):
                 listener.exitRtype(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRtype" ):
-                return visitor.visitRtype(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1724,12 +1670,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAny_expr" ):
                 listener.exitAny_expr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAny_expr" ):
-                return visitor.visitAny_expr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1836,12 +1776,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpr" ):
                 listener.exitExpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpr" ):
-                return visitor.visitExpr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2109,12 +2043,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitLogic_expr" ):
                 listener.exitLogic_expr(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLogic_expr" ):
-                return visitor.visitLogic_expr(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
     def logic_expr(self, _p:int=0):
@@ -2355,12 +2283,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitOpt_type" ):
                 listener.exitOpt_type(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitOpt_type" ):
-                return visitor.visitOpt_type(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -2431,12 +2353,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMacro_call" ):
                 listener.exitMacro_call(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMacro_call" ):
-                return visitor.visitMacro_call(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2531,12 +2447,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitRange_macro" ):
                 listener.exitRange_macro(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRange_macro" ):
-                return visitor.visitRange_macro(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2644,12 +2554,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitMatch_macro" ):
                 listener.exitMatch_macro(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMatch_macro" ):
-                return visitor.visitMatch_macro(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -2744,12 +2648,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAnyof_macro" ):
                 listener.exitAnyof_macro(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAnyof_macro" ):
-                return visitor.visitAnyof_macro(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2894,12 +2792,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVar_macro" ):
                 listener.exitVar_macro(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVar_macro" ):
-                return visitor.visitVar_macro(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3054,12 +2946,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitCheck_macro" ):
                 listener.exitCheck_macro(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCheck_macro" ):
-                return visitor.visitCheck_macro(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -3157,12 +3043,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCustom_macro" ):
                 listener.exitCustom_macro(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCustom_macro" ):
-                return visitor.visitCustom_macro(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3285,12 +3165,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitIgnore_ws" ):
                 listener.exitIgnore_ws(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIgnore_ws" ):
-                return visitor.visitIgnore_ws(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -3347,12 +3221,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInput" ):
                 listener.exitInput(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInput" ):
-                return visitor.visitInput(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3418,12 +3286,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitComment" ):
                 listener.exitComment(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitComment" ):
-                return visitor.visitComment(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -3467,12 +3329,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSingle_ws" ):
                 listener.exitSingle_ws(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSingle_ws" ):
-                return visitor.visitSingle_ws(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3529,12 +3385,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWs" ):
                 listener.exitWs(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWs" ):
-                return visitor.visitWs(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3598,12 +3448,6 @@ class NOPEParser ( Parser ):
             if hasattr( listener, "exitExpl_ws" ):
                 listener.exitExpl_ws(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpl_ws" ):
-                return visitor.visitExpl_ws(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -3661,12 +3505,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitType" ):
                 listener.exitType(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitType" ):
-                return visitor.visitType(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -3770,12 +3608,6 @@ class NOPEParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitComparator" ):
                 listener.exitComparator(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitComparator" ):
-                return visitor.visitComparator(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
