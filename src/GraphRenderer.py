@@ -46,17 +46,17 @@ class GraphRenderer:
 
     def _build_nodes(self, tree: ParseTree, parent_id: Optional[str] = None) -> str:
         token_name = None
-        
+
         if isinstance(tree, TerminalNode):
             symbol = tree.getSymbol()
-            
+
             if symbol.type == Token.EOF:
                 token_name = "EOF"
                 text = ""
             else:
                 token_name = self.parser.symbolicNames[symbol.type]
                 text = tree.getText()
-                
+
                 if not token_name or token_name == "<INVALID>":
                     token_name = "TOKEN"
 
@@ -74,44 +74,37 @@ class GraphRenderer:
         node_id = str(self._counter)
         self._counter += 1
 
-
         if isinstance(tree, TerminalNode):
             if token_name in ["SPACE", "ENDL"]:
                 self.graph.node(
-                    node_id, 
-                    safe_label, 
-                    shape="ellipse", 
-                    # style="filled", 
-                    color="lightgray", 
-                    fontcolor="gray"
+                    node_id,
+                    safe_label,
+                    shape="ellipse",
+                    # style="filled",
+                    color="lightgray",
+                    fontcolor="gray",
                 )
             else:
                 self.graph.node(
-                    node_id, 
-                    safe_label, 
-                    shape="box", 
-                    style="filled", 
+                    node_id,
+                    safe_label,
+                    shape="box",
+                    style="filled",
                     color="lightgreen",
-                    fontcolor="black"
+                    fontcolor="black",
                 )
         else:
-
             if label == "ws":
                 self.graph.node(
-                    node_id, 
-                    safe_label, 
-                    color="gainsboro",
-                    fontcolor="gray"
+                    node_id, safe_label, color="gainsboro", fontcolor="gray"
                 )
             else:
-                self.graph.node(
-                    node_id, 
-                    safe_label,
-                    fontcolor="black"
-                )
+                self.graph.node(node_id, safe_label, fontcolor="black")
 
         if parent_id is not None:
-            if (isinstance(tree, TerminalNode) and token_name in ["SPACE", "ENDL"]) or label == "ws":
+            if (
+                isinstance(tree, TerminalNode) and token_name in ["SPACE", "ENDL"]
+            ) or label == "ws":
                 self.graph.edge(parent_id, node_id, color="lightgray")
             else:
                 self.graph.edge(parent_id, node_id)

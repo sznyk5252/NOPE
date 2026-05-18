@@ -5,7 +5,7 @@ stages:
   image: alpine:latest
   before_script:
     # - apk add --no-cache curl ca-certificates git openssh bash graphviz ttf-freefont
-    - apk add --no-cache curl ca-certificates git openssh bash graphviz ttf-freefont openjdk17-jre    
+    - apk add --no-cache curl ca-certificates git openssh bash graphviz ttf-freefont openjdk17-jre ruff    
     - curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL="/usr/local/bin" sh
     - git config --global user.email "ci-bot@example.com"
     - git config --global user.name "README Sync Bot"
@@ -30,7 +30,8 @@ sync_readme:
         git add "$out_file"
       done
 
-    - uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+    - uv run antlr4 -Dlanguage=Python3 -visitor -o src NOPE.g4
+    - ruff format ./
     - git add src/*
 
     - rm graphs/*
