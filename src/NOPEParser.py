@@ -6518,19 +6518,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitProgram"):
                 listener.exitProgram(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitProgram"):
                 return visitor.visitProgram(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def program(self):
-
         localctx = NOPEParser.ProgramContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_program)
         try:
@@ -6621,19 +6615,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitCode"):
                 listener.exitCode(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitCode"):
                 return visitor.visitCode(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def code(self):
-
         localctx = NOPEParser.CodeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_code)
         self._la = 0  # Token type
@@ -6768,19 +6756,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitInput_in_escape"):
                 listener.exitInput_in_escape(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitInput_in_escape"):
                 return visitor.visitInput_in_escape(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def input_in_escape(self):
-
         localctx = NOPEParser.Input_in_escapeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_input_in_escape)
         try:
@@ -6886,19 +6868,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitBlock"):
                 listener.exitBlock(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitBlock"):
                 return visitor.visitBlock(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def block(self):
-
         localctx = NOPEParser.BlockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_block)
         try:
@@ -6958,19 +6934,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitBlock_with_return"):
                 listener.exitBlock_with_return(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitBlock_with_return"):
                 return visitor.visitBlock_with_return(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def block_with_return(self):
-
         localctx = NOPEParser.Block_with_returnContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_block_with_return)
         self._la = 0  # Token type
@@ -7052,19 +7022,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitIf_stmt"):
                 listener.exitIf_stmt(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitIf_stmt"):
                 return visitor.visitIf_stmt(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def if_stmt(self):
-
         localctx = NOPEParser.If_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_if_stmt)
         self._la = 0  # Token type
@@ -7260,19 +7224,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitRep_loop"):
                 listener.exitRep_loop(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitRep_loop"):
                 return visitor.visitRep_loop(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def rep_loop(self):
-
         localctx = NOPEParser.Rep_loopContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_rep_loop)
         self._la = 0  # Token type
@@ -7451,19 +7409,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitDef"):
                 listener.exitDef(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitDef"):
                 return visitor.visitDef(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def def_(self):
-
         localctx = NOPEParser.DefContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_def)
         self._la = 0  # Token type
@@ -7700,19 +7652,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitRtype"):
                 listener.exitRtype(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitRtype"):
                 return visitor.visitRtype(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def rtype(self):
-
         localctx = NOPEParser.RtypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_rtype)
         self._la = 0  # Token type
@@ -7770,19 +7716,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitAny_expr"):
                 listener.exitAny_expr(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitAny_expr"):
                 return visitor.visitAny_expr(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def any_expr(self):
-
         localctx = NOPEParser.Any_exprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_any_expr)
         try:
@@ -7880,11 +7820,6 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitExpr"):
                 listener.exitExpr(self)
 
-<<<<<<< Updated upstream
-
-
-    def expr(self, _p:int=0):
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitExpr"):
                 return visitor.visitExpr(self)
@@ -7892,7 +7827,6 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def expr(self, _p: int = 0):
->>>>>>> Stashed changes
         _parentctx = self._ctx
         _parentState = self.state
         localctx = NOPEParser.ExprContext(self, self._ctx, _parentState)
@@ -8155,11 +8089,6 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitLogic_expr"):
                 listener.exitLogic_expr(self)
 
-<<<<<<< Updated upstream
-
-
-    def logic_expr(self, _p:int=0):
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitLogic_expr"):
                 return visitor.visitLogic_expr(self)
@@ -8167,7 +8096,6 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def logic_expr(self, _p: int = 0):
->>>>>>> Stashed changes
         _parentctx = self._ctx
         _parentState = self.state
         localctx = NOPEParser.Logic_exprContext(self, self._ctx, _parentState)
@@ -8404,19 +8332,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitOpt_type"):
                 listener.exitOpt_type(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitOpt_type"):
                 return visitor.visitOpt_type(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def opt_type(self):
-
         localctx = NOPEParser.Opt_typeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_opt_type)
         self._la = 0  # Token type
@@ -8477,19 +8399,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitMacro_call"):
                 listener.exitMacro_call(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitMacro_call"):
                 return visitor.visitMacro_call(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def macro_call(self):
-
         localctx = NOPEParser.Macro_callContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_macro_call)
         try:
@@ -8578,19 +8494,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitRange_macro"):
                 listener.exitRange_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitRange_macro"):
                 return visitor.visitRange_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def range_macro(self):
-
         localctx = NOPEParser.Range_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_range_macro)
         self._la = 0  # Token type
@@ -8686,19 +8596,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitMatch_macro"):
                 listener.exitMatch_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitMatch_macro"):
                 return visitor.visitMatch_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def match_macro(self):
-
         localctx = NOPEParser.Match_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_match_macro)
         self._la = 0  # Token type
@@ -8785,19 +8689,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitAnyof_macro"):
                 listener.exitAnyof_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitAnyof_macro"):
                 return visitor.visitAnyof_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def anyof_macro(self):
-
         localctx = NOPEParser.Anyof_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_anyof_macro)
         self._la = 0  # Token type
@@ -8929,19 +8827,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitVar_macro"):
                 listener.exitVar_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitVar_macro"):
                 return visitor.visitVar_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def var_macro(self):
-
         localctx = NOPEParser.Var_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 34, self.RULE_var_macro)
         self._la = 0  # Token type
@@ -9080,19 +8972,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitCheck_macro"):
                 listener.exitCheck_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitCheck_macro"):
                 return visitor.visitCheck_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def check_macro(self):
-
         localctx = NOPEParser.Check_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_check_macro)
         self._la = 0  # Token type
@@ -9182,19 +9068,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitCustom_macro"):
                 listener.exitCustom_macro(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitCustom_macro"):
                 return visitor.visitCustom_macro(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def custom_macro(self):
-
         localctx = NOPEParser.Custom_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_custom_macro)
         self._la = 0  # Token type
@@ -9303,19 +9183,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitIgnore_ws"):
                 listener.exitIgnore_ws(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitIgnore_ws"):
                 return visitor.visitIgnore_ws(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def ignore_ws(self):
-
         localctx = NOPEParser.Ignore_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_ignore_ws)
         try:
@@ -9368,19 +9242,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitInput"):
                 listener.exitInput(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitInput"):
                 return visitor.visitInput(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def input_(self):
-
         localctx = NOPEParser.InputContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_input)
         try:
@@ -9441,19 +9309,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitComment"):
                 listener.exitComment(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitComment"):
                 return visitor.visitComment(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def comment(self):
-
         localctx = NOPEParser.CommentContext(self, self._ctx, self.state)
         self.enterRule(localctx, 44, self.RULE_comment)
         try:
@@ -9494,19 +9356,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitSingle_ws"):
                 listener.exitSingle_ws(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitSingle_ws"):
                 return visitor.visitSingle_ws(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def single_ws(self):
-
         localctx = NOPEParser.Single_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 46, self.RULE_single_ws)
         self._la = 0  # Token type
@@ -9559,19 +9415,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitWs"):
                 listener.exitWs(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitWs"):
                 return visitor.visitWs(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def ws(self):
-
         localctx = NOPEParser.WsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 48, self.RULE_ws)
         self._la = 0  # Token type
@@ -9630,19 +9480,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitExpl_ws"):
                 listener.exitExpl_ws(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitExpl_ws"):
                 return visitor.visitExpl_ws(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def expl_ws(self):
-
         localctx = NOPEParser.Expl_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 50, self.RULE_expl_ws)
         self._la = 0  # Token type
@@ -9695,11 +9539,6 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitType"):
                 listener.exitType(self)
 
-<<<<<<< Updated upstream
-
-
-    def type_(self, _p:int=0):
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitType"):
                 return visitor.visitType(self)
@@ -9707,7 +9546,6 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def type_(self, _p: int = 0):
->>>>>>> Stashed changes
         _parentctx = self._ctx
         _parentState = self.state
         localctx = NOPEParser.TypeContext(self, self._ctx, _parentState)
@@ -9812,19 +9650,13 @@ class NOPEParser(Parser):
             if hasattr(listener, "exitComparator"):
                 listener.exitComparator(self)
 
-<<<<<<< Updated upstream
-
-
-=======
         def accept(self, visitor: ParseTreeVisitor):
             if hasattr(visitor, "visitComparator"):
                 return visitor.visitComparator(self)
             else:
                 return visitor.visitChildren(self)
->>>>>>> Stashed changes
 
     def comparator(self):
-
         localctx = NOPEParser.ComparatorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 54, self.RULE_comparator)
         self._la = 0  # Token type

@@ -296,7 +296,7 @@ You can see results of the grammar in `graphs/`
 * antlr4-python3-runtime - The runtime library required to execute the generated ANTLR Python code.
 * Graphviz - External package used for rendering the Abstract Syntax Tree (AST) visually.
 
-# 7. User Manual
+# 7. Dev Man
 If you want to change the grammar, modify `NOPE.g4` and push a commit. Changes will be applied by CI/CD. Alternatively, you can run:
 ```
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
@@ -304,6 +304,7 @@ uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 
 To see the results, use ```uv run main.py -h```
 
+If you want to change the compiler change file `src/NopeCompiler.py`, Do **NOT** change `src/NOPEVisitor.py`
 
 
 # 8. Learn NOPE
