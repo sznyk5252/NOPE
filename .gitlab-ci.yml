@@ -57,4 +57,4 @@ sync_readme:
         - "**/*.yml"
         - "**/*.nope"
         - "graphs/*"
-        - "src/*"
+        - "src/GraphRenderer.py
