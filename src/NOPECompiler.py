@@ -199,7 +199,9 @@ class NopeCompiler(NOPEVisitor):
         condition = str(self.visit(ctx.logic_expr()))
 
         self.output_buff.append(f"if (!({condition})) {{\n")
-        self.output_buff.append(f'    printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n')
+        self.output_buff.append(
+            f'    printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n'
+        )
         self.output_buff.append("    return 1;\n")
         self.output_buff.append("}\n")
 
@@ -229,7 +231,7 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#comment.
     def visitComment(self, ctx: NOPEParser.CommentContext):
-        clean_comment = ctx.getText().lstrip('#')
+        clean_comment = ctx.getText().lstrip("#")
         self.output_buff.append(f"//{clean_comment}\n")
         return None
 
@@ -247,9 +249,9 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#expl_ws.
     def visitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
-        if ctx.getText() == 'SPACE':
+        if ctx.getText() == "SPACE":
             self.output_buff.append(" ")
-        elif ctx.getText() == 'ENDL':
+        elif ctx.getText() == "ENDL":
             self.output_buff.append("\n")
         return None
 
