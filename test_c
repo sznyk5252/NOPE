@@ -1,0 +1,12 @@
+REP(i, 10, 0, 1) {
+
+    IF (i < 5 OR i == 7) {
+
+        CHECK(i != 3 AND i != 4)
+        SPACE
+
+    }
+    ELSE {
+        ENDL
+    }
+}

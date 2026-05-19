@@ -4,6 +4,8 @@ from argparse import ArgumentParser
 from antlr4 import *
 from antlr4.tree.Tree import TerminalNode
 import graphviz
+
+from src.NOPECompiler import NopeCompiler
 # from src.NOPEParser import NOPEParser
 # from src.NOPELexer import NOPELexer
 
@@ -112,6 +114,29 @@ def process_code(
     print(
         f"Generated {output_name}.{args.format} successfully in: {output_dir.resolve()}\n"
     )
+
+    # Szybkie sprawdzenie czy dobrze generuje plik .c
+    
+    print("Translating NOPE to C...")
+    compiler = NopeCompiler()
+    compiler.output_buff = []
+
+    compiler.visit(tree)
+
+    c_output_filename = f"{output_name}.c"
+
+    with open(c_output_filename, "w", encoding="utf-8") as f:
+        f.write("#include <stdio.h>\n")
+        f.write("#include <stdlib.h>\n\n")
+        f.write("int main() {\n")
+
+        for line in compiler.output_buff:
+            f.write(line)
+
+        f.write("    return 0;\n")
+        f.write("}\n")
+
+    print(f"Generated C code successfully: {c_output_filename}\n")
 
 
 def main():
