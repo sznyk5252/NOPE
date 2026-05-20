@@ -1,237 +1,264 @@
 # Generated from NOPE.g4 by ANTLR 4.13.2
 from antlr4 import *
-
 if "." in __name__:
     from .NOPEParser import NOPEParser
 else:
     from NOPEParser import NOPEParser
 
-
 # This class defines a complete listener for a parse tree produced by NOPEParser.
 class NOPEListener(ParseTreeListener):
+
     # Enter a parse tree produced by NOPEParser#program.
-    def enterProgram(self, ctx: NOPEParser.ProgramContext):
+    def enterProgram(self, ctx:NOPEParser.ProgramContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#program.
-    def exitProgram(self, ctx: NOPEParser.ProgramContext):
+    def exitProgram(self, ctx:NOPEParser.ProgramContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#code.
-    def enterCode(self, ctx: NOPEParser.CodeContext):
+    def enterCode(self, ctx:NOPEParser.CodeContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#code.
-    def exitCode(self, ctx: NOPEParser.CodeContext):
+    def exitCode(self, ctx:NOPEParser.CodeContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#input_in_escape.
-    def enterInput_in_escape(self, ctx: NOPEParser.Input_in_escapeContext):
+    def enterInput_in_escape(self, ctx:NOPEParser.Input_in_escapeContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#input_in_escape.
-    def exitInput_in_escape(self, ctx: NOPEParser.Input_in_escapeContext):
+    def exitInput_in_escape(self, ctx:NOPEParser.Input_in_escapeContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#block.
-    def enterBlock(self, ctx: NOPEParser.BlockContext):
+    def enterBlock(self, ctx:NOPEParser.BlockContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#block.
-    def exitBlock(self, ctx: NOPEParser.BlockContext):
+    def exitBlock(self, ctx:NOPEParser.BlockContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#block_with_return.
-    def enterBlock_with_return(self, ctx: NOPEParser.Block_with_returnContext):
+    def enterBlock_with_return(self, ctx:NOPEParser.Block_with_returnContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#block_with_return.
-    def exitBlock_with_return(self, ctx: NOPEParser.Block_with_returnContext):
+    def exitBlock_with_return(self, ctx:NOPEParser.Block_with_returnContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#if_stmt.
-    def enterIf_stmt(self, ctx: NOPEParser.If_stmtContext):
+    def enterIf_stmt(self, ctx:NOPEParser.If_stmtContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#if_stmt.
-    def exitIf_stmt(self, ctx: NOPEParser.If_stmtContext):
+    def exitIf_stmt(self, ctx:NOPEParser.If_stmtContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#rep_loop.
-    def enterRep_loop(self, ctx: NOPEParser.Rep_loopContext):
+    def enterRep_loop(self, ctx:NOPEParser.Rep_loopContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#rep_loop.
-    def exitRep_loop(self, ctx: NOPEParser.Rep_loopContext):
+    def exitRep_loop(self, ctx:NOPEParser.Rep_loopContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#def.
-    def enterDef(self, ctx: NOPEParser.DefContext):
+    def enterDef(self, ctx:NOPEParser.DefContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#def.
-    def exitDef(self, ctx: NOPEParser.DefContext):
+    def exitDef(self, ctx:NOPEParser.DefContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#rtype.
-    def enterRtype(self, ctx: NOPEParser.RtypeContext):
+    def enterRtype(self, ctx:NOPEParser.RtypeContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#rtype.
-    def exitRtype(self, ctx: NOPEParser.RtypeContext):
+    def exitRtype(self, ctx:NOPEParser.RtypeContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#any_expr.
-    def enterAny_expr(self, ctx: NOPEParser.Any_exprContext):
+    def enterAny_expr(self, ctx:NOPEParser.Any_exprContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#any_expr.
-    def exitAny_expr(self, ctx: NOPEParser.Any_exprContext):
+    def exitAny_expr(self, ctx:NOPEParser.Any_exprContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#expr.
-    def enterExpr(self, ctx: NOPEParser.ExprContext):
+    def enterExpr(self, ctx:NOPEParser.ExprContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#expr.
-    def exitExpr(self, ctx: NOPEParser.ExprContext):
+    def exitExpr(self, ctx:NOPEParser.ExprContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#logic_expr.
-    def enterLogic_expr(self, ctx: NOPEParser.Logic_exprContext):
+    def enterLogic_expr(self, ctx:NOPEParser.Logic_exprContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#logic_expr.
-    def exitLogic_expr(self, ctx: NOPEParser.Logic_exprContext):
+    def exitLogic_expr(self, ctx:NOPEParser.Logic_exprContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#opt_type.
-    def enterOpt_type(self, ctx: NOPEParser.Opt_typeContext):
+    def enterOpt_type(self, ctx:NOPEParser.Opt_typeContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#opt_type.
-    def exitOpt_type(self, ctx: NOPEParser.Opt_typeContext):
+    def exitOpt_type(self, ctx:NOPEParser.Opt_typeContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#macro_call.
-    def enterMacro_call(self, ctx: NOPEParser.Macro_callContext):
+    def enterMacro_call(self, ctx:NOPEParser.Macro_callContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#macro_call.
-    def exitMacro_call(self, ctx: NOPEParser.Macro_callContext):
+    def exitMacro_call(self, ctx:NOPEParser.Macro_callContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#range_macro.
-    def enterRange_macro(self, ctx: NOPEParser.Range_macroContext):
+    def enterRange_macro(self, ctx:NOPEParser.Range_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#range_macro.
-    def exitRange_macro(self, ctx: NOPEParser.Range_macroContext):
+    def exitRange_macro(self, ctx:NOPEParser.Range_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#match_macro.
-    def enterMatch_macro(self, ctx: NOPEParser.Match_macroContext):
+    def enterMatch_macro(self, ctx:NOPEParser.Match_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#match_macro.
-    def exitMatch_macro(self, ctx: NOPEParser.Match_macroContext):
+    def exitMatch_macro(self, ctx:NOPEParser.Match_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#anyof_macro.
-    def enterAnyof_macro(self, ctx: NOPEParser.Anyof_macroContext):
+    def enterAnyof_macro(self, ctx:NOPEParser.Anyof_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#anyof_macro.
-    def exitAnyof_macro(self, ctx: NOPEParser.Anyof_macroContext):
+    def exitAnyof_macro(self, ctx:NOPEParser.Anyof_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#var_macro.
-    def enterVar_macro(self, ctx: NOPEParser.Var_macroContext):
+    def enterVar_macro(self, ctx:NOPEParser.Var_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#var_macro.
-    def exitVar_macro(self, ctx: NOPEParser.Var_macroContext):
+    def exitVar_macro(self, ctx:NOPEParser.Var_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#check_macro.
-    def enterCheck_macro(self, ctx: NOPEParser.Check_macroContext):
+    def enterCheck_macro(self, ctx:NOPEParser.Check_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#check_macro.
-    def exitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
+    def exitCheck_macro(self, ctx:NOPEParser.Check_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#custom_macro.
-    def enterCustom_macro(self, ctx: NOPEParser.Custom_macroContext):
+    def enterCustom_macro(self, ctx:NOPEParser.Custom_macroContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#custom_macro.
-    def exitCustom_macro(self, ctx: NOPEParser.Custom_macroContext):
+    def exitCustom_macro(self, ctx:NOPEParser.Custom_macroContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#ignore_ws.
-    def enterIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
+    def enterIgnore_ws(self, ctx:NOPEParser.Ignore_wsContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#ignore_ws.
-    def exitIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
+    def exitIgnore_ws(self, ctx:NOPEParser.Ignore_wsContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#input.
-    def enterInput(self, ctx: NOPEParser.InputContext):
+    def enterInput(self, ctx:NOPEParser.InputContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#input.
-    def exitInput(self, ctx: NOPEParser.InputContext):
+    def exitInput(self, ctx:NOPEParser.InputContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#comment.
-    def enterComment(self, ctx: NOPEParser.CommentContext):
+    def enterComment(self, ctx:NOPEParser.CommentContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#comment.
-    def exitComment(self, ctx: NOPEParser.CommentContext):
+    def exitComment(self, ctx:NOPEParser.CommentContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#single_ws.
-    def enterSingle_ws(self, ctx: NOPEParser.Single_wsContext):
+    def enterSingle_ws(self, ctx:NOPEParser.Single_wsContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#single_ws.
-    def exitSingle_ws(self, ctx: NOPEParser.Single_wsContext):
+    def exitSingle_ws(self, ctx:NOPEParser.Single_wsContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#ws.
-    def enterWs(self, ctx: NOPEParser.WsContext):
+    def enterWs(self, ctx:NOPEParser.WsContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#ws.
-    def exitWs(self, ctx: NOPEParser.WsContext):
+    def exitWs(self, ctx:NOPEParser.WsContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#expl_ws.
-    def enterExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
+    def enterExpl_ws(self, ctx:NOPEParser.Expl_wsContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#expl_ws.
-    def exitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
+    def exitExpl_ws(self, ctx:NOPEParser.Expl_wsContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#type.
-    def enterType(self, ctx: NOPEParser.TypeContext):
+    def enterType(self, ctx:NOPEParser.TypeContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#type.
-    def exitType(self, ctx: NOPEParser.TypeContext):
+    def exitType(self, ctx:NOPEParser.TypeContext):
         pass
 
+
     # Enter a parse tree produced by NOPEParser#comparator.
-    def enterComparator(self, ctx: NOPEParser.ComparatorContext):
+    def enterComparator(self, ctx:NOPEParser.ComparatorContext):
         pass
 
     # Exit a parse tree produced by NOPEParser#comparator.
-    def exitComparator(self, ctx: NOPEParser.ComparatorContext):
+    def exitComparator(self, ctx:NOPEParser.ComparatorContext):
         pass
+
 
 
 del NOPEParser

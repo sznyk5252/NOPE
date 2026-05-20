@@ -1,11 +1,49 @@
 #include "nope_runtime.h"
 
 int main() {
-	    if (score >= 50) 	{
-	
+	nope_init();
+	int score;
+
+	// TODO: Wczytaj zmienna INT  ze stdout
+
+	if (score >= 50) 
+	{
+
+	    nope_expect_char('P');
+
+	    nope_expect_char('a');
+
+	    nope_expect_char('s');
+
+	    nope_expect_char('s');
+
+	    nope_expect_char('e');
+
+	    nope_expect_char('d');
+
+	    nope_expect_char('\n');
+
 	}
-	    else 	{
-	
+
+	    else 
+	{
+
+	    nope_expect_char('F');
+
+	    nope_expect_char('a');
+
+	    nope_expect_char('i');
+
+	    nope_expect_char('l');
+
+	    nope_expect_char('e');
+
+	    nope_expect_char('d');
+
+	    nope_expect_char('\n');
+
 	}
+
+	nope_cleanup();
 	return 0;
 }

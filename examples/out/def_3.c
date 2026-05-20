@@ -1,10 +1,22 @@
 #include "nope_runtime.h"
 
 int main() {
+	nope_init();
 	{
-	    if (value < min_val || value > max_val) 	{
+
+	int value;
+
+	// TODO: Wczytaj zmienna INT  ze stdout
+
+	if (value < min_val || value > max_val) 
+	{
+
 	    THROWS(error_msg);
+
 	}
+
 	}
+
+	nope_cleanup();
 	return 0;
 }

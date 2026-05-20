@@ -1,0 +1,227 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\lDEF validate_bounds(INT min_val, INT max_val, STR error_msg) {\l    VAR(INT value)\l    IF (value < min_val OR value > max_val) {\l        THROWS(error_msg)\l    }\l}\l" labeljust=l labelloc=t
+	0 [label=program fontcolor=black]
+	1 [label=code fontcolor=black]
+	0 -> 1
+	2 [label=def fontcolor=black]
+	1 -> 2
+	3 [label="TOKEN\n'DEF'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 3
+	4 [label=ws color=gainsboro fontcolor=gray]
+	2 -> 4 [color=lightgray]
+	5 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	4 -> 5 [color=lightgray]
+	6 [label="ID\n'validate_bounds'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 6
+	7 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 7
+	8 [label=opt_type fontcolor=black]
+	2 -> 8
+	9 [label=type fontcolor=black]
+	8 -> 9
+	10 [label="TOKEN\n'INT'" color=lightgreen fontcolor=black shape=box style=filled]
+	9 -> 10
+	11 [label=ws color=gainsboro fontcolor=gray]
+	8 -> 11 [color=lightgray]
+	12 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	11 -> 12 [color=lightgray]
+	13 [label="ID\n'min_val'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 13
+	14 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 14
+	15 [label=ws color=gainsboro fontcolor=gray]
+	2 -> 15 [color=lightgray]
+	16 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	15 -> 16 [color=lightgray]
+	17 [label=opt_type fontcolor=black]
+	2 -> 17
+	18 [label=type fontcolor=black]
+	17 -> 18
+	19 [label="TOKEN\n'INT'" color=lightgreen fontcolor=black shape=box style=filled]
+	18 -> 19
+	20 [label=ws color=gainsboro fontcolor=gray]
+	17 -> 20 [color=lightgray]
+	21 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	20 -> 21 [color=lightgray]
+	22 [label="ID\n'max_val'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 22
+	23 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 23
+	24 [label=ws color=gainsboro fontcolor=gray]
+	2 -> 24 [color=lightgray]
+	25 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	24 -> 25 [color=lightgray]
+	26 [label=opt_type fontcolor=black]
+	2 -> 26
+	27 [label=type fontcolor=black]
+	26 -> 27
+	28 [label="TOKEN\n'STR'" color=lightgreen fontcolor=black shape=box style=filled]
+	27 -> 28
+	29 [label=ws color=gainsboro fontcolor=gray]
+	26 -> 29 [color=lightgray]
+	30 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	29 -> 30 [color=lightgray]
+	31 [label="ID\n'error_msg'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 31
+	32 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 32
+	33 [label=ws color=gainsboro fontcolor=gray]
+	2 -> 33 [color=lightgray]
+	34 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	33 -> 34 [color=lightgray]
+	35 [label=block fontcolor=black]
+	2 -> 35
+	36 [label="LBRACE\n'{'" color=lightgreen fontcolor=black shape=box style=filled]
+	35 -> 36
+	37 [label=code fontcolor=black]
+	35 -> 37
+	38 [label=ws color=gainsboro fontcolor=gray]
+	37 -> 38 [color=lightgray]
+	39 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	38 -> 39 [color=lightgray]
+	40 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	38 -> 40 [color=lightgray]
+	41 [label=macro_call fontcolor=black]
+	37 -> 41
+	42 [label=var_macro fontcolor=black]
+	41 -> 42
+	43 [label="TOKEN\n'VAR'" color=lightgreen fontcolor=black shape=box style=filled]
+	42 -> 43
+	44 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	42 -> 44
+	45 [label=opt_type fontcolor=black]
+	42 -> 45
+	46 [label=type fontcolor=black]
+	45 -> 46
+	47 [label="TOKEN\n'INT'" color=lightgreen fontcolor=black shape=box style=filled]
+	46 -> 47
+	48 [label=ws color=gainsboro fontcolor=gray]
+	45 -> 48 [color=lightgray]
+	49 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	48 -> 49 [color=lightgray]
+	50 [label="ID\n'value'" color=lightgreen fontcolor=black shape=box style=filled]
+	42 -> 50
+	51 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	42 -> 51
+	52 [label=ws color=gainsboro fontcolor=gray]
+	37 -> 52 [color=lightgray]
+	53 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	52 -> 53 [color=lightgray]
+	54 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	52 -> 54 [color=lightgray]
+	55 [label=if_stmt fontcolor=black]
+	37 -> 55
+	56 [label="TOKEN\n'IF'" color=lightgreen fontcolor=black shape=box style=filled]
+	55 -> 56
+	57 [label=ws color=gainsboro fontcolor=gray]
+	55 -> 57 [color=lightgray]
+	58 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	57 -> 58 [color=lightgray]
+	59 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	55 -> 59
+	60 [label=logic_expr fontcolor=black]
+	55 -> 60
+	61 [label=logic_expr fontcolor=black]
+	60 -> 61
+	62 [label=expr fontcolor=black]
+	61 -> 62
+	63 [label="ID\n'value'" color=lightgreen fontcolor=black shape=box style=filled]
+	62 -> 63
+	64 [label=ws color=gainsboro fontcolor=gray]
+	61 -> 64 [color=lightgray]
+	65 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	64 -> 65 [color=lightgray]
+	66 [label=comparator fontcolor=black]
+	61 -> 66
+	67 [label="LS\n'<'" color=lightgreen fontcolor=black shape=box style=filled]
+	66 -> 67
+	68 [label=ws color=gainsboro fontcolor=gray]
+	61 -> 68 [color=lightgray]
+	69 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	68 -> 69 [color=lightgray]
+	70 [label=expr fontcolor=black]
+	61 -> 70
+	71 [label="ID\n'min_val'" color=lightgreen fontcolor=black shape=box style=filled]
+	70 -> 71
+	72 [label=ws color=gainsboro fontcolor=gray]
+	60 -> 72 [color=lightgray]
+	73 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	72 -> 73 [color=lightgray]
+	74 [label="OR\n'OR'" color=lightgreen fontcolor=black shape=box style=filled]
+	60 -> 74
+	75 [label=ws color=gainsboro fontcolor=gray]
+	60 -> 75 [color=lightgray]
+	76 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	75 -> 76 [color=lightgray]
+	77 [label=logic_expr fontcolor=black]
+	60 -> 77
+	78 [label=expr fontcolor=black]
+	77 -> 78
+	79 [label="ID\n'value'" color=lightgreen fontcolor=black shape=box style=filled]
+	78 -> 79
+	80 [label=ws color=gainsboro fontcolor=gray]
+	77 -> 80 [color=lightgray]
+	81 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	80 -> 81 [color=lightgray]
+	82 [label=comparator fontcolor=black]
+	77 -> 82
+	83 [label="GR\n'>'" color=lightgreen fontcolor=black shape=box style=filled]
+	82 -> 83
+	84 [label=ws color=gainsboro fontcolor=gray]
+	77 -> 84 [color=lightgray]
+	85 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	84 -> 85 [color=lightgray]
+	86 [label=expr fontcolor=black]
+	77 -> 86
+	87 [label="ID\n'max_val'" color=lightgreen fontcolor=black shape=box style=filled]
+	86 -> 87
+	88 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	55 -> 88
+	89 [label=ws color=gainsboro fontcolor=gray]
+	55 -> 89 [color=lightgray]
+	90 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	89 -> 90 [color=lightgray]
+	91 [label=block fontcolor=black]
+	55 -> 91
+	92 [label="LBRACE\n'{'" color=lightgreen fontcolor=black shape=box style=filled]
+	91 -> 92
+	93 [label=code fontcolor=black]
+	91 -> 93
+	94 [label=ws color=gainsboro fontcolor=gray]
+	93 -> 94 [color=lightgray]
+	95 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	94 -> 95 [color=lightgray]
+	96 [label="SPACE\n'        '" color=lightgray fontcolor=gray shape=ellipse]
+	94 -> 96 [color=lightgray]
+	97 [label=macro_call fontcolor=black]
+	93 -> 97
+	98 [label=custom_macro fontcolor=black]
+	97 -> 98
+	99 [label="ID\n'THROWS'" color=lightgreen fontcolor=black shape=box style=filled]
+	98 -> 99
+	100 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	98 -> 100
+	101 [label=expr fontcolor=black]
+	98 -> 101
+	102 [label="ID\n'error_msg'" color=lightgreen fontcolor=black shape=box style=filled]
+	101 -> 102
+	103 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	98 -> 103
+	104 [label=ws color=gainsboro fontcolor=gray]
+	93 -> 104 [color=lightgray]
+	105 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	104 -> 105 [color=lightgray]
+	106 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	104 -> 106 [color=lightgray]
+	107 [label="RBRACE\n'}'" color=lightgreen fontcolor=black shape=box style=filled]
+	91 -> 107
+	108 [label=ws color=gainsboro fontcolor=gray]
+	37 -> 108 [color=lightgray]
+	109 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	108 -> 109 [color=lightgray]
+	110 [label="RBRACE\n'}'" color=lightgreen fontcolor=black shape=box style=filled]
+	35 -> 110
+	111 [label=EOF color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 111
+}

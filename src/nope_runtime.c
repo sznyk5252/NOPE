@@ -1,5 +1,9 @@
 #include "nope_runtime.h"
 
+char *nope_input_buffer = NULL;
+char *nope_cursor = NULL;
+bool nope_ignore_ws_active = false;
+
 void nope_anyof(const char* val, const char* of[], int of_size){
     for (int i = 0; i < of_size; i++) {
         if (strcmp(val, of[i]) == 0) {
@@ -98,4 +102,145 @@ void nope_free_split(char** tokens, int size) {
         free(tokens[i]); 
     }
     free(tokens); 
+}
+
+static void trim_trailing_spaces(char *str) {
+    if (!str) return;
+    
+    char *read_ptr = str;
+    char *write_ptr = str;
+    char *last_non_space = NULL;
+
+    while (*read_ptr != '\0') {
+        if (*read_ptr == '\n') {
+            if (last_non_space != NULL) {
+                write_ptr = last_non_space + 1;
+            }
+            *write_ptr++ = '\n';
+            last_non_space = NULL; 
+        } else {
+            *write_ptr = *read_ptr;
+            if (*read_ptr != ' ' && *read_ptr != '\t') {
+                last_non_space = write_ptr;
+            }
+            write_ptr++;
+        }
+        read_ptr++;
+    }
+    
+    if (last_non_space != NULL) {
+        write_ptr = last_non_space + 1;
+    }
+    *write_ptr = '\0';
+}
+
+void nope_init(void) {
+    size_t capacity = 4096;
+    size_t size = 0;
+    
+    nope_input_buffer = malloc(capacity);
+    if (!nope_input_buffer) {
+        fprintf(stderr, "[NOPE SYSTEM ERROR] Memory allocation failed!\n");
+        exit(1);
+    }
+
+    int ch;
+    // Odczyt z potoku (stdin)
+    while ((ch = getchar()) != EOF) {
+        if (size + 1 >= capacity) {
+            capacity *= 2;
+            char *new_buffer = realloc(nope_input_buffer, capacity);
+            if (!new_buffer) {
+                free(nope_input_buffer);
+                fprintf(stderr, "[NOPE SYSTEM ERROR] Memory reallocation failed!\n");
+                exit(1);
+            }
+            nope_input_buffer = new_buffer;
+        }
+        nope_input_buffer[size++] = (char)ch;
+    }
+    nope_input_buffer[size] = '\0';
+
+    // Usunięcie tzw. trailing whitespaces
+    trim_trailing_spaces(nope_input_buffer);
+
+    // Inicjalizacja kursora
+    nope_cursor = nope_input_buffer;
+}
+
+void nope_cleanup(void) {
+    if (nope_input_buffer) {
+        free(nope_input_buffer);
+        nope_input_buffer = NULL;
+        nope_cursor = NULL;
+    }
+}
+
+void nope_fail(const char *reason, const char *expected, const char *got) {
+    fprintf(stderr, "[NOPE] %s\n", reason);
+    if (expected) {
+        fprintf(stderr, "   Expected: '%s'\n", expected);
+    }
+    if (got) {
+        fprintf(stderr, "   Got:      '%s'\n", got);
+    }
+    
+    // Zwalniamy zasoby przed wyjściem
+    nope_cleanup();
+    exit(1); // Wymóg: wyjście 1 oznacza błąd dla judge'a
+}
+
+void nope_expect_char(char expected) {
+    if (nope_ignore_ws_active) {
+        nope_skip_whitespace();
+    }
+
+    if (*nope_cursor == expected) {
+        nope_cursor++; // Pasuje, przesuwamy kursor
+    } else {
+        char got_str[2] = { *nope_cursor, '\0' };
+        char exp_str[2] = { expected, '\0' };
+        
+        if (*nope_cursor == '\0') {
+            nope_fail("Unexpected end of input (EOF)", exp_str, "EOF");
+        } else {
+            nope_fail("Exact match failed", exp_str, got_str);
+        }
+    }
+}
+
+void nope_skip_whitespace(void) {
+    while (*nope_cursor == ' ' || *nope_cursor == '\t' || *nope_cursor == '\n' || *nope_cursor == '\r') {
+        nope_cursor++;
+    }
+}
+
+char* nope_read_str(void) {
+    if (nope_ignore_ws_active) {
+        nope_skip_whitespace();
+    }
+
+    // Szukamy końca stringa (pierwszy biały znak lub null)
+    char *end_ptr = nope_cursor;
+    while (*end_ptr != '\0' && *end_ptr != ' ' && *end_ptr != '\t' && *end_ptr != '\n' && *end_ptr != '\r') {
+        end_ptr++;
+    }
+
+    size_t length = end_ptr - nope_cursor;
+    
+    if (length == 0) {
+        nope_fail("Expected to read a string, but found whitespace/EOF instead", "Any string", "Empty");
+    }
+
+    char *result = malloc(length + 1);
+    if (!result) {
+        fprintf(stderr, "[NOPE SYSTEM ERROR] Memory allocation failed while reading STR!\n");
+        exit(1);
+    }
+
+    strncpy(result, nope_cursor, length);
+    result[length] = '\0';
+    
+    nope_cursor = end_ptr; // Przesuwamy kursor
+    return result;
 }

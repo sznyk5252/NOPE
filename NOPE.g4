@@ -179,6 +179,10 @@ RETURN_TYPING_ARROW: '->';
 
 ID : [a-zA-Z_] [a-zA-Z0-9_]* ; // If there is no variable/macro/c++function with this ID this will be later interpreted as STR
 
+// STR : QUOTE ~[\r\n]*? QUOTE      
+//     |   ~[ \t\r\n#(),{}*+/=<>!\-[\]]+
+//     ;
+
 STR : QUOTE ~[\r\n]*? QUOTE      
-    |   ~[ \t\r\n#(),{}*+/=<>!\-[\]]+
+    |   ~[ \t\r\n#(),{}*+/=<>!\-[\]\\]+
     ;

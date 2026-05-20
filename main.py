@@ -64,6 +64,7 @@ def parse_arguments():
 
     return cli_parser.parse_args()
 
+
 def process_code(
     input_text: str,
     input_stream: InputStream,
@@ -79,9 +80,12 @@ def process_code(
     tree = parser.program()
 
     if parser.getNumberOfSyntaxErrors() > 0:
-        print("Błąd: Znaleziono błędy składniowe w kodzie wejściowym. Przerwano.", file=sys.stderr)
+        print(
+            "Błąd: Znaleziono błędy składniowe w kodzie wejściowym. Przerwano.",
+            file=sys.stderr,
+        )
         return
-    
+
     if args.generate_graph:
         g_out_dir = Path(args.g_out_dir)
         renderer = GraphRenderer.create_default_digraph(parser)
@@ -106,14 +110,16 @@ def process_code(
             directory=g_out_dir,
             view=args.view,
         )
-        print(f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}")
+        print(
+            f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}"
+        )
 
     if not args.no_compile:
         c_out_dir = Path(args.c_out_dir)
         c_out_dir.mkdir(parents=True, exist_ok=True)
-        
+
         print("Translating NOPE to C...")
-        
+
         try:
             compiler = NopeCompiler()
             c_code = compiler.compile(tree)
@@ -124,10 +130,10 @@ def process_code(
                 f.write(c_code)
 
             print(f"Generated C code successfully: {c_output_filename.resolve()}\n")
-            
+
         except NopeCompilationError as e:
             print(f"Compilation Error: {e}", file=sys.stderr)
-              
+
         except Exception as e:
             print(f"Error during compilation: {e}", file=sys.stderr)
 
@@ -162,19 +168,16 @@ def main():
                     graph_name = file_path.stem
 
                 # Właściwe wywołanie logiki
-                process_code(
-                    input_text,
-                    input_stream,
-                    graph_name,
-                    args
-                )
+                process_code(input_text, input_stream, graph_name, args)
 
             except Exception as e:
                 print(f"Error processing {file_path}: {e}\n", file=sys.stderr)
 
     # Scenario 2: No files provided, read from standard input
     else:
-        print("Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):")
+        print(
+            "Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):"
+        )
         input_text = sys.stdin.read()
 
         if not input_text.strip():
@@ -182,12 +185,7 @@ def main():
             return
 
         input_stream = InputStream(input_text)
-        process_code(
-            input_text,
-            input_stream,
-            fallback_name,
-            args
-        )
+        process_code(input_text, input_stream, fallback_name, args)
 
 
 if __name__ == "__main__":

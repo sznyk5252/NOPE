@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 
+
 sys.path.insert(0, str(Path(__file__).parent / "src" / "antlr_generated"))
 
 from .antlr_generated.NOPEVisitor import NOPEVisitor
@@ -16,12 +17,14 @@ class NopeCompiler(NOPEVisitor):
     main_scope: list[str] = []
     ignore_ws_active: bool = False
     output_lines_counter: int = 0
+    defined_vars: set[str] = set()
 
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
-        self.main_scope: list[str] = []
+        self.defined_vars = set()
+        self.main_scope: list[str] = ["nope_init();"]
         self.global_scope: list[str] = [
-            '#include "nope_runtime.h"\n\n',
-            "int main() {\n",
+            '#include "nope_runtime.h"\n',
+            "int main() {",
         ]
 
         self.visit(tree)
@@ -29,12 +32,12 @@ class NopeCompiler(NOPEVisitor):
         full_code = []
         full_code.extend(self.global_scope)
 
-        # full_code.append("\nint main() {")
+        self.main_scope.append("nope_cleanup();")
         for line in self.main_scope:
             full_code.append(f"\t{line}")
         full_code.append("\treturn 0;\n}")
 
-        return "".join(full_code)
+        return "\n".join(full_code)
 
     # SK
     # Visit a parse tree produced by NOPEParser#program.
@@ -106,7 +109,7 @@ class NopeCompiler(NOPEVisitor):
             raise NopeCompilationError("IF statement requires a logical expression.")
 
         condition = str(self.visit(ctx.logic_expr()))
-        self.main_scope.append(f"    if ({condition}) ")
+        self.main_scope.append(f"if ({condition}) ")
 
         if ctx.block(0) is not None:
             self.visit(ctx.block(0))
@@ -297,8 +300,33 @@ class NopeCompiler(NOPEVisitor):
     # SK
     # Visit a parse tree produced by NOPEParser#var_macro.
     def visitVar_macro(self, ctx: NOPEParser.Var_macroContext):
-        return self.visitChildren(ctx)
+        var_name = ctx.ID().getText()
+        var_type = "INT"
+        if ctx.opt_type() is not None and ctx.opt_type().getText() != "":
+            var_type = ctx.opt_type().getText()
 
+        self.defined_vars.add(var_name)
+        
+        c_type = "int"
+        if "FLOAT" in var_type:
+            c_type = "float"
+        elif "STR" in var_type:
+            c_type = "char*"
+        # TODO: obsługa tablic, np. INT[size]
+        self.main_scope.append(f"{c_type} {var_name};\n")
+
+        # 5. Sprawdzenie, czy jest to przypisanie (<<), czy czytanie z konsoli
+        if ctx.ASSIGN() is not None:
+            expr_val = str(self.visit(ctx.any_expr()))
+            self.main_scope.append(f"{var_name} = {expr_val};\n")
+        else:
+            # Wczytywanie z wyjścia ocenianego programu (tylko zarys, docelowo zrobimy to np. przez nope_read_str() / nope_read_int())
+            if c_type == "char*":
+                self.main_scope.append(f"{var_name} = nope_read_str();\n")
+            else:
+                self.main_scope.append(f"// TODO: Wczytaj zmienna {var_type} ze stdout\n")
+
+        return None
     # JK
     # Visit a parse tree produced by NOPEParser#check_macro.
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
@@ -308,12 +336,12 @@ class NopeCompiler(NOPEVisitor):
 
         condition = str(self.visit(ctx.logic_expr()))
 
-        self.main_scope.append(f"        if (!({condition})) {{\n")
+        self.main_scope.append(f"if (!({condition})) {{\n")
         self.main_scope.append(
             f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n'
         )
-        self.main_scope.append("            return 1;\n")
-        self.main_scope.append("        }\n")
+        self.main_scope.append("\treturn 1;\n")
+        self.main_scope.append("\t}\n")
         return None
 
     # JK
@@ -339,11 +367,51 @@ class NopeCompiler(NOPEVisitor):
     def visitIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
         return self.visitChildren(ctx)
 
+
+    def _char_to_c_char(self, char: str) -> str:
+        """
+        Converts a single character from NOPE source to a C char literal.
+        """
+        if char == '\n': return "'\\n'"
+        if char == '\t': return "'\\t'"
+        if char == '\r': return "'\\r'"
+        if char == "'":  return "'\\''"
+        if char == "\\": return "'\\\\'"
+        return f"'{char}'"
+    
     # SK
     # Visit a parse tree produced by NOPEParser#input.
     def visitInput(self, ctx: NOPEParser.InputContext):
-        return self.visitChildren(ctx)
-
+        if ctx.expl_ws() is not None:
+            return self.visit(ctx.expl_ws())
+        
+        if ctx.STR() is not None:
+            text = ctx.getText()
+            if text.startswith("'") and text.endswith("'"):
+                text = text[1:-1]
+            
+            for char in text:
+                c_char = self._char_to_c_char(char)
+                self.main_scope.append(f"    nope_expect_char({c_char});\n")
+            return None
+            
+        if ctx.ID() is not None:
+            var_name = ctx.ID().getText()
+            if var_name in self.defined_vars:
+                self.main_scope.append(f"    // TODO: Porównaj wyjście ze zmienną '{var_name}'\n")
+            else:
+                for char in var_name:
+                    c_char = self._char_to_c_char(char)
+                    self.main_scope.append(f"    nope_expect_char({c_char});\n")
+            return None
+        
+        if ctx.NUMB() is not None:
+            text = ctx.NUMB().getText()
+            for char in text:
+                c_char = self._char_to_c_char(char)
+                self.main_scope.append(f"    nope_expect_char({c_char});\n")
+            return None
+        
     # JK
     # Visit a parse tree produced by NOPEParser#comment.
     def visitComment(self, ctx: NOPEParser.CommentContext):
@@ -365,10 +433,11 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#expl_ws.
     def visitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
-        if ctx.getText() == "SPACE":
-            self.main_scope.append(" ")
-        elif ctx.getText() == "ENDL":
-            self.main_scope.append("\n")
+        text = ctx.getText()
+        if text == "SPACE":
+            self.main_scope.append("    nope_expect_char(' ');\n")
+        elif text == "ENDL":
+            self.main_scope.append("    nope_expect_char('\\n');\n")
         return None
 
     # SK
