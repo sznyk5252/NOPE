@@ -306,7 +306,7 @@ class NopeCompiler(NOPEVisitor):
             var_type = ctx.opt_type().getText()
 
         self.defined_vars.add(var_name)
-        
+
         c_type = "int"
         if "FLOAT" in var_type:
             c_type = "float"
@@ -324,9 +324,12 @@ class NopeCompiler(NOPEVisitor):
             if c_type == "char*":
                 self.main_scope.append(f"{var_name} = nope_read_str();\n")
             else:
-                self.main_scope.append(f"// TODO: Wczytaj zmienna {var_type} ze stdout\n")
+                self.main_scope.append(
+                    f"// TODO: Wczytaj zmienna {var_type} ze stdout\n"
+                )
 
         return None
+
     # JK
     # Visit a parse tree produced by NOPEParser#check_macro.
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
@@ -367,51 +370,57 @@ class NopeCompiler(NOPEVisitor):
     def visitIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
         return self.visitChildren(ctx)
 
-
     def _char_to_c_char(self, char: str) -> str:
         """
         Converts a single character from NOPE source to a C char literal.
         """
-        if char == '\n': return "'\\n'"
-        if char == '\t': return "'\\t'"
-        if char == '\r': return "'\\r'"
-        if char == "'":  return "'\\''"
-        if char == "\\": return "'\\\\'"
+        if char == "\n":
+            return "'\\n'"
+        if char == "\t":
+            return "'\\t'"
+        if char == "\r":
+            return "'\\r'"
+        if char == "'":
+            return "'\\''"
+        if char == "\\":
+            return "'\\\\'"
         return f"'{char}'"
-    
+
     # SK
     # Visit a parse tree produced by NOPEParser#input.
     def visitInput(self, ctx: NOPEParser.InputContext):
         if ctx.expl_ws() is not None:
             return self.visit(ctx.expl_ws())
-        
+
         if ctx.STR() is not None:
             text = ctx.getText()
             if text.startswith("'") and text.endswith("'"):
                 text = text[1:-1]
-            
+
             for char in text:
                 c_char = self._char_to_c_char(char)
                 self.main_scope.append(f"    nope_expect_char({c_char});\n")
             return None
-            
+
         if ctx.ID() is not None:
             var_name = ctx.ID().getText()
             if var_name in self.defined_vars:
-                self.main_scope.append(f"    // TODO: Porównaj wyjście ze zmienną '{var_name}'\n")
+                self.main_scope.append(
+                    f"    // TODO: Porównaj wyjście ze zmienną '{var_name}'\n"
+                )
             else:
                 for char in var_name:
                     c_char = self._char_to_c_char(char)
                     self.main_scope.append(f"    nope_expect_char({c_char});\n")
             return None
-        
+
         if ctx.NUMB() is not None:
             text = ctx.NUMB().getText()
             for char in text:
                 c_char = self._char_to_c_char(char)
                 self.main_scope.append(f"    nope_expect_char({c_char});\n")
             return None
-        
+
     # JK
     # Visit a parse tree produced by NOPEParser#comment.
     def visitComment(self, ctx: NOPEParser.CommentContext):
