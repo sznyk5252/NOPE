@@ -30,12 +30,12 @@ sync_readme:
         git add "$out_file"
       done
 
-    - uv run antlr4 -Dlanguage=Python3 -visitor -o src NOPE.g4
+    - uv run antlr4 -Dlanguage=Python3 -visitor -o src/antlr_generated NOPE.g4
     - ruff format ./
     - git add src/*
 
     - rm graphs/*
-    - uv run main.py examples/in/* --no-view
+    - uv run main.py examples/in/*.nope -co examples/out -go graphs --generate-graph
     - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
     

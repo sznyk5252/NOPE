@@ -1,11 +1,12 @@
-import sys
 from typing import Optional
-from antlr4 import *
+from antlr4 import Parser, Token
 from antlr4.tree.Tree import ParseTree, TerminalNode
+
 from pathlib import Path
 import graphviz
-from src.NOPEParser import NOPEParser
-from src.NOPELexer import NOPELexer
+from .antlr_generated.NOPEParser import NOPEParser
+from .antlr_generated.NOPELexer import NOPELexer
+
 
 
 class GraphRenderer:

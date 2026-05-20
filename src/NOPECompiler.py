@@ -1,5 +1,10 @@
-from .NOPEVisitor import NOPEVisitor
-from .NOPEParser import NOPEParser
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent / "src" / "antlr_generated"))
+
+from .antlr_generated.NOPEVisitor import NOPEVisitor
+from .antlr_generated.NOPEParser import NOPEParser
+
 
 
 class NopeCompilationError(Exception):
@@ -13,18 +18,18 @@ class NopeCompiler(NOPEVisitor):
     output_lines_counter: int = 0
 
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
-        self.main_scope: list[str] = ["int main() {\n"]
-        self.global_scope: list[str] = ['#include "nope_runtime.h"\n']
+        self.main_scope: list[str] = []
+        self.global_scope: list[str] = ['#include "nope_runtime.h"\n\n', "int main() {\n"]
 
         self.visit(tree)
 
         full_code = []
         full_code.extend(self.global_scope)
 
-        full_code.append("\nint main() {")
+        # full_code.append("\nint main() {")
         for line in self.main_scope:
-            full_code.append(f" {line}")
-        full_code.append(" return 0;\n}")
+            full_code.append(f"\t{line}")
+        full_code.append("\treturn 0;\n}")
 
         return "".join(full_code)
 
@@ -53,6 +58,7 @@ class NopeCompiler(NOPEVisitor):
             case "\n":
                 pass
             case "\\":
+                # TODO: CO TO?
                 self.main_scope.a
 
         return self.visitChildren(ctx)
@@ -136,7 +142,7 @@ class NopeCompiler(NOPEVisitor):
         if len(expr_list) > 2 and expr_list[2] is not None:
             step = str(self.visit(expr_list[2]))
 
-        loop_str = f"    for (int {iterator_name} = {lower_bound}; {iterator_name} < {upper_bound}; {iterator_name} += {step}) "
+        loop_str = f"for (int {iterator_name} = {lower_bound}; {iterator_name} < {upper_bound}; {iterator_name} += {step}) "
         self.main_scope.append(loop_str)
 
         if ctx.block() is not None:

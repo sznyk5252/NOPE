@@ -1,0 +1,189 @@
+// ANTLR Parse Tree
+digraph {
+	fontname=monospace fontsize=12 label="Source Code:\l----------------------------------------\l# Macro that calculates a final price after applying a discount\lDEF apply_discount(FLOAT base_price, FLOAT discount) -> FLOAT {\l    'Applying discount...'\l    ENDL\l    # Returns the price reduced by the discount percentage\l    # Uses LP and RP from your expr rule: LP ws? expr ws? RP\l    RETURN base_price - (base_price * discount)\l}\l" labeljust=l labelloc=t
+	0 [label=program fontcolor=black]
+	1 [label=code fontcolor=black]
+	0 -> 1
+	2 [label=comment fontcolor=black]
+	1 -> 2
+	3 [label="COM\n'# Macro that calculates a final price after applying a discount'" color=lightgreen fontcolor=black shape=box style=filled]
+	2 -> 3
+	4 [label=ws color=gainsboro fontcolor=gray]
+	1 -> 4 [color=lightgray]
+	5 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	4 -> 5 [color=lightgray]
+	6 [label=def fontcolor=black]
+	1 -> 6
+	7 [label="TOKEN\n'DEF'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 7
+	8 [label=ws color=gainsboro fontcolor=gray]
+	6 -> 8 [color=lightgray]
+	9 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	8 -> 9 [color=lightgray]
+	10 [label="ID\n'apply_discount'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 10
+	11 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 11
+	12 [label=opt_type fontcolor=black]
+	6 -> 12
+	13 [label=type fontcolor=black]
+	12 -> 13
+	14 [label="TOKEN\n'FLOAT'" color=lightgreen fontcolor=black shape=box style=filled]
+	13 -> 14
+	15 [label=ws color=gainsboro fontcolor=gray]
+	12 -> 15 [color=lightgray]
+	16 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	15 -> 16 [color=lightgray]
+	17 [label="ID\n'base_price'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 17
+	18 [label="SEP\n','" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 18
+	19 [label=ws color=gainsboro fontcolor=gray]
+	6 -> 19 [color=lightgray]
+	20 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	19 -> 20 [color=lightgray]
+	21 [label=opt_type fontcolor=black]
+	6 -> 21
+	22 [label=type fontcolor=black]
+	21 -> 22
+	23 [label="TOKEN\n'FLOAT'" color=lightgreen fontcolor=black shape=box style=filled]
+	22 -> 23
+	24 [label=ws color=gainsboro fontcolor=gray]
+	21 -> 24 [color=lightgray]
+	25 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	24 -> 25 [color=lightgray]
+	26 [label="ID\n'discount'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 26
+	27 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	6 -> 27
+	28 [label=ws color=gainsboro fontcolor=gray]
+	6 -> 28 [color=lightgray]
+	29 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	28 -> 29 [color=lightgray]
+	30 [label=rtype fontcolor=black]
+	6 -> 30
+	31 [label="RETURN_TYPING_ARROW\n'->'" color=lightgreen fontcolor=black shape=box style=filled]
+	30 -> 31
+	32 [label=ws color=gainsboro fontcolor=gray]
+	30 -> 32 [color=lightgray]
+	33 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	32 -> 33 [color=lightgray]
+	34 [label=type fontcolor=black]
+	30 -> 34
+	35 [label="TOKEN\n'FLOAT'" color=lightgreen fontcolor=black shape=box style=filled]
+	34 -> 35
+	36 [label=ws color=gainsboro fontcolor=gray]
+	30 -> 36 [color=lightgray]
+	37 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	36 -> 37 [color=lightgray]
+	38 [label=block_with_return fontcolor=black]
+	6 -> 38
+	39 [label="LBRACE\n'{'" color=lightgreen fontcolor=black shape=box style=filled]
+	38 -> 39
+	40 [label=code fontcolor=black]
+	38 -> 40
+	41 [label=ws color=gainsboro fontcolor=gray]
+	40 -> 41 [color=lightgray]
+	42 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	41 -> 42 [color=lightgray]
+	43 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	41 -> 43 [color=lightgray]
+	44 [label=input fontcolor=black]
+	40 -> 44
+	45 [label="STR\n''Applying discount...''" color=lightgreen fontcolor=black shape=box style=filled]
+	44 -> 45
+	46 [label=ws color=gainsboro fontcolor=gray]
+	40 -> 46 [color=lightgray]
+	47 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	46 -> 47 [color=lightgray]
+	48 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	46 -> 48 [color=lightgray]
+	49 [label=input fontcolor=black]
+	40 -> 49
+	50 [label=expl_ws fontcolor=black]
+	49 -> 50
+	51 [label="EXPL_ENDL\n'ENDL'" color=lightgreen fontcolor=black shape=box style=filled]
+	50 -> 51
+	52 [label=ws color=gainsboro fontcolor=gray]
+	40 -> 52 [color=lightgray]
+	53 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	52 -> 53 [color=lightgray]
+	54 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	52 -> 54 [color=lightgray]
+	55 [label=comment fontcolor=black]
+	40 -> 55
+	56 [label="COM\n'# Returns the price reduced by the discount percentage'" color=lightgreen fontcolor=black shape=box style=filled]
+	55 -> 56
+	57 [label=ws color=gainsboro fontcolor=gray]
+	40 -> 57 [color=lightgray]
+	58 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	57 -> 58 [color=lightgray]
+	59 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	57 -> 59 [color=lightgray]
+	60 [label=comment fontcolor=black]
+	40 -> 60
+	61 [label="COM\n'# Uses LP and RP from your expr rule: LP ws? expr ws? RP'" color=lightgreen fontcolor=black shape=box style=filled]
+	60 -> 61
+	62 [label=ws color=gainsboro fontcolor=gray]
+	40 -> 62 [color=lightgray]
+	63 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	62 -> 63 [color=lightgray]
+	64 [label="SPACE\n'    '" color=lightgray fontcolor=gray shape=ellipse]
+	62 -> 64 [color=lightgray]
+	65 [label="RETURN\n'RETURN'" color=lightgreen fontcolor=black shape=box style=filled]
+	38 -> 65
+	66 [label=ws color=gainsboro fontcolor=gray]
+	38 -> 66 [color=lightgray]
+	67 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	66 -> 67 [color=lightgray]
+	68 [label=expr fontcolor=black]
+	38 -> 68
+	69 [label=expr fontcolor=black]
+	68 -> 69
+	70 [label="ID\n'base_price'" color=lightgreen fontcolor=black shape=box style=filled]
+	69 -> 70
+	71 [label=ws color=gainsboro fontcolor=gray]
+	68 -> 71 [color=lightgray]
+	72 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	71 -> 72 [color=lightgray]
+	73 [label="SUB\n'-'" color=lightgreen fontcolor=black shape=box style=filled]
+	68 -> 73
+	74 [label=ws color=gainsboro fontcolor=gray]
+	68 -> 74 [color=lightgray]
+	75 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	74 -> 75 [color=lightgray]
+	76 [label=expr fontcolor=black]
+	68 -> 76
+	77 [label="LP\n'('" color=lightgreen fontcolor=black shape=box style=filled]
+	76 -> 77
+	78 [label=expr fontcolor=black]
+	76 -> 78
+	79 [label=expr fontcolor=black]
+	78 -> 79
+	80 [label="ID\n'base_price'" color=lightgreen fontcolor=black shape=box style=filled]
+	79 -> 80
+	81 [label=ws color=gainsboro fontcolor=gray]
+	78 -> 81 [color=lightgray]
+	82 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	81 -> 82 [color=lightgray]
+	83 [label="MUL\n'*'" color=lightgreen fontcolor=black shape=box style=filled]
+	78 -> 83
+	84 [label=ws color=gainsboro fontcolor=gray]
+	78 -> 84 [color=lightgray]
+	85 [label="SPACE\n' '" color=lightgray fontcolor=gray shape=ellipse]
+	84 -> 85 [color=lightgray]
+	86 [label=expr fontcolor=black]
+	78 -> 86
+	87 [label="ID\n'discount'" color=lightgreen fontcolor=black shape=box style=filled]
+	86 -> 87
+	88 [label="RP\n')'" color=lightgreen fontcolor=black shape=box style=filled]
+	76 -> 88
+	89 [label=ws color=gainsboro fontcolor=gray]
+	38 -> 89 [color=lightgray]
+	90 [label="ENDL\n'\n'" color=lightgray fontcolor=gray shape=ellipse]
+	89 -> 90 [color=lightgray]
+	91 [label="RBRACE\n'}'" color=lightgreen fontcolor=black shape=box style=filled]
+	38 -> 91
+	92 [label=EOF color=lightgreen fontcolor=black shape=box style=filled]
+	0 -> 92
+}

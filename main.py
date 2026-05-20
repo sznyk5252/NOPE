@@ -5,141 +5,148 @@ from antlr4 import *
 from antlr4.tree.Tree import TerminalNode
 import graphviz
 
-from src.NOPECompiler import NopeCompiler
-# from src.NOPEParser import NOPEParser
-# from src.NOPELexer import NOPELexer
-
-
-from src.NOPELexer import NOPELexer
-from src.NOPEParser import NOPEParser
 from src.GraphRenderer import GraphRenderer
+from src.antlr_generated.NOPELexer import NOPELexer
+from src.antlr_generated.NOPEParser import NOPEParser
+from src.NOPECompiler import NopeCompiler, NopeCompilationError
 
 
 def parse_arguments():
     """Parses command line arguments and returns the parsed args object."""
     cli_parser = ArgumentParser(
-        description="Parse NOPE program(s) and generate visual syntax trees."
+        description="NOPE Compiler & Visual Syntax Tree Generator."
     )
-
     cli_parser.add_argument(
         "input_files",
         nargs="*",
         help="Path(s) to the input NOPE file(s). If omitted, reads from standard input (stdin).",
     )
-
     cli_parser.add_argument(
-        "-o",
-        "--out-dir",
+        "--no-compile",
+        action="store_true",
+        help="Skip C code generation (useful for syntax checking or graph generation only).",
+    )
+    cli_parser.add_argument(
+        "-co",
+        "--c-out-dir",
+        default=".",
+        help="Output directory for the compiled .c files (default: current directory).",
+    )
+    cli_parser.add_argument(
+        "--generate-graph",
+        action="store_true",
+        help="Generate the visual syntax tree (Graphviz).",
+    )
+    cli_parser.add_argument(
+        "-go",
+        "--g-out-dir",
         default="graphs",
         help="Output directory for the generated graph(s) (default: 'graphs').",
     )
     cli_parser.add_argument(
         "-n",
         "--name",
-        default="tree",
-        help="Output filename (only used if reading from stdin or a single file). Defaults to 'tree'.",
+        default=None,
+        help="Custom name for the output file(s) (default: input filename or 'a').",
     )
     cli_parser.add_argument(
         "-f",
-        "--format",
+        "--graph-format",
         default="png",
         choices=["png", "pdf", "svg", "jpg"],
         help="Output file format (default: png).",
     )
-
     cli_parser.add_argument(
-        "--no-view",
+        "--view",
         action="store_true",
         help="Disable automatically opening the generated graph file.",
     )
-    # TODO: --ignore-ws
-    return cli_parser.parse_args()
 
+    return cli_parser.parse_args()
 
 def process_code(
     input_text: str,
     input_stream: InputStream,
     output_name: str,
     args: any,
-    output_dir: Path,
-    should_view: bool,
 ):
-    """Core logic to parse the stream and generate the Graphviz output."""
+    """Core logic to parse the stream, compile, and optionally generate graphs."""
 
-    # 1. Create lexer and token stream
     lexer = NOPELexer(input_stream)
     stream = CommonTokenStream(lexer)
 
-    # 2. Create parser and build the tree
     parser = NOPEParser(stream)
     tree = parser.program()
 
-    print(f"Parse tree (LISP): {tree.toStringTree(recog=parser)}")
-
-    # 3. Initialize Renderer based on CLI flags
-    # if args.styled:
-    #     renderer = GraphRenderer.create_styled_digraph(parser)
-    # else:
-    renderer = GraphRenderer.create_default_digraph(parser)
-
-    # ---------------------------------------------------------
-    # NEW: ADD SOURCE CODE TO THE TOP OF THE GRAPH
-    # ---------------------------------------------------------
-
-    header = "Source Code:\n" + "-" * 40 + "\n"
-    formatted_code = header + input_text
-
-    safe_text = formatted_code.replace("\\", r"\\").replace('"', r"\"")
-
-    graphviz_label = safe_text.replace("\n", r"\l") + r"\l"
-
-    renderer.graph.attr(
-        label=graphviz_label,
-        labelloc="t",  # Place label at the 'top'
-        labeljust="l",  # Justify label to the 'left'
-        fontname="monospace",  # Use code-friendly font
-        fontsize="12",
-    )
-    # ---------------------------------------------------------
-
-    # 4. Render the graph
-    renderer.render(
-        tree,
-        filename=output_name,
-        file_format=args.format,
-        directory=output_dir,
-        view=should_view,
-    )
-
-    print(
-        f"Generated {output_name}.{args.format} successfully in: {output_dir.resolve()}\n"
-    )
-
-    # Szybkie sprawdzenie czy dobrze generuje plik .c
-
-    print("Translating NOPE to C...")
-
-    compiler = NopeCompiler()
+    if parser.getNumberOfSyntaxErrors() > 0:
+        print("Błąd: Znaleziono błędy składniowe w kodzie wejściowym. Przerwano.", file=sys.stderr)
+        return
     
-    c_code = compiler.compile(tree)
+    if args.generate_graph:
+        g_out_dir = Path(args.g_out_dir)
+        renderer = GraphRenderer.create_default_digraph(parser)
 
-    c_output_filename = f"{output_name}.c"
+        header = "Source Code:\n" + "-" * 40 + "\n"
+        formatted_code = header + input_text
+        safe_text = formatted_code.replace("\\", r"\\").replace('"', r"\"")
+        graphviz_label = safe_text.replace("\n", r"\l") + r"\l"
 
-    with open(c_output_filename, "w", encoding="utf-8") as f:
-        f.write(c_code)
+        renderer.graph.attr(
+            label=graphviz_label,
+            labelloc="t",
+            labeljust="l",
+            fontname="monospace",
+            fontsize="12",
+        )
 
-    print(f"Generated C code successfully: {c_output_filename}\n")
+        renderer.render(
+            tree,
+            filename=output_name,
+            file_format=args.graph_format,
+            directory=g_out_dir,
+            view=args.view,
+        )
+        print(f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}")
+
+    if not args.no_compile:
+        c_out_dir = Path(args.c_out_dir)
+        c_out_dir.mkdir(parents=True, exist_ok=True)
+        
+        print("Translating NOPE to C...")
+        
+        try:
+            compiler = NopeCompiler()
+            c_code = compiler.compile(tree)
+
+            c_output_filename = c_out_dir / f"{output_name}.c"
+
+            with open(c_output_filename, "w", encoding="utf-8") as f:
+                f.write(c_code)
+
+            print(f"Generated C code successfully: {c_output_filename.resolve()}\n")
+            
+        except NopeCompilationError as e:
+            print(f"Compilation Error: {e}", file=sys.stderr)
+              
+        except Exception as e:
+            print(f"Error during compilation: {e}", file=sys.stderr)
 
 
 def main():
     args = parse_arguments()
-    output_dir = Path(args.out_dir)
+
+    # Domyślna nazwa dla wejścia z terminala lub przy braku flagi -n
+    fallback_name = args.name if args.name else "a"
 
     # Scenario 1: User provided one or more files
     if args.input_files:
         for file_path_str in args.input_files:
             file_path = Path(file_path_str)
             print(f"--- Processing file: {file_path} ---")
+
+            if not file_path.exists():
+                print(f"Błąd: Plik '{file_path}' nie istnieje.", file=sys.stderr)
+                continue
 
             try:
                 # Read the file to a string first so we can attach it to the image
@@ -149,29 +156,25 @@ def main():
                 # Convert the string to an ANTLR InputStream
                 input_stream = InputStream(input_text)
 
-                if len(args.input_files) == 1 and args.name != "tree":
+                if len(args.input_files) == 1 and args.name is not None:
                     graph_name = args.name
                 else:
                     graph_name = file_path.stem
 
-                # Pass BOTH the raw text and the stream
+                # Właściwe wywołanie logiki
                 process_code(
                     input_text,
                     input_stream,
                     graph_name,
-                    args,
-                    output_dir,
-                    should_view=not args.no_view,
+                    args
                 )
 
             except Exception as e:
-                print(f"Error processing {file_path}: {e}\n")
+                print(f"Error processing {file_path}: {e}\n", file=sys.stderr)
 
     # Scenario 2: No files provided, read from standard input
     else:
-        print(
-            "Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):"
-        )
+        print("Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):")
         input_text = sys.stdin.read()
 
         if not input_text.strip():
@@ -182,10 +185,8 @@ def main():
         process_code(
             input_text,
             input_stream,
-            args.name,
-            args,
-            output_dir,
-            should_view=not args.no_view,
+            fallback_name,
+            args
         )
 
 
