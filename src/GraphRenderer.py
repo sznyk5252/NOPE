@@ -8,7 +8,6 @@ from .antlr_generated.NOPEParser import NOPEParser
 from .antlr_generated.NOPELexer import NOPELexer
 
 
-
 class GraphRenderer:
     """Class responsible for rendering the ANTLR parse tree to Graphviz format."""
 

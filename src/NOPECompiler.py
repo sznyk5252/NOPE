@@ -1,10 +1,10 @@
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent / "src" / "antlr_generated"))
 
 from .antlr_generated.NOPEVisitor import NOPEVisitor
 from .antlr_generated.NOPEParser import NOPEParser
-
 
 
 class NopeCompilationError(Exception):
@@ -19,7 +19,10 @@ class NopeCompiler(NOPEVisitor):
 
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
         self.main_scope: list[str] = []
-        self.global_scope: list[str] = ['#include "nope_runtime.h"\n\n', "int main() {\n"]
+        self.global_scope: list[str] = [
+            '#include "nope_runtime.h"\n\n',
+            "int main() {\n",
+        ]
 
         self.visit(tree)
 
