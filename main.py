@@ -116,25 +116,17 @@ def process_code(
     )
 
     # Szybkie sprawdzenie czy dobrze generuje plik .c
-    
-    print("Translating NOPE to C...")
-    compiler = NopeCompiler()
-    compiler.output_buff = []
 
-    compiler.visit(tree)
+    print("Translating NOPE to C...")
+
+    compiler = NopeCompiler()
+    
+    c_code = compiler.compile(tree)
 
     c_output_filename = f"{output_name}.c"
 
     with open(c_output_filename, "w", encoding="utf-8") as f:
-        f.write("#include <stdio.h>\n")
-        f.write("#include <stdlib.h>\n\n")
-        f.write("int main() {\n")
-
-        for line in compiler.output_buff:
-            f.write(line)
-
-        f.write("    return 0;\n")
-        f.write("}\n")
+        f.write(c_code)
 
     print(f"Generated C code successfully: {c_output_filename}\n")
 

@@ -1,12 +1,20 @@
+# Comment test
+
 REP(i, 10, 0, 1) {
 
-    IF (i < 5 OR i == 7) {
+    IF (i < 8 AND i != 2) {
 
-        CHECK(i != 3 AND i != 4)
+        CHECK(i == 0 OR i == 1)
+
         SPACE
-
-    }
-    ELSE {
         ENDL
+
+    } ELSE {
+
+        testowa_funkcja(i, 100)
+
     }
 }
+
+RANGE(1, 5)
+ANYOF(10, 20, 30)
