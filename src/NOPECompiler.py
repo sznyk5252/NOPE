@@ -80,7 +80,9 @@ class NopeCompiler(NOPEVisitor):
             self.visit(ctx.code())
 
         if ctx.expr() is None:
-            raise NopeCompilationError("Block with return must have a return expression.")
+            raise NopeCompilationError(
+                "Block with return must have a return expression."
+            )
 
         return_expr = str(self.visit(ctx.expr()))
         self.main_scope.append(f"    return {return_expr};\n")
@@ -120,7 +122,9 @@ class NopeCompiler(NOPEVisitor):
 
         expr_list = ctx.expr()
         if not expr_list:
-            raise NopeCompilationError("REP loop requires at least an upper bound expression.")
+            raise NopeCompilationError(
+                "REP loop requires at least an upper bound expression."
+            )
 
         upper_bound = str(self.visit(expr_list[0]))
         lower_bound = "0"
@@ -206,7 +210,11 @@ class NopeCompiler(NOPEVisitor):
         if ctx.LP() is not None and logic_exprs is not None and len(logic_exprs) > 0:
             return f"({str(self.visit(logic_exprs[0]))})"
 
-        if ctx.NEGATION() is not None and logic_exprs is not None and len(logic_exprs) > 0:
+        if (
+            ctx.NEGATION() is not None
+            and logic_exprs is not None
+            and len(logic_exprs) > 0
+        ):
             return f"!({str(self.visit(logic_exprs[0]))})"
 
         if ctx.ID() is not None:
@@ -292,7 +300,9 @@ class NopeCompiler(NOPEVisitor):
         condition = str(self.visit(ctx.logic_expr()))
 
         self.main_scope.append(f"        if (!({condition})) {{\n")
-        self.main_scope.append(f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n')
+        self.main_scope.append(
+            f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n'
+        )
         self.main_scope.append("            return 1;\n")
         self.main_scope.append("        }\n")
         return None
