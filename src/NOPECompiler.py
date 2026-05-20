@@ -1,8 +1,10 @@
 from .NOPEVisitor import NOPEVisitor
 from .NOPEParser import NOPEParser
 
+
 class NopeCompilationError(Exception):
     pass
+
 
 class NopeCompiler(NOPEVisitor):
     global_scope: list[str] = []
@@ -13,19 +15,19 @@ class NopeCompiler(NOPEVisitor):
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
         self.main_scope: list[str] = ["int main() {\n"]
         self.global_scope: list[str] = ['#include "nope_runtime.h"\n']
-        
+
         self.visit(tree)
 
         full_code = []
         full_code.extend(self.global_scope)
-        
+
         full_code.append("\nint main() {")
         for line in self.main_scope:
             full_code.append(f"    {line}")
         full_code.append("    return 0;\n}")
-        
-        return ''.join(full_code)
-    
+
+        return "".join(full_code)
+
     # SK
     # Visit a parse tree produced by NOPEParser#program.
     def visitProgram(self, ctx: NOPEParser.ProgramContext):
@@ -42,18 +44,17 @@ class NopeCompiler(NOPEVisitor):
         child = ctx.getChild(1)
         if child is None:
             raise NopeCompilationError("Invalid escape sequence")
-        
+
         escaped_char = child.getText()
 
         match escaped_char:
-            case ' ':
+            case " ":
                 pass
-            case '\n':
+            case "\n":
                 pass
-            case '\\':
+            case "\\":
                 self.main_scope.a
-                
-        
+
         return self.visitChildren(ctx)
 
     # JK
@@ -150,7 +151,6 @@ class NopeCompiler(NOPEVisitor):
     # TODO: znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał się pylance
     # te metody powinny zwracać None a nie str
     def visitExpr(self, ctx: NOPEParser.ExprContext):
-
         # TODO:
         # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?
         # znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał się pylance
@@ -179,7 +179,6 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#logic_expr.
     def visitLogic_expr(self, ctx: NOPEParser.Logic_exprContext):
-
         # TODO:
         # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?
         # znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał się pylance
@@ -241,7 +240,7 @@ class NopeCompiler(NOPEVisitor):
     # Visit a parse tree produced by NOPEParser#anyof_macro.
     def visitAnyof_macro(self, ctx: NOPEParser.Anyof_macroContext):
         # TODO: te metody powinny zwracać None a nie str
-        
+
         args = []
         for expr_ctx in ctx.expr():
             args.append(str(self.visit(expr_ctx)))
@@ -273,7 +272,7 @@ class NopeCompiler(NOPEVisitor):
     # Visit a parse tree produced by NOPEParser#custom_macro.
     def visitCustom_macro(self, ctx: NOPEParser.Custom_macroContext):
         # TODO: te metody powinny zwracać None a nie str
-        
+
         func_name = ctx.ID().getText()
         args = []
         for expr_ctx in ctx.expr():
