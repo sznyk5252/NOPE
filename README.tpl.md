@@ -122,10 +122,9 @@ To see the results, use ```uv run main.py -h```
 
 If you want to change the compiler change file `src/NopeCompiler.py`, Do **NOT** change `src/NOPEVisitor.py`
 
-
 # 8. Learn NOPE
 Visit the [quick start guide](docs/quick_start.md)
 
 # 9. TODO:
-- naprawić działanie tablic (przykłady arr_*) - można je zmienić żeby gramatyka była prostsza
-- Czy mamy napewno wszystko na najbliższy czwartek? 
+- dodać generowanie jakiegokolwiek kodu .c dla przykładów
+- ogarnąć poprawne wczytywanie ws przez kod c
