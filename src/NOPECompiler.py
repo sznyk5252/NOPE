@@ -81,7 +81,7 @@ class NopeCompiler(NOPEVisitor):
             self.visit(ctx.code())
 
         for i in range(from_i, len(self.main_scope)):
-            self.main_scope[i] = '\t' + self.main_scope[i]
+            self.main_scope[i] = "\t" + self.main_scope[i]
 
         self.ignore_ws_active = before
         self.main_scope.append("}\n")
@@ -316,7 +316,7 @@ class NopeCompiler(NOPEVisitor):
         # TODO: obsługa tablic, np. INT[size]
 
         is_new_var = var_name not in self.defined_vars
-        
+
         if is_new_var:
             self.defined_vars[var_name] = c_type
             self.main_scope.append(f"{c_type} {var_name};")
@@ -332,6 +332,7 @@ class NopeCompiler(NOPEVisitor):
             elif c_type == "float":
                 self.main_scope.append(f"{var_name} = nope_read_float();")
         return None
+
     # JK
     # Visit a parse tree produced by NOPEParser#check_macro.
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
@@ -408,7 +409,7 @@ class NopeCompiler(NOPEVisitor):
             var_name = ctx.ID().getText()
             if var_name in self.defined_vars:
                 c_type = self.defined_vars[var_name]
-                
+
                 if c_type == "int":
                     self.main_scope.append(f"nope_expect_int({var_name});")
                 elif c_type == "float":
