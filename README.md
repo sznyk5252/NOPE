@@ -232,7 +232,8 @@ comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 // LEKSER
 // ==========================================
 
-COM : '#' ~[\r\n]* ; 
+// COM : '#' ~[\r\n]* ; 
+COM : '#' ~[\r\n]* ('\r'? '\n') ;
 
 EXPL_SPACE: 'SPACE';
 EXPL_ENDL: 'ENDL';
@@ -319,5 +320,14 @@ for f in examples/out/*.c; do gcc "$f" src/nope_runtime.c -I src -o "examples/ex
 Visit the [quick start guide](docs/quick_start.md)
 
 # 9. TODO:
-- dodać generowanie jakiegokolwiek kodu .c dla przykładów
-- ogarnąć poprawne wczytywanie ws przez kod c
+- nope main  ✗ ./examples/exe/var2.exe 
+1  1 5 1 1
+> to nie powinno przejść (podwójna spacja)
+
+- Nie dodaje i do spisu zmiennych 
+```
+REP (i, 10) {
+    'Index: '
+    i ENDL
+}
+```

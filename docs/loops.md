@@ -1,9 +1,10 @@
 # Examples:
 ```
 # Prints the same word with a single space 5 times
-REP (5) {
+REP (4) {
     'Test' SPACE
-}
+}\
+Test
 ```
 ```
 # Prints indices from 0 to 9 separated by '\n'
