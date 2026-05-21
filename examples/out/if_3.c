@@ -5,8 +5,7 @@ int main() {
 	if (None) 
 	{
 
-	    THROWS('The program threw an exception before terminating');
-
+		THROWS('The program threw an exception before terminating');
 	}
 
 	nope_cleanup();

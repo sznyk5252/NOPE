@@ -4,47 +4,27 @@ int main() {
 	nope_init();
 	{
 
-	    nope_expect_char('A');
-
-	    nope_expect_char('p');
-
-	    nope_expect_char('p');
-
-	    nope_expect_char('l');
-
-	    nope_expect_char('y');
-
-	    nope_expect_char('i');
-
-	    nope_expect_char('n');
-
-	    nope_expect_char('g');
-
-	    nope_expect_char(' ');
-
-	    nope_expect_char('d');
-
-	    nope_expect_char('i');
-
-	    nope_expect_char('s');
-
-	    nope_expect_char('c');
-
-	    nope_expect_char('o');
-
-	    nope_expect_char('u');
-
-	    nope_expect_char('n');
-
-	    nope_expect_char('t');
-
-	    nope_expect_char('.');
-
-	    nope_expect_char('.');
-
-	    nope_expect_char('.');
-
-	    nope_expect_char('\n');
+	nope_expect_char('A');
+	nope_expect_char('p');
+	nope_expect_char('p');
+	nope_expect_char('l');
+	nope_expect_char('y');
+	nope_expect_char('i');
+	nope_expect_char('n');
+	nope_expect_char('g');
+	nope_expect_char(' ');
+	nope_expect_char('d');
+	nope_expect_char('i');
+	nope_expect_char('s');
+	nope_expect_char('c');
+	nope_expect_char('o');
+	nope_expect_char('u');
+	nope_expect_char('n');
+	nope_expect_char('t');
+	nope_expect_char('.');
+	nope_expect_char('.');
+	nope_expect_char('.');
+	nope_expect_char('\n');
 
 	    return (base_price   ((base_price   discount)));
 

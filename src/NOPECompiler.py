@@ -17,10 +17,10 @@ class NopeCompiler(NOPEVisitor):
     main_scope: list[str] = []
     ignore_ws_active: bool = False
     output_lines_counter: int = 0
-    defined_vars: set[str] = set()
+    defined_vars: dict[str, str] = {}
 
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
-        self.defined_vars = set()
+        self.defined_vars = {}
         self.main_scope: list[str] = ["nope_init();"]
         self.global_scope: list[str] = [
             '#include "nope_runtime.h"\n',
@@ -71,14 +71,17 @@ class NopeCompiler(NOPEVisitor):
 
     # JK
     # Visit a parse tree produced by NOPEParser#block.
-    # TODO: w niektórych blokach musimy ignorować ws, ctx.* - może zwracać None - przynajmniej wg pylance | done
     def visitBlock(self, ctx: NOPEParser.BlockContext):
         self.main_scope.append("{\n")
+        from_i = len(self.main_scope)
         before = self.ignore_ws_active
         self.ignore_ws_active = True
 
         if ctx.code() is not None:
             self.visit(ctx.code())
+
+        for i in range(from_i, len(self.main_scope)):
+            self.main_scope[i] = '\t' + self.main_scope[i]
 
         self.ignore_ws_active = before
         self.main_scope.append("}\n")
@@ -103,7 +106,7 @@ class NopeCompiler(NOPEVisitor):
 
     # JK
     # Visit a parse tree produced by NOPEParser#if_stmt.
-    # TODO: Nie powinno się sprawdzać tokenów po tekście - powinno się sprawdzać czy typ to tokenu nazwanego ELSE
+    # TODO: DODAĆ TOKEN ELSE
     def visitIf_stmt(self, ctx: NOPEParser.If_stmtContext):
         if ctx.logic_expr() is None:
             raise NopeCompilationError("IF statement requires a logical expression.")
@@ -305,31 +308,30 @@ class NopeCompiler(NOPEVisitor):
         if ctx.opt_type() is not None and ctx.opt_type().getText() != "":
             var_type = ctx.opt_type().getText()
 
-        self.defined_vars.add(var_name)
-
         c_type = "int"
         if "FLOAT" in var_type:
             c_type = "float"
         elif "STR" in var_type:
             c_type = "char*"
         # TODO: obsługa tablic, np. INT[size]
-        self.main_scope.append(f"{c_type} {var_name};\n")
 
-        # 5. Sprawdzenie, czy jest to przypisanie (<<), czy czytanie z konsoli
+        is_new_var = var_name not in self.defined_vars
+        
+        if is_new_var:
+            self.defined_vars[var_name] = c_type
+            self.main_scope.append(f"{c_type} {var_name};")
+
         if ctx.ASSIGN() is not None:
             expr_val = str(self.visit(ctx.any_expr()))
-            self.main_scope.append(f"{var_name} = {expr_val};\n")
+            self.main_scope.append(f"{var_name} = {expr_val};")
         else:
-            # Wczytywanie z wyjścia ocenianego programu (tylko zarys, docelowo zrobimy to np. przez nope_read_str() / nope_read_int())
             if c_type == "char*":
-                self.main_scope.append(f"{var_name} = nope_read_str();\n")
-            else:
-                self.main_scope.append(
-                    f"// TODO: Wczytaj zmienna {var_type} ze stdout\n"
-                )
-
+                self.main_scope.append(f"{var_name} = nope_read_str();")
+            elif c_type == "int":
+                self.main_scope.append(f"{var_name} = nope_read_int();")
+            elif c_type == "float":
+                self.main_scope.append(f"{var_name} = nope_read_float();")
         return None
-
     # JK
     # Visit a parse tree produced by NOPEParser#check_macro.
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
@@ -339,12 +341,12 @@ class NopeCompiler(NOPEVisitor):
 
         condition = str(self.visit(ctx.logic_expr()))
 
-        self.main_scope.append(f"if (!({condition})) {{\n")
+        self.main_scope.append(f"if (!({condition})) {{")
         self.main_scope.append(
-            f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");\n'
+            f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");'
         )
-        self.main_scope.append("\treturn 1;\n")
-        self.main_scope.append("\t}\n")
+        self.main_scope.append("\treturn 1;")
+        self.main_scope.append("\t}")
         return None
 
     # JK
@@ -362,7 +364,7 @@ class NopeCompiler(NOPEVisitor):
                 args.append(str(self.visit(expr_ctx)))
 
         args_str = ", ".join(args)
-        self.main_scope.append(f"    {func_name}({args_str});\n")
+        self.main_scope.append(f"{func_name}({args_str});")
         return None
 
     # SK
@@ -399,26 +401,31 @@ class NopeCompiler(NOPEVisitor):
 
             for char in text:
                 c_char = self._char_to_c_char(char)
-                self.main_scope.append(f"    nope_expect_char({c_char});\n")
+                self.main_scope.append(f"nope_expect_char({c_char});")
             return None
 
         if ctx.ID() is not None:
             var_name = ctx.ID().getText()
             if var_name in self.defined_vars:
-                self.main_scope.append(
-                    f"    // TODO: Porównaj wyjście ze zmienną '{var_name}'\n"
-                )
+                c_type = self.defined_vars[var_name]
+                
+                if c_type == "int":
+                    self.main_scope.append(f"nope_expect_int({var_name});")
+                elif c_type == "float":
+                    self.main_scope.append(f"nope_expect_float({var_name});")
+                elif c_type == "char*":
+                    self.main_scope.append(f"nope_expect_str({var_name});")
             else:
                 for char in var_name:
                     c_char = self._char_to_c_char(char)
-                    self.main_scope.append(f"    nope_expect_char({c_char});\n")
+                    self.main_scope.append(f"nope_expect_char({c_char});")
             return None
 
         if ctx.NUMB() is not None:
             text = ctx.NUMB().getText()
             for char in text:
                 c_char = self._char_to_c_char(char)
-                self.main_scope.append(f"    nope_expect_char({c_char});\n")
+                self.main_scope.append(f"nope_expect_char({c_char});")
             return None
 
     # JK
@@ -444,9 +451,9 @@ class NopeCompiler(NOPEVisitor):
     def visitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
         text = ctx.getText()
         if text == "SPACE":
-            self.main_scope.append("    nope_expect_char(' ');\n")
+            self.main_scope.append("nope_expect_char(' ');")
         elif text == "ENDL":
-            self.main_scope.append("    nope_expect_char('\\n');\n")
+            self.main_scope.append("nope_expect_char('\\n');\n")
         return None
 
     # SK

@@ -3,21 +3,13 @@
 int main() {
 	nope_init();
 	int x;
-
-	// TODO: Wczytaj zmienna INT ze stdout
-
+	x = nope_read_int();
 	int y;
-
-	// TODO: Wczytaj zmienna INT ze stdout
-
+	y = nope_read_int();
 	if (!((x   y) == 10)) {
-
 	            printf("[NOPE] Failed test on condition: CHECK((x   y) == 10)\n");
-
 		return 1;
-
 		}
-
 	nope_cleanup();
 	return 0;
 }

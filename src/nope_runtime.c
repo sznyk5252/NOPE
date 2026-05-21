@@ -55,12 +55,6 @@ void nope_range_float(float val, float min, float max) {
     }
 }
 
-void nope_assert_equal(const char* val1, const char* val2) {
-    if (strcmp(val1, val2) != 0) {
-        fprintf(stderr, "Error: assertion failed, '%s' != '%s'\n", val1, val2);
-        exit(1);
-    }
-}
 
 char* nope_read_line(void) {
     char* line = NULL;
@@ -219,8 +213,6 @@ char* nope_read_str(void) {
     if (nope_ignore_ws_active) {
         nope_skip_whitespace();
     }
-
-    // Szukamy końca stringa (pierwszy biały znak lub null)
     char *end_ptr = nope_cursor;
     while (*end_ptr != '\0' && *end_ptr != ' ' && *end_ptr != '\t' && *end_ptr != '\n' && *end_ptr != '\r') {
         end_ptr++;
@@ -241,6 +233,93 @@ char* nope_read_str(void) {
     strncpy(result, nope_cursor, length);
     result[length] = '\0';
     
-    nope_cursor = end_ptr; // Przesuwamy kursor
+    nope_cursor = end_ptr; 
     return result;
+}
+
+int nope_read_int(void) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+    
+    char *endptr;
+    long val = strtol(nope_cursor, &endptr, 10);
+    
+    if (endptr == nope_cursor) {
+        nope_fail("Expected to read an INT, but found invalid characters/EOF", "Integer", "NaN");
+    }
+    
+    nope_cursor = endptr; // Aktualizacja głównego kursora!
+    return (int)val;
+}
+
+float nope_read_float(void) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+    
+    char *endptr;
+    float val = strtof(nope_cursor, &endptr);
+    
+    if (endptr == nope_cursor) {
+        nope_fail("Expected to read a FLOAT, but found invalid characters/EOF", "Float", "NaN");
+    }
+    
+    nope_cursor = endptr;
+    return val;
+}
+
+void nope_expect_int(int expected) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+    
+    char *endptr;
+    long val = strtol(nope_cursor, &endptr, 10);
+    
+    if (endptr == nope_cursor) {
+        char exp_str[32];
+        snprintf(exp_str, sizeof(exp_str), "%d", expected);
+        nope_fail("Expected integer to match variable, but found text/EOF", exp_str, "NaN");
+    }
+    
+    if ((int)val != expected) {
+        char exp_str[32], got_str[32];
+        snprintf(exp_str, sizeof(exp_str), "%d", expected);
+        snprintf(got_str, sizeof(got_str), "%ld", val);
+        nope_fail("Variable (INT) match failed", exp_str, got_str);
+    }
+    
+    nope_cursor = endptr;
+}
+
+void nope_expect_float(float expected) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+    
+    char *endptr;
+    float val = strtof(nope_cursor, &endptr);
+    
+    if (endptr == nope_cursor) {
+        char exp_str[32];
+        snprintf(exp_str, sizeof(exp_str), "%f", expected);
+        nope_fail("Expected float to match variable, but found text/EOF", exp_str, "NaN");
+    }
+    
+    float diff = val - expected;
+    if (diff < 0) diff = -diff; 
+    
+    if (diff > 0.0001f) {
+        char exp_str[32], got_str[32];
+        snprintf(exp_str, sizeof(exp_str), "%f", expected);
+        snprintf(got_str, sizeof(got_str), "%f", val);
+        nope_fail("Variable (FLOAT) match failed", exp_str, got_str);
+    }
+    nope_cursor = endptr;
+}
+
+void nope_expect_str(const char *expected) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+    
+    size_t len = strlen(expected);
+    if (strncmp(nope_cursor, expected, len) == 0) {
+        nope_cursor += len;
+    } else {
+        char got_str[64];
+        snprintf(got_str, sizeof(got_str), "%.*s", (int)len, nope_cursor);
+        nope_fail("Variable (STR) match failed", expected, got_str);
+    }
 }
