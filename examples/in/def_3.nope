@@ -1,6 +1,6 @@
 DEF validate_bounds(INT min_val, INT max_val, STR error_msg) {
     VAR(INT value)
     IF (value < min_val OR value > max_val) {
-        THROWS(error_msg)
+        error_msg
     }
 }

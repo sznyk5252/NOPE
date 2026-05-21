@@ -8,7 +8,6 @@ int main(){
 	int step_size;
 	step_size = nope_read_int();
 	nope_expect_char('\n');
-	nope_expect_char('\n');
 	for (int i = 0; i < (limit   2); i += (step_size   1)) 
 	{
 		nope_expect_char('P');

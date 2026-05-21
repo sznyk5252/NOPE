@@ -2,7 +2,6 @@
 
 int main(){
 	nope_init();
-	nope_expect_char('\n');
 	for (int i = 0; i < 10; i += 1) 
 	{
 		nope_expect_char('I');

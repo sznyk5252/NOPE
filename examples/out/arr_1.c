@@ -2,13 +2,10 @@
 
 int main(){
 	nope_init();
-	nope_expect_char('\n');
 	int size;
 	size = nope_read_int();
 	nope_expect_char('\n');
-	nope_expect_char('\n');
 	float buffer[size];
-	nope_expect_char('\n');
 	for (int i = 0; i < size; i += 1) 
 	{
 		float current_val;

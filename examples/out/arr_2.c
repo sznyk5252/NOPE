@@ -6,7 +6,6 @@ void check_grid(int grid[10][10]) {	for (int i = 0; i < 10; i += 1) 	{		for (int
 
 int main(){
 	nope_init();
-	nope_expect_char('\n');
 	nope_cleanup();
 	return 0;
 }
