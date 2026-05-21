@@ -122,6 +122,16 @@ To see the results, use ```uv run main.py -h```
 
 If you want to change the compiler change file `src/NopeCompiler.py`, Do **NOT** change `src/NOPEVisitor.py`
 
+To compile all .nope examples to .c files use:
+```
+uv run main.py examples/in/*.nope -co examples/out 
+```
+
+To compile all .c examples to executables use somethink like this:
+```
+for f in examples/out/*.c; do gcc "$f" src/nope_runtime.c -I src -o "examples/exe/$(basename "${f%.c}").exe"; done
+```
+
 # 8. Learn NOPE
 Visit the [quick start guide](docs/quick_start.md)
 
