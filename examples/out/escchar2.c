@@ -1,7 +1,16 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
+	nope_expect_char('\'');
+	nope_expect_char('\n');
+	nope_expect_char('\\');
+	nope_expect_char('\\');
+	nope_expect_char('\n');
+	nope_expect_char('#');
+	nope_expect_char('\n');
+	nope_expect_char('\\');
+	nope_expect_char('n');
 	nope_cleanup();
 	return 0;
 }

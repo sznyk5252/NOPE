@@ -1,12 +1,12 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
 	int x;
 	x = nope_read_int();
+	nope_expect_char('\n');
 	if (x > 10) 
 	{
-
 		if (!(x != 100)) {
 		            printf("[NOPE] Failed test on condition: CHECK(x != 100)\n");
 			return 1;
@@ -60,7 +60,6 @@ int main() {
 		nope_expect_char('0');
 		nope_expect_char('0');
 	}
-
 	nope_cleanup();
 	return 0;
 }

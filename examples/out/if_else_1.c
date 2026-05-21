@@ -1,12 +1,12 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
 	int score;
 	score = nope_read_int();
+	nope_expect_char('\n');
 	if (score >= 50) 
 	{
-
 		nope_expect_char('P');
 		nope_expect_char('a');
 		nope_expect_char('s');
@@ -16,10 +16,8 @@ int main() {
 		nope_expect_char('\n');
 
 	}
-
 	    else 
 	{
-
 		nope_expect_char('F');
 		nope_expect_char('a');
 		nope_expect_char('i');
@@ -29,7 +27,6 @@ int main() {
 		nope_expect_char('\n');
 
 	}
-
 	nope_cleanup();
 	return 0;
 }

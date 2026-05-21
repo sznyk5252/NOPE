@@ -1,17 +1,17 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
 	int x;
 	x = nope_read_int();
+	nope_expect_char('\n');
 	int y;
 	y = nope_read_int();
+	nope_expect_char('\n');
 	if (x > 0) 
 	{
-
 		if (y > 0) 
 		{
-
 			nope_expect_char('F');
 			nope_expect_char('i');
 			nope_expect_char('r');
@@ -52,10 +52,8 @@ int main() {
 			nope_expect_char('e');
 			nope_expect_char('m');
 		}
-
 		    else 
 		{
-
 			nope_expect_char('F');
 			nope_expect_char('o');
 			nope_expect_char('u');
@@ -97,12 +95,9 @@ int main() {
 			nope_expect_char('e');
 			nope_expect_char('m');
 		}
-
 	}
-
 	    else 
 	{
-
 		nope_expect_char('L');
 		nope_expect_char('e');
 		nope_expect_char('f');
@@ -138,7 +133,6 @@ int main() {
 		nope_expect_char('e');
 		nope_expect_char('m');
 	}
-
 	nope_cleanup();
 	return 0;
 }

@@ -4,16 +4,21 @@ char *nope_input_buffer = NULL;
 char *nope_cursor = NULL;
 bool nope_ignore_ws_active = false;
 
-void nope_anyof(const char* val, const char* of[], int of_size){
+void nope_anyof(const char* of[], int of_size) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+
     for (int i = 0; i < of_size; i++) {
-        if (strcmp(val, of[i]) == 0) {
+        size_t len = strlen(of[i]);
+        if (strncmp(nope_cursor, of[i], len) == 0) {
+            nope_cursor += len;
             return;
         }
     }
-    fprintf(stderr, "Error: value '%s' not in allowed list\n", val);
-    exit(1);
+    
+    char got_str[32];
+    snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
+    nope_fail("ANYOF match failed", "One of the provided options", got_str);
 }
-
 void nope_check(bool condition) {
     if (!condition) {
         fprintf(stderr, "Error: check failed\n");
@@ -21,26 +26,41 @@ void nope_check(bool condition) {
     }
 }
 
-void nope_match(const char* val, const char* pattern)
-{
+void nope_match(const char* pattern) {
+    if (nope_ignore_ws_active) nope_skip_whitespace();
+
     regex_t regex;
     int reti;
 
+    // REG_EXTENDED dla potężniejszych regexów
     reti = regcomp(&regex, pattern, REG_EXTENDED);
     if (reti) {
-        fprintf(stderr, "Error: Could not compile regex\n");
+        fprintf(stderr, "[NOPE SYSTEM ERROR] Could not compile regex: %s\n", pattern);
         exit(1);
     }
 
-    reti = regexec(&regex, val, 0, NULL, 0);
+    // regmatch_t pmatch[1] pozwala nam wyciągnąć początek i koniec dopasowania
+    regmatch_t pmatch[1];
+    reti = regexec(&regex, nope_cursor, 1, pmatch, 0);
     regfree(&regex);
 
     if (reti == REG_NOMATCH) {
-        fprintf(stderr, "Error: value '%s' does not match pattern '%s'\n", val, pattern);
-        exit(1);
+        // Obcinamy output, żeby nie wypisać całego pozostałego bufora
+        char got_str[32];
+        snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
+        nope_fail("Regex pattern match failed", pattern, got_str);
     }
-}
+    
+    // Upewniamy się, że dopasowanie zaczyna się dokładnie w miejscu kursora!
+    if (pmatch[0].rm_so != 0) {
+        char got_str[32];
+        snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
+        nope_fail("Regex pattern matched, but not at the current position", pattern, got_str);
+    }
 
+    // Przesuwamy kursor o długość dopasowania
+    nope_cursor += pmatch[0].rm_eo;
+}
 void nope_range_int(int val, int min, int max) {
     if (val < min || val > max) {
         fprintf(stderr, "Error: value %d out of range [%d, %d]\n", val, min, max);
@@ -53,49 +73,6 @@ void nope_range_float(float val, float min, float max) {
         fprintf(stderr, "Error: value %f out of range [%f, %f]\n", val, min, max);
         exit(1);
     }
-}
-
-
-char* nope_read_line(void) {
-    char* line = NULL;
-    size_t len = 0;
-    if (getline(&line, &len, stdin) == -1) {
-        free(line);
-        return NULL;
-    }
-    return line;
-}
-
-char** nope_split_space(const char* line, int* out_size) {
-    char* line_copy = strdup(line);
-    
-    int capacity = 10;
-    int count = 0;
-    char** tokens = malloc(capacity * sizeof(char*));
-
-    char* token = strtok(line_copy, " \n");
-    while (token != NULL) {
-        if (count >= capacity) {
-            capacity *= 2;
-            tokens = realloc(tokens, capacity * sizeof(char*));
-        }
-        
-        tokens[count++] = strdup(token);
-        
-        token = strtok(NULL, " \n");
-    }
-
-    free(line_copy); 
-    *out_size = count;
-    return tokens;
-}
-
-void nope_free_split(char** tokens, int size) {
-    if (tokens == NULL) return;
-    for (int i = 0; i < size; i++) {
-        free(tokens[i]); 
-    }
-    free(tokens); 
 }
 
 static void trim_trailing_spaces(char *str) {

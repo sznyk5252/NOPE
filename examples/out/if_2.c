@@ -1,12 +1,12 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
 	float temp;
 	temp = nope_read_float();
+	nope_expect_char('\n');
 	if (!(temp <= 0.0) && temp < 100.0) 
 	{
-
 		nope_expect_char('W');
 		nope_expect_char('a');
 		nope_expect_char('t');
@@ -35,7 +35,6 @@ int main() {
 		nope_expect_char('e');
 		nope_expect_char(' ');
 	}
-
 	nope_cleanup();
 	return 0;
 }

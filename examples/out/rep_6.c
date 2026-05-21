@@ -1,14 +1,16 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
 	int limit;
 	limit = nope_read_int();
+	nope_expect_char('\n');
 	int step_size;
 	step_size = nope_read_int();
+	nope_expect_char('\n');
+	nope_expect_char('\n');
 	for (int i = 0; i < (limit   2); i += (step_size   1)) 
 	{
-
 		nope_expect_char('P');
 		nope_expect_char('r');
 		nope_expect_char('o');
@@ -31,7 +33,6 @@ int main() {
 		nope_expect_char('\n');
 
 	}
-
 	nope_cleanup();
 	return 0;
 }

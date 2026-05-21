@@ -24,13 +24,13 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope: list[str] = ["nope_init();"]
         self.global_scope: list[str] = [
             '#include "nope_runtime.h"\n',
-            "int main() {",
         ]
 
         self.visit(tree)
 
         full_code = []
         full_code.extend(self.global_scope)
+        full_code.append('int main(){')
 
         self.main_scope.append("nope_cleanup();")
         for line in self.main_scope:
@@ -56,6 +56,14 @@ class NopeCompiler(NOPEVisitor):
         if child is None:
             raise NopeCompilationError("Invalid escape sequence")
 
+        if isinstance(child, NOPEParser.WsContext):
+            return None
+
+        text = child.getText()
+        for char in text:
+            c_char = self._char_to_c_char(char)
+            self.main_scope.append(f"nope_expect_char({c_char});")
+
         escaped_char = child.getText()
 
         match escaped_char:
@@ -64,15 +72,14 @@ class NopeCompiler(NOPEVisitor):
             case "\n":
                 pass
             case "\\":
-                # TODO: CO TO?
-                self.main_scope.a
+                self.main_scope.append("nope_expect_char('\\\\');")
 
         return self.visitChildren(ctx)
 
     # JK
     # Visit a parse tree produced by NOPEParser#block.
     def visitBlock(self, ctx: NOPEParser.BlockContext):
-        self.main_scope.append("{\n")
+        self.main_scope.append("{")
         from_i = len(self.main_scope)
         before = self.ignore_ws_active
         self.ignore_ws_active = True
@@ -84,11 +91,12 @@ class NopeCompiler(NOPEVisitor):
             self.main_scope[i] = "\t" + self.main_scope[i]
 
         self.ignore_ws_active = before
-        self.main_scope.append("}\n")
+        self.main_scope.append("}")
         return None
 
     # JK
     # Visit a parse tree produced by NOPEParser#block_with_return.
+    # TODO: ujednolicić z zwykłem blokiem
     def visitBlock_with_return(self, ctx: NOPEParser.Block_with_returnContext):
         self.main_scope.append("{\n")
         if ctx.code() is not None:
@@ -162,7 +170,60 @@ class NopeCompiler(NOPEVisitor):
     # SK
     # Visit a parse tree produced by NOPEParser#def.
     def visitDef(self, ctx: NOPEParser.DefContext):
-        return self.visitChildren(ctx)
+        func_name = ctx.ID(0).getText()
+        
+        # 1. Zapisujemy obecny stan (pozwala wrócić do main() po przetworzeniu funkcji)
+        old_scope = self.main_scope
+        old_vars = self.defined_vars.copy()
+        
+        # 2. Tworzymy nowy, pusty scope na kod wewnątrz definicji funkcji
+        self.main_scope = []
+        
+        # 3. Parsowanie parametrów funkcji
+        params_str_list = []
+        
+        # ctx.ID() zwraca listę identyfikatorów. Od indeksu 1 zaczynają się parametry.
+        for i in range(len(ctx.ID()) - 1):
+            param_name = ctx.ID(i + 1).getText()
+            
+            # W gramatyce dla każdego parametru (ID) występuje (opcjonalny) typ opt_type
+            param_type_ctx = ctx.opt_type(i)
+            param_type_str = param_type_ctx.getText().strip() if param_type_ctx else ""
+            
+            c_type, dims, is_array = self._parse_type(param_type_str)
+            
+            # W języku C argumenty tablicowe wyglądają tak: int grid[10][10]
+            params_str_list.append(f"{c_type} {param_name}{dims}")
+            
+            # Rejestrujemy argument w pamięci jako lokalną zmienną, aby VAR wewnątrz funkcji go "widział"
+            self.defined_vars[param_name] = f"{c_type} array" if is_array else c_type
+
+        # 4. Parsowanie zwracanego typu (rtype)
+        ret_c_type = "void"
+        if ctx.rtype() is not None:
+            # ctx.rtype().getText() zwróci np. '->INT'. Wycinamy strzałkę.
+            ret_type_str = ctx.rtype().getText().replace("->", "").strip()
+            ret_c_type, _, _ = self._parse_type(ret_type_str)
+
+        # 5. Generowanie sygnatury i dorzucenie jej na start nowego scope'a
+        signature = f"{ret_c_type} {func_name}({', '.join(params_str_list)}) "
+        self.main_scope.append(signature)
+
+        # 6. Odwiedzenie bloku kodu (wygeneruje to klamry {} i kod wewnętrzny prosto do self.main_scope)
+        if ctx.block() is not None:
+            self.visit(ctx.block())
+        elif ctx.block_with_return() is not None:
+            self.visit(ctx.block_with_return())
+
+        # 7. Złączenie całego wygenerowanego kodu i wyrzucenie do przestrzeni globalnej!
+        function_code = "".join(self.main_scope)
+        self.global_scope.append(function_code + "\n\n")
+
+        # 8. Przywrócenie głównego środowiska (koniec zamrożenia)
+        self.main_scope = old_scope
+        self.defined_vars = old_vars
+        
+        return None
 
     # SK
     # Visit a parse tree produced by NOPEParser#rtype.
@@ -304,37 +365,72 @@ class NopeCompiler(NOPEVisitor):
     # Visit a parse tree produced by NOPEParser#var_macro.
     def visitVar_macro(self, ctx: NOPEParser.Var_macroContext):
         var_name = ctx.ID().getText()
-        var_type = "INT"
-        if ctx.opt_type() is not None and ctx.opt_type().getText() != "":
-            var_type = ctx.opt_type().getText()
 
-        c_type = "int"
-        if "FLOAT" in var_type:
-            c_type = "float"
-        elif "STR" in var_type:
-            c_type = "char*"
-        # TODO: obsługa tablic, np. INT[size]
-
+        indices = []
+        if ctx.expr() is not None:
+            indices = [str(self.visit(e)) for e in ctx.expr()]
+            
+        index_suffix = "".join(f"[{idx}]" for idx in indices)
+        
+        # Sprawdzamy czy to zupełnie nowa zmienna/tablica
         is_new_var = var_name not in self.defined_vars
-
+        
         if is_new_var:
-            self.defined_vars[var_name] = c_type
-            self.main_scope.append(f"{c_type} {var_name};")
+            var_type_raw = "INT"
+            if ctx.opt_type() is not None and ctx.opt_type().getText().strip() != "":
+                var_type_raw = ctx.opt_type().getText().strip()
+                
+            # Oddzielamy typ bazowy od wymiarów (np. "FLOAT[size][10]" -> "FLOAT" i "[size][10]")
+            base_nope_type = var_type_raw.split('[')[0].strip()
+            
+            dims = ""
+            if '[' in var_type_raw:
+                dims = var_type_raw[var_type_raw.index('['):].strip()
+                
+            is_array = len(dims) > 0
+            
+            # Mapowanie na C
+            c_type = "int"
+            if "FLOAT" in base_nope_type:
+                c_type = "float"
+            elif "STR" in base_nope_type:
+                c_type = "char*"
+                
+            # Zapisujemy typ w pamięci (z flagą "array", jeśli to tablica)
+            self.defined_vars[var_name] = f"{c_type} array" if is_array else c_type
+            
+            # Generowanie deklaracji. Dla tablic będzie to tzw. VLA (Variable Length Array)
+            self.main_scope.append(f"{c_type} {var_name}{dims};")
+            
+            # Zgodnie z dokumentacją: całych tablic NIE wczytujemy niejawnie ze stdout!
+            if is_array:
+                return None
+
+        # 2. W tym miejscu wiemy, że chcemy wykonać odczyt ze stdout lub przypisanie <<
+        # Działa to dla zwykłych zmiennych oraz dla pojedynczych elementów tablicy
+        stored_type = self.defined_vars[var_name]
+        base_c_type = stored_type.replace(" array", "")
+        
+        assign_target = f"{var_name}{index_suffix}"
 
         if ctx.ASSIGN() is not None:
+            # Przypisanie jawne: VAR(buffer[i]) << current_val
             expr_val = str(self.visit(ctx.any_expr()))
-            self.main_scope.append(f"{var_name} = {expr_val};")
+            self.main_scope.append(f"{assign_target} = {expr_val};")
         else:
-            if c_type == "char*":
-                self.main_scope.append(f"{var_name} = nope_read_str();")
-            elif c_type == "int":
-                self.main_scope.append(f"{var_name} = nope_read_int();")
-            elif c_type == "float":
-                self.main_scope.append(f"{var_name} = nope_read_float();")
+            # Wczytanie z potoku na wskazane miejsce: VAR(buffer[i])
+            if base_c_type == "char*":
+                self.main_scope.append(f"{assign_target} = nope_read_str();")
+            elif base_c_type == "int":
+                self.main_scope.append(f"{assign_target} = nope_read_int();")
+            elif base_c_type == "float":
+                self.main_scope.append(f"{assign_target} = nope_read_float();")
+
         return None
 
     # JK
     # Visit a parse tree produced by NOPEParser#check_macro.
+    # TODO: korzystaj z funki z nope_runtime.h - między innymi z nope_match, to samo dla innych  
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
         # TODO: pylance wskazuje na możliwośc None
         if ctx.logic_expr() is None:
@@ -371,7 +467,17 @@ class NopeCompiler(NOPEVisitor):
     # SK
     # Visit a parse tree produced by NOPEParser#ignore_ws.
     def visitIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
-        return self.visitChildren(ctx)
+        before = self.ignore_ws_active
+        self.ignore_ws_active = True
+        self.main_scope.append("nope_ignore_ws_active = true;")
+        if ctx.code() is not None:
+            self.visit(ctx.code())
+
+        self.ignore_ws_active = before        
+        c_bool = "false"
+        self.main_scope.append(f"nope_ignore_ws_active = {c_bool};")
+        
+        return None
 
     def _char_to_c_char(self, char: str) -> str:
         """
@@ -388,6 +494,28 @@ class NopeCompiler(NOPEVisitor):
         if char == "\\":
             return "'\\\\'"
         return f"'{char}'"
+    
+    def _parse_type(self, nope_type: str) -> tuple[str, str, bool]:
+        """
+        Parses a NOPE type string into C type components.
+        Returns a tuple: (base_c_type, dimensions_string, is_array_flag)
+        """
+        nope_type = nope_type.strip()
+        if not nope_type:
+            return "int", "", False
+            
+        base = nope_type.split('[')[0].strip()
+        dims = ""
+        if '[' in nope_type:
+            dims = nope_type[nope_type.index('['):].strip()
+            
+        c_type = "int"
+        if "FLOAT" in base:
+            c_type = "float"
+        elif "STR" in base:
+            c_type = "char*"
+            
+        return c_type, dims, len(dims) > 0
 
     # SK
     # Visit a parse tree produced by NOPEParser#input.
@@ -442,11 +570,14 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#ws.
     def visitWs(self, ctx: NOPEParser.WsContext):
+        if self.ignore_ws_active:
+            return None    
         text = ctx.getText()
-        if text.strip():
-            self.main_scope.append(text)
+        for char in text:
+            c_char = self._char_to_c_char(char)
+            self.main_scope.append(f"nope_expect_char({c_char});")
         return None
-
+    
     # JK
     # Visit a parse tree produced by NOPEParser#expl_ws.
     def visitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):

@@ -1,10 +1,10 @@
 #include "nope_runtime.h"
 
-int main() {
+int main(){
 	nope_init();
+	nope_expect_char('\n');
 	for (int idx = 5; idx < 1; idx += 1) 
 	{
-
 		int x;
 		x = nope_read_int();
 		nope_expect_char(' ');
@@ -13,7 +13,6 @@ int main() {
 			return 1;
 			}
 	}
-
 	nope_cleanup();
 	return 0;
 }

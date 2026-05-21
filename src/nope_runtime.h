@@ -16,18 +16,14 @@ void nope_check(bool condition);
 void nope_match(const char* val, const char* pattern);
 void nope_range_int(int val, int min, int max);
 void nope_range_float(float val, float min, float max);
-char* nope_read_line(void);
-char** nope_split_space(const char* line, int* out_size);
-void nope_free_split(char** tokens, int size);
 
 void nope_init(void);
 void nope_cleanup(void);
 void nope_fail(const char *reason, const char *expected, const char *got);
-char* nope_read_str(void);
 void nope_expect_char(char expected);
 void nope_skip_whitespace(void);
 
-
+char* nope_read_str(void);
 int nope_read_int(void);
 float nope_read_float(void);
 
