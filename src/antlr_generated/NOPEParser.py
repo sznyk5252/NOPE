@@ -6525,6 +6525,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def program(self):
+
         localctx = NOPEParser.ProgramContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_program)
         try:
@@ -6622,6 +6623,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def code(self):
+
         localctx = NOPEParser.CodeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_code)
         self._la = 0  # Token type
@@ -6763,6 +6765,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def input_in_escape(self):
+
         localctx = NOPEParser.Input_in_escapeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_input_in_escape)
         try:
@@ -6875,6 +6878,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def block(self):
+
         localctx = NOPEParser.BlockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_block)
         try:
@@ -6941,6 +6945,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def block_with_return(self):
+
         localctx = NOPEParser.Block_with_returnContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_block_with_return)
         self._la = 0  # Token type
@@ -7029,6 +7034,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def if_stmt(self):
+
         localctx = NOPEParser.If_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_if_stmt)
         self._la = 0  # Token type
@@ -7231,6 +7237,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def rep_loop(self):
+
         localctx = NOPEParser.Rep_loopContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_rep_loop)
         self._la = 0  # Token type
@@ -7416,6 +7423,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def def_(self):
+
         localctx = NOPEParser.DefContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_def)
         self._la = 0  # Token type
@@ -7659,6 +7667,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def rtype(self):
+
         localctx = NOPEParser.RtypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_rtype)
         self._la = 0  # Token type
@@ -7723,6 +7732,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def any_expr(self):
+
         localctx = NOPEParser.Any_exprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_any_expr)
         try:
@@ -8339,6 +8349,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def opt_type(self):
+
         localctx = NOPEParser.Opt_typeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_opt_type)
         self._la = 0  # Token type
@@ -8406,6 +8417,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def macro_call(self):
+
         localctx = NOPEParser.Macro_callContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_macro_call)
         try:
@@ -8501,6 +8513,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def range_macro(self):
+
         localctx = NOPEParser.Range_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_range_macro)
         self._la = 0  # Token type
@@ -8603,6 +8616,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def match_macro(self):
+
         localctx = NOPEParser.Match_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_match_macro)
         self._la = 0  # Token type
@@ -8696,6 +8710,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def anyof_macro(self):
+
         localctx = NOPEParser.Anyof_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_anyof_macro)
         self._la = 0  # Token type
@@ -8834,6 +8849,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def var_macro(self):
+
         localctx = NOPEParser.Var_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 34, self.RULE_var_macro)
         self._la = 0  # Token type
@@ -8979,6 +8995,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def check_macro(self):
+
         localctx = NOPEParser.Check_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_check_macro)
         self._la = 0  # Token type
@@ -9075,6 +9092,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def custom_macro(self):
+
         localctx = NOPEParser.Custom_macroContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_custom_macro)
         self._la = 0  # Token type
@@ -9190,6 +9208,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def ignore_ws(self):
+
         localctx = NOPEParser.Ignore_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_ignore_ws)
         try:
@@ -9249,6 +9268,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def input_(self):
+
         localctx = NOPEParser.InputContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_input)
         try:
@@ -9316,6 +9336,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def comment(self):
+
         localctx = NOPEParser.CommentContext(self, self._ctx, self.state)
         self.enterRule(localctx, 44, self.RULE_comment)
         try:
@@ -9363,6 +9384,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def single_ws(self):
+
         localctx = NOPEParser.Single_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 46, self.RULE_single_ws)
         self._la = 0  # Token type
@@ -9422,6 +9444,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def ws(self):
+
         localctx = NOPEParser.WsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 48, self.RULE_ws)
         self._la = 0  # Token type
@@ -9487,6 +9510,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def expl_ws(self):
+
         localctx = NOPEParser.Expl_wsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 50, self.RULE_expl_ws)
         self._la = 0  # Token type
@@ -9657,6 +9681,7 @@ class NOPEParser(Parser):
                 return visitor.visitChildren(self)
 
     def comparator(self):
+
         localctx = NOPEParser.ComparatorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 54, self.RULE_comparator)
         self._la = 0  # Token type

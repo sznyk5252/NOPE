@@ -478,7 +478,9 @@ class NopeCompiler(NOPEVisitor):
         c_msg = self._to_c_string(f"CHECK({condition})")
 
         self.main_scope.append(f"if (!({condition})) {{")
-        self.main_scope.append(f'\tnope_fail("CHECK assertion failed", {c_msg}, "false");')
+        self.main_scope.append(
+            f'\tnope_fail("CHECK assertion failed", {c_msg}, "false");'
+        )
         self.main_scope.append("}")
         return None
 
