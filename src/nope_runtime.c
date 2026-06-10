@@ -215,6 +215,13 @@ char* nope_read_str(void) {
 }
 
 int nope_read_int(void) {
+    if (!nope_ignore_ws_active) {
+        if (*nope_cursor == ' ' || *nope_cursor == '\t' ||
+            *nope_cursor == '\n' || *nope_cursor == '\r') {
+            nope_fail("Unexpected whitespace before number (strict mode)", "digit", "whitespace");
+        }
+    }
+
     if (nope_ignore_ws_active) nope_skip_whitespace();
     
     char *endptr;
@@ -229,6 +236,12 @@ int nope_read_int(void) {
 }
 
 float nope_read_float(void) {
+    if (!nope_ignore_ws_active) {
+        if (*nope_cursor == ' ' || *nope_cursor == '\t' ||
+            *nope_cursor == '\n' || *nope_cursor == '\r') {
+            nope_fail("Unexpected whitespace before number (strict mode)", "digit", "whitespace");
+        }
+    }
     if (nope_ignore_ws_active) nope_skip_whitespace();
     
     char *endptr;
@@ -243,6 +256,13 @@ float nope_read_float(void) {
 }
 
 void nope_expect_int(int expected) {
+    if (!nope_ignore_ws_active) {
+        if (*nope_cursor == ' ' || *nope_cursor == '\t' ||
+            *nope_cursor == '\n' || *nope_cursor == '\r') {
+            nope_fail("Unexpected whitespace before number (strict mode)", "digit", "whitespace");
+        }
+    }
+
     if (nope_ignore_ws_active) nope_skip_whitespace();
     
     char *endptr;
@@ -265,6 +285,13 @@ void nope_expect_int(int expected) {
 }
 
 void nope_expect_float(float expected) {
+    if (!nope_ignore_ws_active) {
+        if (*nope_cursor == ' ' || *nope_cursor == '\t' ||
+            *nope_cursor == '\n' || *nope_cursor == '\r') {
+            nope_fail("Unexpected whitespace before number (strict mode)", "digit", "whitespace");
+        }
+    }
+    
     if (nope_ignore_ws_active) nope_skip_whitespace();
     
     char *endptr;

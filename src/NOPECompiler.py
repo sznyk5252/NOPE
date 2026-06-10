@@ -162,8 +162,17 @@ class NopeCompiler(NOPEVisitor):
         loop_str = f"for (int {iterator_name} = {lower_bound}; {iterator_name} < {upper_bound}; {iterator_name} += {step}) "
         self.main_scope.append(loop_str)
 
+        had_iter = iterator_name in self.defined_vars
+        old_val = self.defined_vars.get(iterator_name)
+        self.defined_vars[iterator_name] = "int"
+
         if ctx.block() is not None:
             self.visit(ctx.block())
+
+        if had_iter:
+            self.defined_vars[iterator_name] = old_val
+        else:
+            self.defined_vars.pop(iterator_name, None)
 
         return None
 
@@ -262,7 +271,16 @@ class NopeCompiler(NOPEVisitor):
         if exprs is not None and len(exprs) == 2:
             left = str(self.visit(exprs[0]))
             right = str(self.visit(exprs[1]))
-            operator = ctx.getChild(1).getText()
+            if ctx.MUL() is not None:
+                operator = "*"
+            elif ctx.DIV() is not None:
+                operator = "/"
+            elif ctx.ADD() is not None:
+                operator = "+"
+            elif ctx.SUB() is not None:
+                operator = "-"
+            else:
+                raise NopeCompilationError("Unknown binary operator in expression.")
             return f"({left} {operator} {right})"
 
         if ctx.LP() is not None and exprs is not None and len(exprs) > 0:
@@ -339,12 +357,26 @@ class NopeCompiler(NOPEVisitor):
 
         min_val = str(self.visit(exprs[0]))
         max_val = str(self.visit(exprs[1]))
-        return f"NOPE_RANGE({min_val}, {max_val})"
+
+        is_float = "." in min_val or "." in max_val
+        read_fn = "nope_read_float" if is_float else "nope_read_int"
+        range_fn = "nope_range_float" if is_float else "nope_range_int"
+
+        self.main_scope.append(f"{range_fn}({read_fn}(), {min_val}, {max_val});")
+        return None
 
     # SK
     # Visit a parse tree produced by NOPEParser#match_macro.
     def visitMatch_macro(self, ctx: NOPEParser.Match_macroContext):
-        return self.visitChildren(ctx)
+        if ctx.expr() is None:
+            raise NopeCompilationError("MATCH macro requires a pattern expression.")
+
+        pattern = str(self.visit(ctx.expr()))
+        if pattern.startswith("'") and pattern.endswith("'"):
+            pattern = pattern[1:-1]
+
+        self.main_scope.append(f"nope_match({self._to_c_string(pattern)});")
+        return None
 
     # JK
     # Visit a parse tree produced by NOPEParser#anyof_macro.
@@ -354,12 +386,18 @@ class NopeCompiler(NOPEVisitor):
         if not exprs:
             raise NopeCompilationError("ANYOF macro requires at least one expression.")
 
-        args = []
+        options = []
         for expr_ctx in exprs:
-            args.append(str(self.visit(expr_ctx)))
+            raw = str(self.visit(expr_ctx))
+            if raw.startswith("'") and raw.endswith("'"):
+                raw = raw[1:-1]
+            options.append(self._to_c_string(raw))
 
-        args_str = ", ".join(args)
-        return f"NOPE_ANYOF({args_str})"
+        options_str = ", ".join(options)
+        self.main_scope.append(
+            f"nope_anyof((const char*[]){{{options_str}}}, {len(options)});"
+        )
+        return None
 
     # SK
     # Visit a parse tree produced by NOPEParser#var_macro.
@@ -437,13 +475,11 @@ class NopeCompiler(NOPEVisitor):
             raise NopeCompilationError("CHECK macro requires a logical expression.")
 
         condition = str(self.visit(ctx.logic_expr()))
+        c_msg = self._to_c_string(f"CHECK({condition})")
 
         self.main_scope.append(f"if (!({condition})) {{")
-        self.main_scope.append(
-            f'            printf("[NOPE] Failed test on condition: CHECK({condition})\\n");'
-        )
-        self.main_scope.append("\treturn 1;")
-        self.main_scope.append("\t}")
+        self.main_scope.append(f'\tnope_fail("CHECK assertion failed", {c_msg}, "false");')
+        self.main_scope.append("}")
         return None
 
     # JK
@@ -516,6 +552,17 @@ class NopeCompiler(NOPEVisitor):
             c_type = "char*"
 
         return c_type, dims, len(dims) > 0
+
+    def _to_c_string(self, s: str) -> str:
+        """Zamienia tekst NOPE na bezpieczny literał "..." w C."""
+        escaped = (
+            s.replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("\n", "\\n")
+            .replace("\t", "\\t")
+            .replace("\r", "\\r")
+        )
+        return f'"{escaped}"'
 
     # SK
     # Visit a parse tree produced by NOPEParser#input.

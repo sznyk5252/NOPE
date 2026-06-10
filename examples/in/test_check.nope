@@ -1,0 +1,2 @@
+VAR(INT a)
+VAR(INT b)CHECK(a + b == 10)
