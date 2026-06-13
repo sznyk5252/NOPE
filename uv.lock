@@ -120,7 +120,7 @@ wheels = [
 [[package]]
 name = "nope"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "antlr4-python3-runtime" },
     { name = "antlr4-tools" },

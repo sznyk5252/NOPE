@@ -6,11 +6,11 @@ from antlr4 import *
 from antlr4.tree.Tree import TerminalNode
 import graphviz
 
-from src.GraphRenderer import GraphRenderer
-from src.antlr_generated.NOPELexer import NOPELexer
-from src.antlr_generated.NOPEParser import NOPEParser
-from src.NOPECompiler import NopeCompiler, NopeCompilationError
-from src.NOPELinter import NopeLinter
+from nope.GraphRenderer import GraphRenderer
+from nope.antlr_generated.NOPELexer import NOPELexer
+from nope.antlr_generated.NOPEParser import NOPEParser
+from nope.NOPECompiler import NopeCompiler, NopeCompilationError
+from nope.NOPELinter import NopeLinter
 
 
 def parse_arguments():

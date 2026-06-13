@@ -4,7 +4,7 @@ from antlr4 import *
 if "." in __name__:
     from .NOPEParser import NOPEParser
 else:
-    from NOPEParser import NOPEParser
+    from nope.NOPEParser import NOPEParser
 
 # This class defines a complete generic visitor for a parse tree produced by NOPEParser.
 
