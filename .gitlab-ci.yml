@@ -39,14 +39,15 @@ sync_readme:
     - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
     
+    - uv run build
     - |
       if [ -n "$(git status --porcelain)" ]; then
-        echo "Wykryto zmiany w plikach .md, aktualizuję repozytorium..."
+        echo "Wykryto zmiany w plikach aktualizuję repozytorium..."
         git commit -m "Automatic docs + grammar sync"
         
         git push -o ci.skip "https://project_${CI_PROJECT_ID}_bot:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:${CI_COMMIT_REF_NAME}
       else
-        echo "Wszystkie dokumenty są aktualne. Brak zmian."
+        echo "Wszystkie pliki są aktualne. Brak zmian."
       fi
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -62,3 +63,4 @@ sync_readme:
         - "src/nope_runtime.h"
         - "src/nope_runtime.c"
         - "src/NOPECompiler.py"
+        - "src/main.py"
