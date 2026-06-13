@@ -152,6 +152,8 @@ def compile_from_string(
     """
     Allows calling the NOPE compiler directly from other Python code,
     bypassing the CLI argument parsing.
+
+    Return path to executable if build is True. 
     """
     api_args = SimpleNamespace(
         no_compile=no_compile,
@@ -167,6 +169,13 @@ def compile_from_string(
 
     input_stream = InputStream(input_text)
     process_code(input_text, input_stream, output_name, api_args)
+    if build:
+        exe_out_dir_path = Path(exe_out_dir)
+        return exe_out_dir_path / f"{output_name}.exe"
+    return None
+    
+
+
 
 
 def compile_from_file(
@@ -181,10 +190,12 @@ def compile_from_file(
     graph_format: str = "png",
     view: bool = False,
     no_compile: bool = False,
-):
+) -> Path | None:
     """
     Reads NOPE source code from a file and compiles it directly from Python code,
     bypassing the CLI argument parsing.
+
+    Return path to executable if build is True. 
     """
     if isinstance(file_path, str):
         path = Path(file_path)
@@ -215,3 +226,9 @@ def compile_from_file(
 
     input_stream = InputStream(input_text)
     process_code(input_text, input_stream, output_name, api_args)
+    # returns the executable
+    if build:
+        exe_out_dir_path = Path(exe_out_dir)
+        return exe_out_dir_path / f"{output_name}.exe"
+    return None
+    
