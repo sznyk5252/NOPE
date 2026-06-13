@@ -2,6 +2,7 @@ import sys
 import subprocess
 from pathlib import Path
 from types import SimpleNamespace
+
 # from antlr4 import *
 from antlr4 import InputStream, CommonTokenStream
 import graphviz
@@ -146,7 +147,7 @@ def compile_from_string(
     g_out_dir: str = "graphs",
     graph_format: str = "png",
     view: bool = False,
-    no_compile: bool = False
+    no_compile: bool = False,
 ):
     """
     Allows calling the NOPE compiler directly from other Python code,
@@ -161,7 +162,7 @@ def compile_from_string(
         generate_graph=generate_graph,
         g_out_dir=g_out_dir,
         graph_format=graph_format,
-        view=view
+        view=view,
     )
 
     input_stream = InputStream(input_text)
@@ -179,7 +180,7 @@ def compile_from_file(
     g_out_dir: str = "graphs",
     graph_format: str = "png",
     view: bool = False,
-    no_compile: bool = False
+    no_compile: bool = False,
 ):
     """
     Reads NOPE source code from a file and compiles it directly from Python code,
@@ -189,7 +190,7 @@ def compile_from_file(
         path = Path(file_path)
     else:
         path = file_path
-    
+
     if not path.exists():
         raise FileNotFoundError(f"Source file not found: {path.resolve()}")
 
@@ -209,7 +210,7 @@ def compile_from_file(
         generate_graph=generate_graph,
         g_out_dir=g_out_dir,
         graph_format=graph_format,
-        view=view
+        view=view,
     )
 
     input_stream = InputStream(input_text)
