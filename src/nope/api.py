@@ -19,7 +19,7 @@ def process_code(
     input_stream: InputStream,
     output_name: str,
     args: any,
-    verbouse: bool = False
+    verbouse: bool = False,
 ):
     """Core logic to parse the stream, compile, and optionally generate graphs."""
 
@@ -160,7 +160,7 @@ def compile_from_string(
     Allows calling the NOPE compiler directly from other Python code,
     bypassing the CLI argument parsing.
 
-    Return path to executable if build is True. 
+    Return path to executable if build is True.
     """
     api_args = SimpleNamespace(
         no_compile=no_compile,
@@ -180,9 +180,6 @@ def compile_from_string(
         exe_out_dir_path = Path(exe_out_dir)
         return exe_out_dir_path / f"{output_name}.exe"
     return None
-    
-
-
 
 
 def compile_from_file(
@@ -203,7 +200,7 @@ def compile_from_file(
     Reads NOPE source code from a file and compiles it directly from Python code,
     bypassing the CLI argument parsing.
 
-    Return path to executable if build is True. 
+    Return path to executable if build is True.
     """
     if isinstance(file_path, str):
         path = Path(file_path)
@@ -239,4 +236,3 @@ def compile_from_file(
         exe_out_dir_path = Path(exe_out_dir)
         return exe_out_dir_path / f"{output_name}.exe"
     return None
-    
