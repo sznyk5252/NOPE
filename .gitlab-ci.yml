@@ -34,7 +34,7 @@ sync_readme:
     - ruff format ./
     - git add src/*
 
-    - uv run build
+    - uv build
 
     - rm graphs/*
     - uv run nope examples/in/*.nope -co examples/out -go graphs --generate-graph
