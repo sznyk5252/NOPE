@@ -5,12 +5,14 @@ DEF prints_separator() {
     ENDL
     'Result:' SPACE
 }
+
 ```
 ```
 DEF Custom_Range(expected, margin) {
     VAR(FLOAT result) SPACE
     CHECK(result >= expected - margin AND result <= expected + margin)
 }
+
 ```
 ```
 DEF validate_bounds(INT min_val, INT max_val, STR error_msg) {

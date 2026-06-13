@@ -16,8 +16,12 @@ IF (NOT temp <= 0.0 AND temp < 100.0) {
 }
 ```
 ```
-IF (MATCH('Critical error')) {
-    THROWS('The program threw an exception before terminating')
+VAR(a)
+IF (a > 0) {
+    a
+}ELSE{
+    VAR(b) << -a
+    b
 }
 ```
 ## if else:

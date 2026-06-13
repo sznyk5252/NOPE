@@ -68,6 +68,7 @@ REP (i, size) {
     ENDL
 }
 # Now we have values in the buffer - do with it what you want
+
 ```
 ```
 # Function accepting a 10x10 grid
@@ -82,4 +83,5 @@ DEF check_grid(INT[10][10] grid) {
         ENDL
     }
 }
+
 ```

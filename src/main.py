@@ -18,13 +18,13 @@ def parse_arguments():
     cli_parser = ArgumentParser(
         description="NOPE Compiler & Visual Syntax Tree Generator."
     )
-    
+
     cli_parser.add_argument(
         "input_files",
         nargs="*",
         help="Path(s) to the input NOPE file(s). If omitted, reads from standard input (stdin).",
     )
-    
+
     cli_parser.add_argument(
         "--no-compile",
         action="store_true",
@@ -51,11 +51,10 @@ def parse_arguments():
     cli_parser.add_argument(
         "-eo",
         "--exe-out-dir",
-        default=".", 
+        default=".",
         help="Output directory for the compiled executables (default: current directory).",
     )
-    
-    
+
     cli_parser.add_argument(
         "--generate-graph",
         action="store_true",
@@ -99,7 +98,7 @@ def process_code(
 
     linter = NopeLinter()
     warnings = linter.lint(input_text)
-    
+
     if warnings:
         for warning in warnings:
             print(warning, file=sys.stderr)
@@ -163,43 +162,45 @@ def process_code(
 
             print(f"Generated C code successfully: {c_output_filename.resolve()}")
 
-            
-            
-            
             if args.build:
                 exe_out_dir = Path(args.exe_out_dir)
                 exe_out_dir.mkdir(parents=True, exist_ok=True)
-                
+
                 exe_output_filename = exe_out_dir / f"{output_name}.exe"
-                
-                
-                runtime_dir = Path(__file__).parent # / "src"
+
+                runtime_dir = Path(__file__).parent  # / "src"
                 runtime_c = runtime_dir / "nope_runtime.c"
-                
-                
+
                 compile_cmd = [
                     args.cc,
                     str(c_output_filename),
                     str(runtime_c),
-                    "-I", str(runtime_dir),
-                    "-o", str(exe_output_filename)
+                    "-I",
+                    str(runtime_dir),
+                    "-o",
+                    str(exe_output_filename),
                 ]
-                
+
                 print(f"Building executable with {args.cc}...")
-                
+
                 try:
                     result = subprocess.run(compile_cmd, capture_output=True, text=True)
-                    
+
                     if result.returncode == 0:
-                        print(f"Generated executable successfully: {exe_output_filename.resolve()}\n")
+                        print(
+                            f"Generated executable successfully: {exe_output_filename.resolve()}\n"
+                        )
                     else:
-                        print(f"[{args.cc}] Compilation Error:\n{result.stderr}", file=sys.stderr)
-                        
+                        print(
+                            f"[{args.cc}] Compilation Error:\n{result.stderr}",
+                            file=sys.stderr,
+                        )
+
                 except FileNotFoundError:
                     print(
                         f"Error: Compiler '{args.cc}' was not found "
-                        f"Please make sure you are correctly installed the compiler and you added it to PATH.", 
-                        file=sys.stderr
+                        f"Please make sure you are correctly installed the compiler and you added it to PATH.",
+                        file=sys.stderr,
                     )
 
         except NopeCompilationError as e:
@@ -212,10 +213,8 @@ def process_code(
 def main():
     args = parse_arguments()
 
-    
     fallback_name = args.name if args.name else "a"
 
-    
     if args.input_files:
         for file_path_str in args.input_files:
             file_path = Path(file_path_str)
@@ -226,11 +225,9 @@ def main():
                 continue
 
             try:
-                
                 with open(file_path, "r", encoding="utf-8") as f:
                     input_text = f.read()
 
-                
                 input_stream = InputStream(input_text)
 
                 if len(args.input_files) == 1 and args.name is not None:
@@ -238,13 +235,11 @@ def main():
                 else:
                     graph_name = file_path.stem
 
-                
                 process_code(input_text, input_stream, graph_name, args)
 
             except Exception as e:
                 print(f"Error processing {file_path}: {e}\n", file=sys.stderr)
 
-    
     else:
         print(
             "Reading from standard input (Type your code and press Ctrl+D / Ctrl+Z to finish):"

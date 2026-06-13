@@ -284,11 +284,11 @@ class NopeCompiler(NOPEVisitor):
         if ctx.macro_call() is not None:
             return str(self.visit(ctx.macro_call()))
 
-        
-        if hasattr(ctx, 'NUMB') and ctx.NUMB() is not None:
+        if hasattr(ctx, "NUMB") and ctx.NUMB() is not None:
             return ctx.NUMB().getText()
 
         raise NopeCompilationError("Unrecognized mathematical expression format.")
+
     # JK
     # Visit a parse tree produced by NOPEParser#logic_expr.
     # TODO: nie może zwracać str

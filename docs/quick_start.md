@@ -6,6 +6,7 @@ Expect that the program will print exactly what is provided.
 1 2 3
 1.2 4.5
 123
+
 ```
 
 ## Range
@@ -23,6 +24,7 @@ Expect that the program will print a string matching the regex.
 ## Comment
 ```
 # This is comment line 
+
 ```
 
 ## How to check for `#`, keywords, etc.?
