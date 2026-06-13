@@ -40,6 +40,7 @@ sync_readme:
     - uv run nope examples/in/*.nope -co examples/out -go graphs --generate-graph
     - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
+    - git add -A examples/out/
     
     - |
       if [ -n "$(git status --porcelain)" ]; then
