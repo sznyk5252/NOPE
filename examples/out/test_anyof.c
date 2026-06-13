@@ -2,7 +2,7 @@
 
 int main(){
 	nope_init();
-	nope_range_int(nope_read_int(), 0, 10);
+	nope_anyof((const char*[]){"yes", "YES", "y"}, 3);
 	nope_cleanup();
 	return 0;
 }

@@ -11,7 +11,7 @@ int main(){
 		nope_expect_char('e');
 		nope_expect_char(':');
 		nope_expect_char(' ');
-		nope_expect_char('i');
+		nope_expect_int(i);
 		nope_expect_char('\n');
 
 	}

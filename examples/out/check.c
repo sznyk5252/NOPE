@@ -8,10 +8,10 @@ int main(){
 	int y;
 	y = nope_read_int();
 	nope_expect_char('\n');
-	if (!((x   y) == 10)) {
-	            printf("[NOPE] Failed test on condition: CHECK((x   y) == 10)\n");
-		return 1;
-		}
+	if (!((x + y) == 10)) {
+		nope_fail("CHECK assertion failed", "CHECK((x + y) == 10)", "false");
+	}
+	nope_expect_char('\n');
 	nope_cleanup();
 	return 0;
 }

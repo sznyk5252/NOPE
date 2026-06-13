@@ -83,7 +83,7 @@ def parse_arguments():
     cli_parser.add_argument(
         "--view",
         action="store_true",
-        help="Disable automatically opening the generated graph file.",
+        help="Enable automatically opening the generated graph file.",
     )
 
     return cli_parser.parse_args()
@@ -173,7 +173,7 @@ def process_code(
                 exe_output_filename = exe_out_dir / f"{output_name}.exe"
                 
                 
-                runtime_dir = Path(__file__).parent / "src"
+                runtime_dir = Path(__file__).parent # / "src"
                 runtime_c = runtime_dir / "nope_runtime.c"
                 
                 
@@ -197,8 +197,8 @@ def process_code(
                         
                 except FileNotFoundError:
                     print(
-                        f"Błąd: Kompilator '{args.cc}' nie został znaleziony. "
-                        f"Upewnij się, że jest zainstalowany i dodany do zmiennej PATH.", 
+                        f"Error: Compiler '{args.cc}' was not found "
+                        f"Please make sure you are correctly installed the compiler and you added it to PATH.", 
                         file=sys.stderr
                     )
 
@@ -222,7 +222,7 @@ def main():
             print(f"--- Processing file: {file_path} ---")
 
             if not file_path.exists():
-                print(f"Błąd: Plik '{file_path}' nie istnieje.", file=sys.stderr)
+                print(f"Error: File '{file_path}' does not exists.", file=sys.stderr)
                 continue
 
             try:

@@ -7,10 +7,9 @@ int main(){
 		int x;
 		x = nope_read_int();
 		nope_expect_char(' ');
-		if (!(x == (idx   2))) {
-		            printf("[NOPE] Failed test on condition: CHECK(x == (idx   2))\n");
-			return 1;
-			}
+		if (!(x == (idx * 2))) {
+			nope_fail("CHECK assertion failed", "CHECK(x == (idx * 2))", "false");
+		}
 	}
 	nope_cleanup();
 	return 0;

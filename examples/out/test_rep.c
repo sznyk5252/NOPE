@@ -2,7 +2,10 @@
 
 int main(){
 	nope_init();
-	nope_range_int(nope_read_int(), 0, 10);
+	for (int i = 0; i < 3; i += 1) 
+	{
+		nope_expect_int(i);
+	}
 	nope_cleanup();
 	return 0;
 }

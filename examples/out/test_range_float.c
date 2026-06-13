@@ -2,7 +2,7 @@
 
 int main(){
 	nope_init();
-	nope_range_int(nope_read_int(), 0, 10);
+	nope_range_float(nope_read_float(), -10.5, 20.0);
 	nope_cleanup();
 	return 0;
 }

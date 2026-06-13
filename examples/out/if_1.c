@@ -8,9 +8,8 @@ int main(){
 	if (x > 10) 
 	{
 		if (!(x != 100)) {
-		            printf("[NOPE] Failed test on condition: CHECK(x != 100)\n");
-			return 1;
-			}
+			nope_fail("CHECK assertion failed", "CHECK(x != 100)", "false");
+		}
 		nope_expect_char('T');
 		nope_expect_char('h');
 		nope_expect_char('e');

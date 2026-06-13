@@ -2,11 +2,13 @@
 
 int main(){
 	nope_init();
+	nope_anyof((const char*[]){"abc", "cba"}, 2);
 	nope_expect_char(' ');
 	nope_expect_char('1');
 	nope_expect_char('2');
 	nope_expect_char('3');
 	nope_expect_char(' ');
+	nope_expect_char('\n');
 	nope_cleanup();
 	return 0;
 }

@@ -225,7 +225,7 @@ class NopeCompiler(NOPEVisitor):
             self.visit(ctx.block_with_return())
 
         # 7. Złączenie całego wygenerowanego kodu i wyrzucenie do przestrzeni globalnej!
-        function_code = "".join(self.main_scope)
+        function_code = "\n".join(self.main_scope)
         self.global_scope.append(function_code + "\n\n")
 
         # 8. Przywrócenie głównego środowiska (koniec zamrożenia)
@@ -254,13 +254,7 @@ class NopeCompiler(NOPEVisitor):
 
     # JK
     # Visit a parse tree produced by NOPEParser#expr.
-    # TODO: znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał pylance
-    # te metody powinny zwracać None a nie str
     def visitExpr(self, ctx: NOPEParser.ExprContext):
-        # TODO: done
-        # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?
-        # znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał pylance
-        # te metody powinny zwracać None a nie str
         if ctx.getTypedRuleContext(NOPEParser.InputContext, 0) is not None:
             return ctx.getTypedRuleContext(NOPEParser.InputContext, 0).getText()
 
@@ -290,10 +284,14 @@ class NopeCompiler(NOPEVisitor):
         if ctx.macro_call() is not None:
             return str(self.visit(ctx.macro_call()))
 
-        raise NopeCompilationError("Unrecognized mathematical expression format.")
+        
+        if hasattr(ctx, 'NUMB') and ctx.NUMB() is not None:
+            return ctx.NUMB().getText()
 
+        raise NopeCompilationError("Unrecognized mathematical expression format.")
     # JK
     # Visit a parse tree produced by NOPEParser#logic_expr.
+    # TODO: nie może zwracać str
     def visitLogic_expr(self, ctx: NOPEParser.Logic_exprContext):
         # TODO: done
         # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?

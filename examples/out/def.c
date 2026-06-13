@@ -1,6 +1,15 @@
 #include "nope_runtime.h"
 
-void SUM(int a, int b) {	char* c;	c = 'Sum of a and b is: ';	int sum;	sum = (a   b);	nope_expect_str(c);	nope_expect_char(' ');	nope_expect_int(sum);}
+void SUM(int a, int b) 
+{
+	char* c;
+	c = 'Sum of a and b is: ';
+	int sum;
+	sum = (a + b);
+	nope_expect_str(c);
+	nope_expect_char(' ');
+	nope_expect_int(sum);
+}
 
 
 int main(){
