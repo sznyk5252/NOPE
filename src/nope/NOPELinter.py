@@ -13,15 +13,15 @@ class NopeLinter:
         self.warnings = []
         lines = input_text.splitlines()
 
-        if (
-            input_text
-            and not input_text.endswith("\n")
-            and not input_text.endswith("\r")
-        ):
-            self.warnings.append(
-                "[LINTER WARNING] File does not end with a newline character. "
-                "Adding a blank line at the end of the file is recommended (POSIX standard)."
-            )
+        # if (
+        #     input_text
+        #     and not input_text.endswith("\n")
+        #     and not input_text.endswith("\r")
+        # ):
+        #     self.warnings.append(
+        #         "[LINTER WARNING] File does not end with a newline character. "
+        #         "Adding a blank line at the end of the file is recommended (POSIX standard)."
+        #     )
 
         if re.search(r"\{\s*\}", input_text):
             self.warnings.append(
