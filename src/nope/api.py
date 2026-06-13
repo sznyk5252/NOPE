@@ -19,6 +19,7 @@ def process_code(
     input_stream: InputStream,
     output_name: str,
     args: any,
+    verbouse: bool = False
 ):
     """Core logic to parse the stream, compile, and optionally generate graphs."""
 
@@ -38,7 +39,7 @@ def process_code(
 
     if parser.getNumberOfSyntaxErrors() > 0:
         print(
-            "Error: Syntax errors found in the input code. Aborting.",
+            "Error: Syntax errors found in the input NOPE code. Aborting.",
             file=sys.stderr,
         )
         return
@@ -67,15 +68,17 @@ def process_code(
             directory=g_out_dir,
             view=args.view,
         )
-        print(
-            f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}"
-        )
+        if verbouse:
+            print(
+                f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}"
+            )
 
     if not args.no_compile:
         c_out_dir = Path(args.c_out_dir)
         c_out_dir.mkdir(parents=True, exist_ok=True)
 
-        print("Translating NOPE to C...")
+        if verbouse:
+            print("Translating NOPE to C...")
 
         try:
             compiler = NopeCompiler()
@@ -86,7 +89,8 @@ def process_code(
             with open(c_output_filename, "w", encoding="utf-8") as f:
                 f.write(c_code)
 
-            print(f"Generated C code successfully: {c_output_filename.resolve()}")
+            if verbouse:
+                print(f"Generated C code successfully: {c_output_filename.resolve()}")
 
             if args.build:
                 exe_out_dir = Path(args.exe_out_dir)
@@ -107,15 +111,17 @@ def process_code(
                     str(exe_output_filename),
                 ]
 
-                print(f"Building executable with {args.cc}...")
+                if verbouse:
+                    print(f"Building executable with {args.cc}...")
 
                 try:
                     result = subprocess.run(compile_cmd, capture_output=True, text=True)
 
                     if result.returncode == 0:
-                        print(
-                            f"Generated executable successfully: {exe_output_filename.resolve()}\n"
-                        )
+                        if verbouse:
+                            print(
+                                f"Generated executable successfully: {exe_output_filename.resolve()}\n"
+                            )
                     else:
                         print(
                             f"[{args.cc}] Compilation Error:\n{result.stderr}",
@@ -148,6 +154,7 @@ def compile_from_string(
     graph_format: str = "png",
     view: bool = False,
     no_compile: bool = False,
+    verbouse: bool = False,
 ):
     """
     Allows calling the NOPE compiler directly from other Python code,
@@ -168,7 +175,7 @@ def compile_from_string(
     )
 
     input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args)
+    process_code(input_text, input_stream, output_name, api_args, verbouse=verbouse)
     if build:
         exe_out_dir_path = Path(exe_out_dir)
         return exe_out_dir_path / f"{output_name}.exe"
@@ -190,6 +197,7 @@ def compile_from_file(
     graph_format: str = "png",
     view: bool = False,
     no_compile: bool = False,
+    verbouse: bool = False,
 ) -> Path | None:
     """
     Reads NOPE source code from a file and compiles it directly from Python code,
@@ -225,7 +233,7 @@ def compile_from_file(
     )
 
     input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args)
+    process_code(input_text, input_stream, output_name, api_args, verbouse=verbouse)
     # returns the executable
     if build:
         exe_out_dir_path = Path(exe_out_dir)
