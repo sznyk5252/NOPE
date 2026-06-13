@@ -30,16 +30,17 @@ sync_readme:
         git add "$out_file"
       done
 
-    - uv run antlr4 -Dlanguage=Python3 -visitor -o src/antlr_generated NOPE.g4
+    - uv run antlr4 -Dlanguage=Python3 -visitor -o src/nope/antlr_generated NOPE.g4
     - ruff format ./
     - git add src/*
 
+    - uv run build
+
     - rm graphs/*
-    - uv run main.py examples/in/*.nope -co examples/out -go graphs --generate-graph
+    - uv run nope examples/in/*.nope -co examples/out -go graphs --generate-graph
     - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
     
-    - uv run build
     - |
       if [ -n "$(git status --porcelain)" ]; then
         echo "Wykryto zmiany w plikach aktualizuję repozytorium..."
@@ -59,8 +60,9 @@ sync_readme:
         - "**/*.yml"
         - "**/*.nope"
         - "graphs/*"
-        - "src/GraphRenderer.py"
-        - "src/nope_runtime.h"
-        - "src/nope_runtime.c"
-        - "src/NOPECompiler.py"
-        - "src/main.py"
+        - "src/nope/GraphRenderer.py"
+        - "src/nope/nope_runtime.h"
+        - "src/nope/nope_runtime.c"
+        - "src/nope/NOPECompiler.py"
+        - "src/nope/main.py"
+        - ".gitlab-ci.yml"
