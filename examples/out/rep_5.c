@@ -20,5 +20,6 @@ int main(){
 
 	}
 	nope_cleanup();
+	nope_expect_eof();
 	return 0;
 }

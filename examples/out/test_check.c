@@ -11,5 +11,6 @@ int main(){
 		nope_fail("CHECK assertion failed", "CHECK((a + b) == 10)", "false");
 	}
 	nope_cleanup();
+	nope_expect_eof();
 	return 0;
 }

@@ -14,5 +14,6 @@ void validate_bounds(int min_val, int max_val, char* error_msg)
 int main(){
 	nope_init();
 	nope_cleanup();
+	nope_expect_eof();
 	return 0;
 }

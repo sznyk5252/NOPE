@@ -36,5 +36,6 @@ int main(){
 		nope_expect_char(' ');
 	}
 	nope_cleanup();
+	nope_expect_eof();
 	return 0;
 }
