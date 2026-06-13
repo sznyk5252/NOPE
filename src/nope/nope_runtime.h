@@ -30,5 +30,6 @@ float nope_read_float(void);
 void nope_expect_int(int expected);
 void nope_expect_float(float expected);
 void nope_expect_str(const char *expected);
+void nope_expect_eof(void);
 
 #endif // NOPE_RUNTIME_H

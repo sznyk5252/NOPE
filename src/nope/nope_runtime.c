@@ -327,3 +327,19 @@ void nope_expect_str(const char *expected) {
         nope_fail("Variable (STR) match failed", expected, got_str);
     }
 }
+
+void nope_expect_eof(void) {
+    // Jeśli jesteśmy w trybie ignorowania spacji (w bloku IGNORE_WHITESPACE),
+    // pozwalamy sędziemu zjeść na koniec puste entery i spacje
+    if (nope_ignore_ws_active) {
+        nope_skip_whitespace();
+    }
+
+    // Jeśli po zjedzeniu spacji kursor nadal widzi jakieś znaki (nie jest to '\0')
+    if (*nope_cursor != '\0') {
+        char got_str[32];
+        // Kopiujemy kawałek śmieciowego wyjścia, żeby pokazać je w logach
+        snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
+        nope_fail("Expected End Of File (EOF), but found extra output", "EOF", got_str);
+    }
+}

@@ -35,6 +35,7 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append("nope_cleanup();")
         for line in self.main_scope:
             full_code.append(f"\t{line}")
+        full_code.append("\tnope_expect_eof();")
         full_code.append("\treturn 0;\n}")
 
         return "\n".join(full_code)
