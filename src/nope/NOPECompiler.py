@@ -32,7 +32,7 @@ class NopeCompiler(NOPEVisitor):
         full_code.extend(self.global_scope)
         full_code.append("int main(){")
 
-        full_code.append("nope_expect_eof();")
+        self.main_scope.append("nope_expect_eof();")
         self.main_scope.append("nope_cleanup();")
         for line in self.main_scope:
             full_code.append(f"\t{line}")
