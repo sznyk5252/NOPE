@@ -64,5 +64,6 @@ sync_readme:
         - "src/nope/nope_runtime.h"
         - "src/nope/nope_runtime.c"
         - "src/nope/NOPECompiler.py"
+        - "src/nope/NOPELinter.py"
         - "src/nope/main.py"
         - ".gitlab-ci.yml"
