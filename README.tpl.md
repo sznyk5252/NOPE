@@ -94,9 +94,7 @@
 | **`CHECK`** | `check_macro` | Assertion evaluating logical expressions | `CHECK(x + y >= 10 AND x < 20)` |
 | **`MATCH`** | `match_macro` | Exact or regex matching | `MATCH('Passed')` |
 | **`ANYOF`** | `anyof_macro` | Multiple choice matching | `ANYOF('yes', 'YES')` |
-| **`THROWS`** | `throws_macro`| Negative testing (expects an error) | `THROWS('Exception')` |
 | **`RANGE`** | `range_macro` | Boundary check | `RANGE(0, 100)` |
-| **`C_HEADER`** | `header_macro`| Code to include at the beginning | `C_HEADER('#include <math.h>')` |
 | **`IGNORE_WHITESPACE`**| `ignore_ws` | Disables strict whitespace checking for a block | `IGNORE_WHITESPACE { MATCH('A') }` |
 
 # 5. Formal Grammar
