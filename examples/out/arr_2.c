@@ -23,7 +23,7 @@ void check_grid(int grid[10][10])
 int main(){
 	nope_init();
 	nope_expect_char('\n');
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

@@ -61,7 +61,7 @@ nope_expect_char(' ');
 
 int main(){
 	nope_init();
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

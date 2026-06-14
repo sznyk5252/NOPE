@@ -10,7 +10,7 @@ int main(){
 	if (!((a + b) == 10)) {
 		nope_fail("CHECK assertion failed", "CHECK((a + b) == 10)", "false");
 	}
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

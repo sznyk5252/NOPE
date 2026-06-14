@@ -13,7 +13,7 @@ void Custom_Range(int expected, int margin)
 
 int main(){
 	nope_init();
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

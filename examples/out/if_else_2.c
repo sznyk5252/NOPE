@@ -65,7 +65,7 @@ int main(){
 		nope_expect_char('u');
 		nope_expect_char('s');
 	}
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

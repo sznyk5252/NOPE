@@ -31,7 +31,7 @@ int main(){
 	nope_expect_char(' ');
 	nope_expect_char('\n');
 	SUM(a2, b2);
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

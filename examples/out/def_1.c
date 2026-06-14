@@ -23,7 +23,7 @@ void prints_separator()
 int main(){
 	nope_init();
 	nope_expect_char('\n');
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

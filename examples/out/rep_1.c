@@ -14,7 +14,7 @@ int main(){
 	nope_expect_char('e');
 	nope_expect_char('s');
 	nope_expect_char('t');
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }

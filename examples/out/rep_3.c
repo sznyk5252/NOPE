@@ -11,7 +11,7 @@ int main(){
 			nope_fail("CHECK assertion failed", "CHECK(x == (idx * 2))", "false");
 		}
 	}
-	nope_cleanup();
 	nope_expect_eof();
+	nope_cleanup();
 	return 0;
 }
