@@ -20,7 +20,7 @@ VAR(a)
 IF (a > 0) {
     a
 }ELSE{
-    VAR(b) << -a
+    VAR(b) << 0 - a
     b
 }
 ```
