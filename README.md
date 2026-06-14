@@ -302,13 +302,13 @@ If you want to change the grammar, modify `NOPE.g4` and push a commit. Changes w
 uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
 ```
 
-To see the results, use ```uv run main.py -h```
+To see the results, use ```uv run nope -h```
 
 If you want to change the compiler change file `src/NopeCompiler.py`, Do **NOT** change `src/NOPEVisitor.py`
 
 To compile all .nope examples to .c files use:
 ```
-uv run main.py examples/in/*.nope -co examples/out 
+uv run nope examples/in/*.nope -co examples/out 
 ```
 
 To compile all .c examples to executables use somethink like this:
@@ -316,18 +316,26 @@ To compile all .c examples to executables use somethink like this:
 for f in examples/out/*.c; do gcc "$f" src/nope_runtime.c -I src -o "examples/exe/$(basename "${f%.c}").exe"; done
 ```
 
+To compile all NOPE examples to c and c to executables use:
+```
+uv run nope examples/in/*.nope -co examples/out -b -eo examples/exe
+```
+
 # 8. Learn NOPE
 Visit the [quick start guide](docs/quick_start.md)
 
-# 9. TODO:
-- nope main  ✗ ./examples/exe/var2.exe 
-1  1 5 1 1
-> to nie powinno przejść (podwójna spacja)
+# 9. Example of NOPE integration in judging system
+[Universal-checker](https://gitlab.com/szymek.krezolek/universal-checker) 
 
-- Nie dodaje i do spisu zmiennych 
-```
-REP (i, 10) {
-    'Index: '
-    i ENDL
-}
-```
+# 10. TODO:
+
+## JK
+naprawić tak żeby działały przykłady:
+- examples/in/if_3.nope
+- examples/in/escchar.nope
+- examples/in/def.nope
+
+usunąć THROWS i C_HEADER z dokumentacji (w szczególności z README.tpl.md)
+
+## SK
+poprawić integrację z universal-checker

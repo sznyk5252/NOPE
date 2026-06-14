@@ -36,7 +36,7 @@ DEF get_sensor_data() -> FLOAT {
     VAR(FLOAT reading)
     
     IF (reading < 0.0) {
-        THROWS('Sensor reading cannot be negative')
+        'Sensor reading cannot be negative'
     }
     
     RETURN reading
