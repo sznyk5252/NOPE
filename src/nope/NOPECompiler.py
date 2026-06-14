@@ -453,6 +453,8 @@ class NopeCompiler(NOPEVisitor):
         if ctx.ASSIGN() is not None:
             # Przypisanie jawne: VAR(buffer[i]) << current_val
             expr_val = str(self.visit(ctx.any_expr()))
+            if len(expr_val) >= 2 and expr_val.startswith("'") and expr_val.endswith("'"):
+                expr_val = self._to_c_string(expr_val[1:-1])
             self.main_scope.append(f"{assign_target} = {expr_val};")
         else:
             # Wczytanie z potoku na wskazane miejsce: VAR(buffer[i])

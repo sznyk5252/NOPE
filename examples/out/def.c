@@ -3,7 +3,7 @@
 void SUM(int a, int b) 
 {
 	char* c;
-	c = 'Sum of a and b is: ';
+	c = "Sum of a and b is: ";
 	int sum;
 	sum = (a + b);
 	nope_expect_str(c);
