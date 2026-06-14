@@ -17,7 +17,7 @@ class NopeCompiler(NOPEVisitor):
     main_scope: list[str] = []
     ignore_ws_active: bool = False
     output_lines_counter: int = 0
-    defined_vars: dict[str, str] = {}
+    defined_vars: dict[str, str] = {} # name : type
 
     def compile(self, tree: NOPEParser.ProgramContext) -> str:
         self.defined_vars = {}
