@@ -19,9 +19,9 @@ class NopeCompiler(NOPEVisitor):
     output_lines_counter: int = 0
     defined_vars: dict[str, str] = {}  # name : type
 
-    def compile(self, tree: NOPEParser.ProgramContext) -> str:
+    def compile(self, tree: NOPEParser.ProgramContext, snippet_length: int = 100) -> str:
         self.defined_vars = {}
-        self.main_scope: list[str] = ["nope_init();"]
+        self.main_scope: list[str] = ["nope_init();", f"nope_snippet_length = {snippet_length};"]
         self.global_scope: list[str] = [
             '#include "nope_runtime.h"\n',
         ]

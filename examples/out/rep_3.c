@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	for (int idx = 5; idx < 1; idx += 1) 
 	{
 		int x;

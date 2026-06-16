@@ -297,7 +297,7 @@ You can see results of the grammar in `graphs/`
 # 7. Dev Man
 If you want to change the grammar, modify `NOPE.g4` and push a commit. Changes will be applied by CI/CD. Alternatively, you can run:
 ```
-uv run antlr4 -Dlanguage=Python3 -o src NOPE.g4
+uv run antlr4 -Dlanguage=Python3 -visitor -o src/nope/antlr_generated NOPE.g4
 ```
 
 To see the results, use ```uv run nope -h```

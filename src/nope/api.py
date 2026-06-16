@@ -18,12 +18,12 @@ def process_code(
     input_text: str,
     input_stream: InputStream,
     output_name: str,
-    args: any,
-    verbouse: bool = False,
+    args: SimpleNamespace,
 ):
     """Core logic to parse the stream, compile, and optionally generate graphs."""
 
     linter = NopeLinter()
+    input_text = input_text.rstrip(" \t\r\n")
     warnings = linter.lint(input_text)
 
     if warnings:
@@ -68,7 +68,7 @@ def process_code(
             directory=g_out_dir,
             view=args.view,
         )
-        if verbouse:
+        if args.verbouse:
             print(
                 f"Generated {output_name}.{args.graph_format} successfully in: {g_out_dir.resolve()}"
             )
@@ -77,7 +77,7 @@ def process_code(
         c_out_dir = Path(args.c_out_dir)
         c_out_dir.mkdir(parents=True, exist_ok=True)
 
-        if verbouse:
+        if args.verbouse:
             print("Translating NOPE to C...")
 
         try:
@@ -89,7 +89,7 @@ def process_code(
             with open(c_output_filename, "w", encoding="utf-8") as f:
                 f.write(c_code)
 
-            if verbouse:
+            if args.verbouse:
                 print(f"Generated C code successfully: {c_output_filename.resolve()}")
 
             if args.build:
@@ -111,14 +111,14 @@ def process_code(
                     str(exe_output_filename),
                 ]
 
-                if verbouse:
+                if args.verbouse:
                     print(f"Building executable with {args.cc}...")
 
                 try:
                     result = subprocess.run(compile_cmd, capture_output=True, text=True)
 
                     if result.returncode == 0:
-                        if verbouse:
+                        if args.verbouse:
                             print(
                                 f"Generated executable successfully: {exe_output_filename.resolve()}\n"
                             )
@@ -172,10 +172,11 @@ def compile_from_string(
         g_out_dir=g_out_dir,
         graph_format=graph_format,
         view=view,
+        verbouse=verbouse
     )
 
     input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args, verbouse=verbouse)
+    process_code(input_text, input_stream, output_name, api_args)
     if build:
         exe_out_dir_path = Path(exe_out_dir)
         return exe_out_dir_path / f"{output_name}.exe"
@@ -227,10 +228,11 @@ def compile_from_file(
         g_out_dir=g_out_dir,
         graph_format=graph_format,
         view=view,
+        verbouse=verbouse
     )
 
     input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args, verbouse=verbouse)
+    process_code(input_text, input_stream, output_name, api_args)
     # returns the executable
     if build:
         exe_out_dir_path = Path(exe_out_dir)

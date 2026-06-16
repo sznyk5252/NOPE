@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	nope_range_float(nope_read_float(), -10.5, 20.);
 	nope_expect_char(')');
 	nope_expect_char('(');

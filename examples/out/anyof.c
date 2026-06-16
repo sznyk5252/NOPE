@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	nope_anyof((const char*[]){"abc", "cba"}, 2);
 	nope_expect_char(' ');
 	nope_expect_char('1');

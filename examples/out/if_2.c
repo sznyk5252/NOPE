@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	float temp;
 	temp = nope_read_float();
 	nope_expect_char('\n');

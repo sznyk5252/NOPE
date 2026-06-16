@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	for (int j = 10; j < 0; j += -1) 
 	{
 		nope_expect_char('C');

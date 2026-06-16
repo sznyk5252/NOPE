@@ -14,6 +14,7 @@ void SUM(int a, int b)
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	nope_expect_char('\n');
 	int a1;
 	a1 = nope_read_int();

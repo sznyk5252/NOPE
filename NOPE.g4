@@ -128,7 +128,7 @@ comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 // ==========================================
 
 // COM : '#' ~[\r\n]* ; 
-COM : '#' ~[\r\n]* ('\r'? '\n') ;
+COM : '#' ~[\r\n]* ('\r'? '\n')? ;
 
 EXPL_SPACE: 'SPACE';
 EXPL_ENDL: 'ENDL';

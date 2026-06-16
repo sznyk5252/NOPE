@@ -3,6 +3,7 @@
 char *nope_input_buffer = NULL;
 char *nope_cursor = NULL;
 bool nope_ignore_ws_active = false;
+int nope_snippet_length = 100;
 
 void nope_anyof(const char* of[], int of_size) {
     if (nope_ignore_ws_active) nope_skip_whitespace();
@@ -148,17 +149,69 @@ void nope_cleanup(void) {
 }
 
 void nope_fail(const char *reason, const char *expected, const char *got) {
-    fprintf(stderr, "[NOPE] %s\n", reason);
+    int line = 1;
+    int col = 1;
+    char *ptr = nope_input_buffer;
+    char *line_start = nope_input_buffer;
+
+    // Przechodzimy przez bufor od początku aż do miejsca błędu
+    while (ptr < nope_cursor) {
+        if (*ptr == '\n') {
+            line++;
+            col = 1;
+            line_start = ptr + 1; // Zapisujemy, gdzie zaczyna się nowa linia
+        } else {
+            col++;
+        }
+        ptr++;
+    }
+
+    // 2. Wypisywanie głównego komunikatu błędu
+    fprintf(stderr, "\n========================================\n");
+    fprintf(stderr, "[NOPE ERROR] %s\n", reason);
+    fprintf(stderr, "Location: Line %d, Column %d\n", line, col);
+    fprintf(stderr, "----------------------------------------\n");
     if (expected) {
         fprintf(stderr, "   Expected: '%s'\n", expected);
     }
     if (got) {
-        fprintf(stderr, "   Got:      '%s'\n", got);
+        // Zabezpieczenie przed nowymi liniami psującymi formatowanie w polu "Got"
+        if (strcmp(got, "\n") == 0) fprintf(stderr, "   Got:      '\\n'\n");
+        else if (strcmp(got, "\r\n") == 0) fprintf(stderr, "   Got:      '\\r\\n'\n");
+        else fprintf(stderr, "   Got:      '%s'\n", got);
     }
+
+    // 3. Generowanie "Okienka" (Snippetu)
+    fprintf(stderr, "\n--- Output Snippet ---\n");
+
+    // Szukamy końca obecnej linii, żeby nie wypisywać całego bufora
+    char *line_end = line_start;
+    while (*line_end != '\0' && *line_end != '\n') {
+        line_end++;
+    }
+
+    // Ograniczamy długość linii do 100 znaków (żeby uniknąć spamu w konsoli, gdy uczeń wypisze 10000 znaków)
+    int print_len = line_end - line_start;
+    if (print_len > nope_snippet_length) print_len = nope_snippet_length; 
+
+    // Wypisujemy trefną linijkę z programu ucznia
+    fprintf(stderr, "%.*s\n", print_len, line_start);
+
+    // Rysujemy kursor w odpowiednim miejscu
+    for (char *p = line_start; p < nope_cursor && p < line_start + nope_snippet_length; p++) {
+        // Sprytny trick: jeśli w tekście był tabulator, rysujemy tabulator (żeby kursor się nie rozjechał)
+        // w przeciwnym razie rysujemy zwykłą spację.
+        if (*p == '\t') fprintf(stderr, "\t");
+        else fprintf(stderr, " ");
+    }
+    
+    // Wypisujemy strzałkę wskazującą błąd
+    fprintf(stderr, "^\n");
+    fprintf(stderr, "========================================\n\n");
     
     // Zwalniamy zasoby przed wyjściem
     nope_cleanup();
-    exit(1); // Wymóg: wyjście 1 oznacza błąd dla judge'a
+    exit(1);
 }
 
 void nope_expect_char(char expected) {
@@ -331,9 +384,9 @@ void nope_expect_str(const char *expected) {
 void nope_expect_eof(void) {
     // Jeśli jesteśmy w trybie ignorowania spacji (w bloku IGNORE_WHITESPACE),
     // pozwalamy sędziemu zjeść na koniec puste entery i spacje
-    if (nope_ignore_ws_active) {
-        nope_skip_whitespace();
-    }
+    // if (nope_ignore_ws_active) {
+    nope_skip_whitespace();
+    // }
 
     // Jeśli po zjedzeniu spacji kursor nadal widzi jakieś znaki (nie jest to '\0')
     if (*nope_cursor != '\0') {

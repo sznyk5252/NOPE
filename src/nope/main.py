@@ -48,7 +48,6 @@ def parse_arguments():
         default=".",
         help="Output directory for the compiled executables (default: current directory).",
     )
-
     cli_parser.add_argument(
         "--generate-graph",
         action="store_true",
@@ -77,6 +76,17 @@ def parse_arguments():
         "--view",
         action="store_true",
         help="Enable automatically opening the generated graph file.",
+    )
+    cli_parser.add_argument(
+        "--snippet-len",
+        type=int,
+        default=100,
+        help="Maximum character length of the error snippet output (default: 100).",
+    )
+    cli_parser.add_argument(
+        "--verbouse",
+        action="store_true",
+        help="Enable verbose output for detailed compilation and build information.",
     )
 
     return cli_parser.parse_args()

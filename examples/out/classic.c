@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	nope_expect_char('1');
 	nope_expect_char(' ');
 	nope_expect_char('2');

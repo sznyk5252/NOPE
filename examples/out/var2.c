@@ -2,6 +2,7 @@
 
 int main(){
 	nope_init();
+	nope_snippet_length = 100;
 	int x;
 	x = 1;
 	nope_expect_int(x);

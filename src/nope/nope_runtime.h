@@ -10,6 +10,7 @@
 extern char *nope_input_buffer;
 extern char *nope_cursor;
 extern bool nope_ignore_ws_active;
+extern int nope_snippet_length;
 
 void nope_anyof(const char* of[], int of_size);
 void nope_check(bool condition);
