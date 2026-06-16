@@ -29,7 +29,6 @@ int main(){
 	b2 = nope_read_int();
 	nope_expect_char('\n');
 	SUM(a1, b1);
-	nope_expect_char(' ');
 	nope_expect_char('\n');
 	SUM(a2, b2);
 	nope_expect_eof();

@@ -30,10 +30,6 @@ nope_expect_char(' ');
 float reading;
 reading = nope_read_float();
 nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
 nope_expect_char('\n');
 nope_expect_char(' ');
 nope_expect_char(' ');
@@ -76,10 +72,6 @@ if (reading < 0.0)
 	nope_expect_char('e');
 }
 nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
 nope_expect_char('\n');
 nope_expect_char(' ');
 nope_expect_char(' ');

@@ -20,7 +20,6 @@ int main(){
 	nope_expect_char('1');
 	nope_expect_char('2');
 	nope_expect_char('3');
-	nope_expect_char('\n');
 	nope_expect_eof();
 	nope_cleanup();
 	return 0;

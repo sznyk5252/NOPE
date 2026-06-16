@@ -14,7 +14,6 @@ void Custom_Range(int expected, int margin)
 int main(){
 	nope_init();
 	nope_snippet_length = 100;
-	nope_expect_char('\n');
 	nope_expect_eof();
 	nope_cleanup();
 	return 0;

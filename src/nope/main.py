@@ -111,14 +111,12 @@ def main():
                 with open(file_path, "r", encoding="utf-8") as f:
                     input_text = f.read()
 
-                input_stream = InputStream(input_text)
-
                 if len(args.input_files) == 1 and args.name is not None:
                     graph_name = args.name
                 else:
                     graph_name = file_path.stem
 
-                process_code(input_text, input_stream, graph_name, args)
+                process_code(input_text, graph_name, args)
 
             except Exception as e:
                 print(f"Error processing {file_path}: {e}\n", file=sys.stderr)
