@@ -16,10 +16,36 @@ void nope_anyof(const char* of[], int of_size) {
         }
     }
     
+    char expected_msg[512] = "One of: "; // Rezerwujemy bezpiecznie 512 bajtów
+    
+    for (int i = 0; i < of_size; i++) {
+        // Zabezpieczenie przed przepełnieniem bufora
+        if (strlen(expected_msg) + strlen(of[i]) + 5 >= sizeof(expected_msg)) {
+            strcat(expected_msg, "...");
+            break; 
+        }
+        
+        strcat(expected_msg, "'");
+        strcat(expected_msg, of[i]);
+        strcat(expected_msg, "'");
+        
+        if (i < of_size - 1) {
+            strcat(expected_msg, ", ");
+        }
+    }
+
+    // 3. Sprawdzamy, co dostaliśmy na wejściu (Got)
     char got_str[32];
-    snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
-    nope_fail("ANYOF match failed", "One of the provided options", got_str);
+    if (*nope_cursor == '\0') {
+        strcpy(got_str, "EOF");
+    } else {
+        snprintf(got_str, sizeof(got_str), "%.31s...", nope_cursor);
+    }
+    
+    // 4. Wyrzucamy błąd!
+    nope_fail("ANYOF match failed", expected_msg, got_str);
 }
+
 void nope_check(bool condition) {
     if (!condition) {
         fprintf(stderr, "Error: check failed\n");
