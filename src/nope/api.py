@@ -16,7 +16,6 @@ from nope.NOPELinter import NopeLinter
 
 def process_code(
     input_text: str,
-    input_stream: InputStream,
     output_name: str,
     args: SimpleNamespace,
 ):
@@ -27,6 +26,7 @@ def process_code(
     input_text = "\n".join(cleaned)
     input_text = input_text.rstrip(" \t\r\n")
     warnings = linter.lint(input_text)
+    input_stream = InputStream(input_text)
 
     if warnings:
         for warning in warnings:
@@ -179,8 +179,7 @@ def compile_from_string(
         snippet_len=snippet_length,
     )
 
-    input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args)
+    process_code(input_text, output_name, api_args)
     if build:
         exe_out_dir_path = Path(exe_out_dir)
         return exe_out_dir_path / f"{output_name}.exe"
@@ -237,8 +236,7 @@ def compile_from_file(
         snippet_len=snippet_length,
     )
 
-    input_stream = InputStream(input_text)
-    process_code(input_text, input_stream, output_name, api_args)
+    process_code(input_text, output_name, api_args)
     # returns the executable
     if build:
         exe_out_dir_path = Path(exe_out_dir)
