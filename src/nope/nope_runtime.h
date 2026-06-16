@@ -14,6 +14,7 @@ extern int nope_snippet_length;
 
 void nope_anyof(const char* of[], int of_size);
 void nope_check(bool condition);
+void nope_match_endl(void);
 void nope_match(const char* pattern);
 void nope_range_int(int val, int min, int max);
 void nope_range_float(float val, float min, float max);

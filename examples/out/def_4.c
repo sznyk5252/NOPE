@@ -3,11 +3,11 @@
 int calculate_area(int width, int height) 
 {
 
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
     return (width * height);
 
 }

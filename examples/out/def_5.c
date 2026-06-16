@@ -3,11 +3,11 @@
 float get_sensor_data() 
 {
 
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
 nope_expect_char('S');
 nope_expect_char('e');
 nope_expect_char('n');
@@ -22,19 +22,19 @@ nope_expect_char('u');
 nope_expect_char('e');
 nope_expect_char(':');
 nope_expect_char(' ');
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
 float reading;
 reading = nope_read_float();
-nope_expect_char('\n');
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
 if (reading < 0.0) 
 {
 	nope_expect_char('S');
@@ -71,12 +71,12 @@ if (reading < 0.0)
 	nope_expect_char('v');
 	nope_expect_char('e');
 }
-nope_expect_char('\n');
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
     return reading;
 
 }

@@ -15,21 +15,21 @@ void SUM(int a, int b)
 int main(){
 	nope_init();
 	nope_snippet_length = 100;
-	nope_expect_char('\n');
+	    nope_match_endl();
 	int a1;
 	a1 = nope_read_int();
-	nope_expect_char(' ');
+	    nope_expect_char(' ');
 	int b1;
 	b1 = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	int a2;
 	a2 = nope_read_int();
-	nope_expect_char(' ');
+	    nope_expect_char(' ');
 	int b2;
 	b2 = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	SUM(a1, b1);
-	nope_expect_char('\n');
+	    nope_match_endl();
 	SUM(a2, b2);
 	nope_expect_eof();
 	nope_cleanup();

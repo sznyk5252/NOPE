@@ -5,10 +5,10 @@ int main(){
 	nope_snippet_length = 100;
 	int limit;
 	limit = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	int step_size;
 	step_size = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	for (int i = 0; (((step_size + 1)) > 0 ? (i < (limit * 2)) : (i > (limit * 2))); i += ((step_size + 1))) 
 	{
 		nope_expect_char('P');
@@ -30,8 +30,7 @@ int main(){
 		nope_expect_char('.');
 		nope_expect_char('.');
 		nope_expect_char('.');
-		nope_expect_char('\n');
-
+		nope_match_endl();
 	}
 	nope_expect_eof();
 	nope_cleanup();

@@ -14,8 +14,7 @@ void check_grid(int grid[10][10])
 			}
 			nope_expect_char(' ');
 		}
-		nope_expect_char('\n');
-
+		nope_match_endl();
 	}
 }
 

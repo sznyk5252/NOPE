@@ -642,9 +642,17 @@ class NopeCompiler(NOPEVisitor):
             return None
         text = ctx.getText()
         for char in text:
-            c_char = self._char_to_c_char(char)
-            self.main_scope.append(f"nope_expect_char({c_char});")
-        return None
+            if char == '\n':
+                # Zamiast twardego sprawdzania, używamy naszej pobłażliwej funkcji
+                self.main_scope.append("    nope_match_endl();")
+            elif char == '\r':
+                # Ignorujemy surowe \r w Pythonie, 
+                # ponieważ nope_match_endl() w C samo potrafi połknąć \r\n
+                continue
+            else:
+                # Przepuszczamy spacje i tabulatory normalnym trybem
+                c_char = self._char_to_c_char(char)
+                self.main_scope.append(f"    nope_expect_char({c_char});")
 
     # JK
     # Visit a parse tree produced by NOPEParser#expl_ws.
@@ -653,7 +661,7 @@ class NopeCompiler(NOPEVisitor):
         if text == "SPACE":
             self.main_scope.append("nope_expect_char(' ');")
         elif text == "ENDL":
-            self.main_scope.append("nope_expect_char('\\n');\n")
+            self.main_scope.append("nope_match_endl();")
         return None
 
     # SK

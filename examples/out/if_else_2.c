@@ -5,7 +5,7 @@ int main(){
 	nope_snippet_length = 100;
 	int status;
 	status = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	if (status == 1) 
 	{
 		nope_expect_char('I');

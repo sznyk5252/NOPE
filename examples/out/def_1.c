@@ -7,8 +7,7 @@ void prints_separator()
 	nope_expect_char('-');
 	nope_expect_char('-');
 	nope_expect_char('-');
-	nope_expect_char('\n');
-
+	nope_match_endl();
 	nope_expect_char('R');
 	nope_expect_char('e');
 	nope_expect_char('s');

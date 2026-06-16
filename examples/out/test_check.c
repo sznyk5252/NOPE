@@ -5,7 +5,7 @@ int main(){
 	nope_snippet_length = 100;
 	int a;
 	a = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	int b;
 	b = nope_read_int();
 	if (!((a + b) == 10)) {

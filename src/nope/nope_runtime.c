@@ -26,7 +26,20 @@ void nope_check(bool condition) {
         exit(1);
     }
 }
-
+void nope_match_endl(void) {
+    if (*nope_cursor == '\n') {
+        nope_cursor++; // Zwykły Linuxowy Enter
+    } else if (*nope_cursor == '\r' && *(nope_cursor + 1) == '\n') {
+        nope_cursor += 2; // Windowsowy Enter
+    } else if (*nope_cursor == '\0') {
+        // MAGICZNY TRIK: Jeśli to koniec pliku, wybaczamy brakujący Enter!
+        return; 
+    } else {
+        char got_str[8] = {0};
+        got_str[0] = *nope_cursor;
+        nope_fail("Expected End Of Line (ENDL)", "\\n", got_str);
+    }
+}
 void nope_match(const char* pattern) {
     if (nope_ignore_ws_active) nope_skip_whitespace();
 

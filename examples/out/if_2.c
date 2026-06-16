@@ -5,7 +5,7 @@ int main(){
 	nope_snippet_length = 100;
 	float temp;
 	temp = nope_read_float();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	if (!(temp <= 0.0) && temp < 100.0) 
 	{
 		nope_expect_char('W');

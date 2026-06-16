@@ -5,10 +5,10 @@ int main(){
 	nope_snippet_length = 100;
 	int x;
 	x = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	int y;
 	y = nope_read_int();
-	nope_expect_char('\n');
+	    nope_match_endl();
 	if (x > 0) 
 	{
 		if (y > 0) 

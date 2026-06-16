@@ -13,8 +13,7 @@ int main(){
 		nope_expect_char(':');
 		nope_expect_char(' ');
 		nope_expect_int(i);
-		nope_expect_char('\n');
-
+		nope_match_endl();
 	}
 	nope_expect_eof();
 	nope_cleanup();

@@ -3,11 +3,11 @@
 float apply_discount(float base_price, float discount) 
 {
 
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
 nope_expect_char('A');
 nope_expect_char('p');
 nope_expect_char('p');
@@ -28,26 +28,25 @@ nope_expect_char('t');
 nope_expect_char('.');
 nope_expect_char('.');
 nope_expect_char('.');
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char('\n');
-
-nope_expect_char('\n');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
-nope_expect_char(' ');
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+nope_match_endl();
+    nope_match_endl();
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
+    nope_expect_char(' ');
     return (base_price - ((base_price * discount)));
 
 }
