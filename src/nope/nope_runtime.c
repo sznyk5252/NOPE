@@ -182,11 +182,13 @@ void nope_fail(const char *reason, const char *expected, const char *got) {
     fprintf(stderr, "[NOPE ERROR] %s\n", reason);
     fprintf(stderr, "Location: Line %d, Column %d\n", line, col);
     fprintf(stderr, "----------------------------------------\n");
-    if (expected) {
-        fprintf(stderr, "   Expected: '%s'\n", expected);
+    if (expected && expected[0] != '\0') {
+        if (strcmp(expected, "\n") == 0) fprintf(stderr, "   Expected: '\\n'\n");
+        else if (strcmp(expected, "\r\n") == 0) fprintf(stderr, "   Expected: '\\r\\n'\n");
+        else fprintf(stderr, "   Expected: '%s'\n", expected);
     }
-    if (got) {
-        // Zabezpieczenie przed nowymi liniami psującymi formatowanie w polu "Got"
+
+    if (got && got[0] != '\0') {
         if (strcmp(got, "\n") == 0) fprintf(stderr, "   Got:      '\\n'\n");
         else if (strcmp(got, "\r\n") == 0) fprintf(stderr, "   Got:      '\\r\\n'\n");
         else fprintf(stderr, "   Got:      '%s'\n", got);

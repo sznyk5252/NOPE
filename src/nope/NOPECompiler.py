@@ -498,7 +498,7 @@ class NopeCompiler(NOPEVisitor):
 
         self.main_scope.append(f"if (!({condition})) {{")
         self.main_scope.append(
-            f'\tnope_fail("CHECK assertion failed", {c_msg}, "false");'
+            f'\tnope_fail("CHECK assertion failed", "Condition \\"{condition}\\" must be true", "");'
         )
         self.main_scope.append("}")
         return None
