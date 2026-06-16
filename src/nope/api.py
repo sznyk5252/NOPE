@@ -172,7 +172,7 @@ def compile_from_string(
         g_out_dir=g_out_dir,
         graph_format=graph_format,
         view=view,
-        verbouse=verbouse
+        verbouse=verbouse,
     )
 
     input_stream = InputStream(input_text)
@@ -228,7 +228,7 @@ def compile_from_file(
         g_out_dir=g_out_dir,
         graph_format=graph_format,
         view=view,
-        verbouse=verbouse
+        verbouse=verbouse,
     )
 
     input_stream = InputStream(input_text)
