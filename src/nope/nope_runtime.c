@@ -184,28 +184,54 @@ void nope_fail(const char *reason, const char *expected, const char *got) {
     // 3. Generowanie "Okienka" (Snippetu)
     fprintf(stderr, "\n--- Output Snippet ---\n");
 
-    // Szukamy końca obecnej linii, żeby nie wypisywać całego bufora
+    // Szukamy końca obecnej linii
     char *line_end = line_start;
     while (*line_end != '\0' && *line_end != '\n') {
         line_end++;
     }
 
-    // Ograniczamy długość linii do 100 znaków (żeby uniknąć spamu w konsoli, gdy uczeń wypisze 10000 znaków)
-    int print_len = line_end - line_start;
-    if (print_len > nope_snippet_length) print_len = nope_snippet_length; 
+    char *snippet_start = line_start;
+    int snippet_len = line_end - line_start;
 
-    // Wypisujemy trefną linijkę z programu ucznia
-    fprintf(stderr, "%.*s\n", print_len, line_start);
+    // Jeżeli linijka jest dłuższa niż nasz limit, musimy przesunąć okienko
+    if (snippet_len > nope_snippet_length) {
+        snippet_len = nope_snippet_length;
+        int half_window = snippet_len / 2;
+        
+        // Przesuwamy początek okienka tak, aby błąd był mniej więcej w połowie
+        if (nope_cursor - line_start > half_window) {
+            snippet_start = nope_cursor - half_window;
+        }
+        
+        // Zabezpieczenie przed wyjechaniem za prawy koniec linii
+        if (snippet_start + snippet_len > line_end) {
+            snippet_start = line_end - snippet_len;
+        }
+    }
+
+    // Jeśli ucięliśmy początek linii, pokazujemy 3 kropki
+    if (snippet_start > line_start) {
+        fprintf(stderr, "...");
+    }
+    
+    // Wypisujemy właściwy, przesunięty wycinek tekstu
+    fprintf(stderr, "%.*s", snippet_len, snippet_start);
+    
+    // Jeśli ucięliśmy koniec linii, pokazujemy 3 kropki
+    if (snippet_start + snippet_len < line_end) {
+        fprintf(stderr, "...");
+    }
+    fprintf(stderr, "\n");
 
     // Rysujemy kursor w odpowiednim miejscu
-    for (char *p = line_start; p < nope_cursor && p < line_start + nope_snippet_length; p++) {
-        // Sprytny trick: jeśli w tekście był tabulator, rysujemy tabulator (żeby kursor się nie rozjechał)
-        // w przeciwnym razie rysujemy zwykłą spację.
+    if (snippet_start > line_start) {
+        fprintf(stderr, "   "); // Musimy przesunąć kursor o te 3 kropki z lewej!
+    }
+
+    for (char *p = snippet_start; p < nope_cursor; p++) {
         if (*p == '\t') fprintf(stderr, "\t");
         else fprintf(stderr, " ");
     }
-    
-    // Wypisujemy strzałkę wskazującą błąd
     fprintf(stderr, "^\n");
     fprintf(stderr, "========================================\n\n");
     
