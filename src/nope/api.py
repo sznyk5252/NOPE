@@ -24,6 +24,8 @@ def process_code(
 
     linter = NopeLinter()
     input_text = input_text.rstrip(" \t\r\n")
+    cleaned = [line.rstrip(" \t\r") for line in input_text.splitlines()]
+    input_text = "\n".join(cleaned)
     warnings = linter.lint(input_text)
 
     if warnings:
