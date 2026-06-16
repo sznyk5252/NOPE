@@ -9,7 +9,7 @@ int main(){
 	if (x > 10) 
 	{
 		if (!(x != 100)) {
-			nope_fail("CHECK assertion failed", "CHECK(x != 100)", "false");
+			nope_fail("CHECK assertion failed", "Condition \"x != 100\" must be true", "");
 		}
 		nope_expect_char('T');
 		nope_expect_char('h');

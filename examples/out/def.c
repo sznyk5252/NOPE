@@ -28,9 +28,9 @@ int main(){
 	int b2;
 	b2 = nope_read_int();
 	    nope_match_endl();
-	SUM(a1, b1);
+	    SUM(a1, b1);
 	    nope_match_endl();
-	SUM(a2, b2);
+	    SUM(a2, b2);
 	nope_expect_eof();
 	nope_cleanup();
 	return 0;

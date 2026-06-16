@@ -9,7 +9,7 @@ int main(){
 		x = nope_read_int();
 		nope_expect_char(' ');
 		if (!(x == (idx * 2))) {
-			nope_fail("CHECK assertion failed", "CHECK(x == (idx * 2))", "false");
+			nope_fail("CHECK assertion failed", "Condition \"x == (idx * 2)\" must be true", "");
 		}
 	}
 	nope_expect_eof();

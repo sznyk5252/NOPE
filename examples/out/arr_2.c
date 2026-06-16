@@ -9,7 +9,7 @@ void check_grid(int grid[10][10])
 			if (i == j) 
 			{
 				if (!(grid[i] == grid[j])) {
-					nope_fail("CHECK assertion failed", "CHECK(grid[i] == grid[j])", "false");
+					nope_fail("CHECK assertion failed", "Condition \"grid[i] == grid[j]\" must be true", "");
 				}
 			}
 			nope_expect_char(' ');

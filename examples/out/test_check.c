@@ -9,7 +9,7 @@ int main(){
 	int b;
 	b = nope_read_int();
 	if (!((a + b) == 10)) {
-		nope_fail("CHECK assertion failed", "CHECK((a + b) == 10)", "false");
+		nope_fail("CHECK assertion failed", "Condition \"(a + b) == 10\" must be true", "");
 	}
 	nope_expect_eof();
 	nope_cleanup();

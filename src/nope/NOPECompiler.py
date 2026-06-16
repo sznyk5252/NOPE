@@ -506,7 +506,6 @@ class NopeCompiler(NOPEVisitor):
     # JK
     # Visit a parse tree produced by NOPEParser#custom_macro.
     def visitCustom_macro(self, ctx: NOPEParser.Custom_macroContext):
-        # TODO: te metody powinny zwracać None a nie str | done
         if ctx.ID() is None:
             raise NopeCompilationError("Custom macro must have an identifier.")
 
@@ -515,10 +514,24 @@ class NopeCompiler(NOPEVisitor):
         args = []
         if ctx.expr() is not None:
             for expr_ctx in ctx.expr():
-                args.append(str(self.visit(expr_ctx)))
+                # Pobieramy wartość argumentu odwiedzając drzewo
+                val = str(self.visit(expr_ctx))
+                
+                # --- MAGICZNY TRIK DLA C ---
+                # Jeśli wartość to string otoczony apostrofami (jak w NOPE),
+                # zamieniamy go na string w podwójnych cudzysłowach (dla C).
+                if len(val) >= 2 and val.startswith("'") and val.endswith("'"):
+                    # Odcinamy skrajne apostrofy, escapujemy ew. wewnętrzne cudzysłowy
+                    inner_text = val[1:-1].replace('"', '\\"')
+                    val = f'"{inner_text}"'
+                # ---------------------------
+                
+                args.append(val)
 
         args_str = ", ".join(args)
-        self.main_scope.append(f"{func_name}({args_str});")
+        
+        # Dodałem 4 spacje wcięcia, żeby wygenerowany kod C wyglądał jeszcze estetyczniej!
+        self.main_scope.append(f"    {func_name}({args_str});") 
         return None
 
     # SK
@@ -642,11 +655,11 @@ class NopeCompiler(NOPEVisitor):
             return None
         text = ctx.getText()
         for char in text:
-            if char == '\n':
+            if char == "\n":
                 # Zamiast twardego sprawdzania, używamy naszej pobłażliwej funkcji
                 self.main_scope.append("    nope_match_endl();")
-            elif char == '\r':
-                # Ignorujemy surowe \r w Pythonie, 
+            elif char == "\r":
+                # Ignorujemy surowe \r w Pythonie,
                 # ponieważ nope_match_endl() w C samo potrafi połknąć \r\n
                 continue
             else:

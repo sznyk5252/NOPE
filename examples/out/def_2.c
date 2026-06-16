@@ -6,7 +6,7 @@ void Custom_Range(int expected, int margin)
 	result = nope_read_float();
 	nope_expect_char(' ');
 	if (!(result >= (expected - margin) && result <= (expected + margin))) {
-		nope_fail("CHECK assertion failed", "CHECK(result >= (expected - margin) && result <= (expected + margin))", "false");
+		nope_fail("CHECK assertion failed", "Condition \"result >= (expected - margin) && result <= (expected + margin)\" must be true", "");
 	}
 }
 
