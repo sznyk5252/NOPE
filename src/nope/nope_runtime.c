@@ -252,7 +252,7 @@ void nope_fail(const char *reason, const char *expected, const char *got) {
 }
 
 void nope_expect_char(char expected) {
-    if (nope_ignore_ws_active) {
+    if (nope_ignore_ws_active && expected != ' ' && expected != '\t' && expected != '\n' && expected != '\r') {
         nope_skip_whitespace();
     }
 
