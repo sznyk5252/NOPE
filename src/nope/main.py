@@ -100,7 +100,8 @@ def main():
     if args.input_files:
         for file_path_str in args.input_files:
             file_path = Path(file_path_str)
-            print(f"--- Processing file: {file_path} ---")
+            if len(args.input_files) > 1:
+                print(f"--- Processing file: {file_path} ---")
 
             if not file_path.exists():
                 print(f"Error: File '{file_path}' does not exist.", file=sys.stderr)

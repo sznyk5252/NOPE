@@ -3,7 +3,7 @@
 int main(){
 	nope_init();
 	nope_snippet_length = 100;
-	for (int i = 0; i < 10; i += 2) 
+	for (int i = 0; ((2) > 0 ? (i < 10) : (i > 10)); i += (2)) 
 	{
 		nope_expect_char('V');
 		nope_expect_char('a');

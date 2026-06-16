@@ -7,7 +7,7 @@ int main(){
 	size = nope_read_int();
 	nope_expect_char('\n');
 	float buffer[size];
-	for (int i = 0; i < size; i += 1) 
+	for (int i = 0; ((1) > 0 ? (i < size) : (i > size)); i += (1)) 
 	{
 		float current_val;
 		current_val = nope_read_float();

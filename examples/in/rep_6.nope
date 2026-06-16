@@ -1,7 +1,7 @@
 VAR(INT limit)
 VAR(INT step_size)
 # Loop bounds calculated with expresions
-REP (limit * 2, 0, step_size + 1) {
+REP (0, limit * 2, step_size + 1) {
     'Processing batch...'
     ENDL
 }

@@ -108,35 +108,33 @@ static void trim_trailing_spaces(char *str) {
 
 void nope_init(void) {
     size_t capacity = 4096;
-    size_t size = 0;
+    size_t length = 0;
     
-    nope_input_buffer = malloc(capacity);
+    nope_input_buffer = (char *)malloc(capacity);
     if (!nope_input_buffer) {
-        fprintf(stderr, "[NOPE SYSTEM ERROR] Memory allocation failed!\n");
+        fprintf(stderr, "Fatal Error: Memory allocation failed in nope_init\n");
         exit(1);
     }
 
-    int ch;
-    // Odczyt z potoku (stdin)
-    while ((ch = getchar()) != EOF) {
-        if (size + 1 >= capacity) {
+    size_t bytes_read;
+    while ((bytes_read = fread(nope_input_buffer + length, 1, capacity - length - 1, stdin)) > 0) {
+        length += bytes_read;
+        if (length + 1 == capacity) {
             capacity *= 2;
-            char *new_buffer = realloc(nope_input_buffer, capacity);
+            char *new_buffer = (char *)realloc(nope_input_buffer, capacity);
             if (!new_buffer) {
+                fprintf(stderr, "Fatal Error: Memory reallocation failed in nope_init\n");
                 free(nope_input_buffer);
-                fprintf(stderr, "[NOPE SYSTEM ERROR] Memory reallocation failed!\n");
                 exit(1);
             }
             nope_input_buffer = new_buffer;
         }
-        nope_input_buffer[size++] = (char)ch;
     }
-    nope_input_buffer[size] = '\0';
 
-    // Usunięcie tzw. trailing whitespaces
+
+    nope_input_buffer[length] = '\0';
     trim_trailing_spaces(nope_input_buffer);
-
-    // Inicjalizacja kursora
+    
     nope_cursor = nope_input_buffer;
 }
 

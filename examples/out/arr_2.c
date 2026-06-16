@@ -2,9 +2,9 @@
 
 void check_grid(int grid[10][10]) 
 {
-	for (int i = 0; i < 10; i += 1) 
+	for (int i = 0; ((1) > 0 ? (i < 10) : (i > 10)); i += (1)) 
 	{
-		for (int j = 0; j < 10; j += 1) 
+		for (int j = 0; ((1) > 0 ? (j < 10) : (j > 10)); j += (1)) 
 		{
 			if (i == j) 
 			{

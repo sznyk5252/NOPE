@@ -146,26 +146,35 @@ class NopeCompiler(NOPEVisitor):
     def visitRep_loop(self, ctx: NOPEParser.Rep_loopContext):
         iterator_name = ctx.ID().getText() if ctx.ID() is not None else "i"
 
-        # TODO: ctx.expr() - może zwrócić None
-        iterator_name = ctx.ID().getText() if ctx.ID() is not None else "i"
-
         expr_list = ctx.expr()
         if not expr_list:
             raise NopeCompilationError(
-                "REP loop requires at least an upper bound expression."
+                "REP loop requires at least one expression (upper bound)."
             )
 
-        upper_bound = str(self.visit(expr_list[0]))
-        lower_bound = "0"
-        step = "1"
-
-        if len(expr_list) > 1 and expr_list[1] is not None:
-            lower_bound = str(self.visit(expr_list[1]))
-
-        if len(expr_list) > 2 and expr_list[2] is not None:
+        if len(expr_list) == 1:
+            lower_bound = "0"
+            upper_bound = str(self.visit(expr_list[0]))
+            step = "1"
+        elif len(expr_list) == 2:
+            lower_bound = str(self.visit(expr_list[0]))
+            upper_bound = str(self.visit(expr_list[1]))
+            step = "1"
+        else:
+            lower_bound = str(self.visit(expr_list[0]))
+            upper_bound = str(self.visit(expr_list[1]))
             step = str(self.visit(expr_list[2]))
 
-        loop_str = f"for (int {iterator_name} = {lower_bound}; {iterator_name} < {upper_bound}; {iterator_name} += {step}) "
+        # --- ZAAWANSOWANA MAGIA C: Dynamiczny kierunek pętli ---
+        # Jeżeli step > 0, używamy < (liczenie w górę). 
+        # Jeżeli step <= 0, używamy > (liczenie w dół).
+        loop_str = (
+            f"for (int {iterator_name} = {lower_bound}; "
+            f"(({step}) > 0 ? ({iterator_name} < {upper_bound}) : ({iterator_name} > {upper_bound})); "
+            f"{iterator_name} += ({step})) "
+        )
+        # --------------------------------------------------------
+
         self.main_scope.append(loop_str)
 
         had_iter = iterator_name in self.defined_vars
