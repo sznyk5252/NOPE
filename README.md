@@ -140,8 +140,8 @@ if_stmt
 
 rep_loop
     : 'REP' ws? LP ws? (ID ws? SEP ws?)?    // iterator ID
-     expr                                   // upper bound       
-     (ws? SEP ws? expr)?                    // lower bound
+     expr                                   // lower bound       
+     (ws? SEP ws? expr)?                    // upper bound
      (ws? SEP ws? expr)?                    // step
       ws? RP ws? 
         block 
@@ -230,7 +230,6 @@ comparator: EQ | NEQ | LS | GR | LSEQ | GREQ;
 // LEKSER
 // ==========================================
 
-// COM : '#' ~[\r\n]* ; 
 COM : '#' ~[\r\n]* ('\r'? '\n')? ;
 
 EXPL_SPACE: 'SPACE';

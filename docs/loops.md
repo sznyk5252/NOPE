@@ -22,7 +22,7 @@ REP (idx, 1, 5) {
 ```
 ```
 # Loop with iterator 'i', upper bound 10, lower bound 0, and step 2
-REP (i, 10, 0, 2) {
+REP (i, 0, 10, 2) {
     'Value: '
     i
     ENDL
@@ -30,7 +30,7 @@ REP (i, 10, 0, 2) {
 ```
 ```
 # Countdown loop: upper bound 0, lower bound 10, step -1
-REP (j, 0, 10, -1) {
+REP (j, 10, 0, -1) {
     'Countdown: '
     j
     ENDL
@@ -40,7 +40,7 @@ REP (j, 0, 10, -1) {
 VAR(INT limit)
 VAR(INT step_size)
 # Loop bounds calculated with expresions
-REP (limit * 2, 0, step_size + 1) {
+REP (0, limit * 2, step_size + 1) {
     'Processing batch...'
     ENDL
 }

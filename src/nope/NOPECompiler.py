@@ -166,7 +166,7 @@ class NopeCompiler(NOPEVisitor):
             step = str(self.visit(expr_list[2]))
 
         # --- ZAAWANSOWANA MAGIA C: Dynamiczny kierunek pętli ---
-        # Jeżeli step > 0, używamy < (liczenie w górę). 
+        # Jeżeli step > 0, używamy < (liczenie w górę).
         # Jeżeli step <= 0, używamy > (liczenie w dół).
         loop_str = (
             f"for (int {iterator_name} = {lower_bound}; "
