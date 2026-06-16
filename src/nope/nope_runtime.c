@@ -103,15 +103,32 @@ void nope_match(const char* pattern) {
 }
 void nope_range_int(int val, int min, int max) {
     if (val < min || val > max) {
-        fprintf(stderr, "Error: value %d out of range [%d, %d]\n", val, min, max);
-        exit(1);
+        // Przygotowujemy ładny string dla "Expected"
+        char expected_msg[64];
+        snprintf(expected_msg, sizeof(expected_msg), "Value between %d and %d", min, max);
+        
+        // Przygotowujemy string dla "Got"
+        char got_str[32];
+        snprintf(got_str, sizeof(got_str), "%d", val);
+        
+        // Odpalamy naszą maszynerię do błędów!
+        nope_fail("RANGE assertion failed", expected_msg, got_str);
     }
 }
 
 void nope_range_float(float val, float min, float max) {
     if (val < min || val > max) {
-        fprintf(stderr, "Error: value %f out of range [%f, %f]\n", val, min, max);
-        exit(1);
+        // Przygotowujemy ładny string dla "Expected"
+        char expected_msg[64];
+        // Używamy %g zamiast %f, aby usunąć brzydkie zera na końcu (np. 5.5 zamiast 5.500000)
+        snprintf(expected_msg, sizeof(expected_msg), "Value between %g and %g", min, max);
+        
+        // Przygotowujemy string dla "Got"
+        char got_str[32];
+        snprintf(got_str, sizeof(got_str), "%g", val);
+        
+        // Odpalamy naszą maszynerię do błędów!
+        nope_fail("RANGE assertion failed", expected_msg, got_str);
     }
 }
 
