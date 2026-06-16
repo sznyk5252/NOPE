@@ -155,7 +155,7 @@ def compile_from_string(
     view: bool = False,
     no_compile: bool = False,
     verbouse: bool = False,
-    snippet_length: int = 100
+    snippet_length: int = 100,
 ):
     """
     Allows calling the NOPE compiler directly from other Python code,
@@ -174,7 +174,7 @@ def compile_from_string(
         graph_format=graph_format,
         view=view,
         verbouse=verbouse,
-        snippet_len = snippet_length
+        snippet_len=snippet_length,
     )
 
     input_stream = InputStream(input_text)
@@ -198,7 +198,7 @@ def compile_from_file(
     view: bool = False,
     no_compile: bool = False,
     verbouse: bool = False,
-    snippet_length: int = 100
+    snippet_length: int = 100,
 ) -> Path | None:
     """
     Reads NOPE source code from a file and compiles it directly from Python code,
@@ -232,7 +232,7 @@ def compile_from_file(
         graph_format=graph_format,
         view=view,
         verbouse=verbouse,
-        snippet_len = snippet_length
+        snippet_len=snippet_length,
     )
 
     input_stream = InputStream(input_text)
