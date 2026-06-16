@@ -23,9 +23,9 @@ def process_code(
     """Core logic to parse the stream, compile, and optionally generate graphs."""
 
     linter = NopeLinter()
-    input_text = input_text.rstrip(" \t\r\n")
     cleaned = [line.rstrip(" \t\r") for line in input_text.splitlines()]
     input_text = "\n".join(cleaned)
+    input_text = input_text.rstrip(" \t\r\n")
     warnings = linter.lint(input_text)
 
     if warnings:
