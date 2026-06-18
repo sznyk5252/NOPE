@@ -32,10 +32,10 @@ class NopeLinter:
         for i, line in enumerate(lines):
             line_num = i + 1
 
-            # if line.endswith(" ") or line.endswith("\t"):
-            #     self.warnings.append(
-            #         f"[LINTER WARNING] Line {line_num}: Invisible trailing whitespace detected."
-            #     )
+            if line.endswith(" ") or line.endswith("\t"):
+                self.warnings.append(
+                    f"[LINTER WARNING] Line {line_num}: Invisible trailing whitespace detected. This will be automaticly ignored!"
+                )
 
             stripped = line.strip()
             if stripped.endswith("SPACE") or stripped.endswith("' '"):
