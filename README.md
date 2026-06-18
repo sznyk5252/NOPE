@@ -322,17 +322,4 @@ uv run nope examples/in/*.nope -co examples/out -b -eo examples/exe
 Visit the [quick start guide](docs/quick_start.md)
 
 # 9. Example of NOPE integration in judging system
-[Universal-checker](https://gitlab.com/szymek.krezolek/universal-checker) 
-
-# 10. TODO:
-
-## JK
-naprawić tak żeby działały przykłady:
-- examples/in/if_3.nope
-- examples/in/escchar.nope
-- examples/in/def.nope
-
-usunąć THROWS i C_HEADER z dokumentacji (w szczególności z README.tpl.md)
-
-## SK
-poprawić integrację z universal-checker
+[Universal-checker](https://gitlab.com/szymek.krezolek/universal-checker)

@@ -516,7 +516,7 @@ class NopeCompiler(NOPEVisitor):
             for expr_ctx in ctx.expr():
                 # Pobieramy wartość argumentu odwiedzając drzewo
                 val = str(self.visit(expr_ctx))
-                
+
                 # --- MAGICZNY TRIK DLA C ---
                 # Jeśli wartość to string otoczony apostrofami (jak w NOPE),
                 # zamieniamy go na string w podwójnych cudzysłowach (dla C).
@@ -525,13 +525,13 @@ class NopeCompiler(NOPEVisitor):
                     inner_text = val[1:-1].replace('"', '\\"')
                     val = f'"{inner_text}"'
                 # ---------------------------
-                
+
                 args.append(val)
 
         args_str = ", ".join(args)
-        
+
         # Dodałem 4 spacje wcięcia, żeby wygenerowany kod C wyglądał jeszcze estetyczniej!
-        self.main_scope.append(f"    {func_name}({args_str});") 
+        self.main_scope.append(f"    {func_name}({args_str});")
         return None
 
     # SK

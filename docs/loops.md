@@ -37,7 +37,7 @@ REP (j, 10, 0, -1) {
 }
 ```
 ```
-VAR(INT limit)
+VAR(INT limit)  
 VAR(INT step_size)
 # Loop bounds calculated with expresions
 REP (0, limit * 2, step_size + 1) {

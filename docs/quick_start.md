@@ -47,7 +47,7 @@ IGNORE_WHITESPACE(
     2 SPACE 3 ENDL
 )
 0\ 1\
-2\ 3\
+2\ 3
 
 ```
 This will be the same as writing: 
