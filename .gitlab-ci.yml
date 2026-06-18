@@ -36,7 +36,7 @@ sync_readme:
 
     - uv build
 
-    - rm graphs/*
+    # - rm graphs/*
     - uv run nope examples/in/*.nope -co examples/out -go graphs --generate-graph
     - find graphs/ -type f ! -name "*.png" -delete
     - git add -A graphs/
