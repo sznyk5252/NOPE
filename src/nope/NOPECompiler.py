@@ -154,7 +154,7 @@ class NopeCompiler(NOPEVisitor):
             f"(({step}) > 0 ? ({iterator_name} < {upper_bound}) : ({iterator_name} > {upper_bound})); "
             f"{iterator_name} += ({step})) "
         )
-    
+
         self.main_scope.append(loop_str)
 
         had_iter = iterator_name in self.defined_vars
@@ -501,7 +501,7 @@ class NopeCompiler(NOPEVisitor):
 
             for char in text:
                 c_char = self._char_to_c_char(char)
-                if ord(char) < 128: #UTF-encoding
+                if ord(char) < 128:  # UTF-encoding
                     self.main_scope.append(f"nope_expect_char('{c_char}');")
                 else:
                     self.main_scope.append(f'nope_expect_str("{char}");')
