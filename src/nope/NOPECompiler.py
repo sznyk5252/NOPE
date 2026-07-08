@@ -502,7 +502,7 @@ class NopeCompiler(NOPEVisitor):
             for char in text:
                 c_char = self._char_to_c_char(char)
                 if ord(char) < 128:  # UTF-encoding
-                    self.main_scope.append(f"nope_expect_char('{c_char}');")
+                    self.main_scope.append(f"nope_expect_char({c_char});")
                 else:
                     self.main_scope.append(f'nope_expect_str("{char}");')
             return None
