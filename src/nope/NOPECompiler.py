@@ -45,18 +45,12 @@ class NopeCompiler(NOPEVisitor):
 
         return "\n".join(full_code)
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#program.
     def visitProgram(self, ctx: NOPEParser.ProgramContext):
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#code.
     def visitCode(self, ctx: NOPEParser.CodeContext):
         return self.visitChildren(ctx)
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#input_in_escape.
     def visitInput_in_escape(self, ctx: NOPEParser.Input_in_escapeContext):
         child = ctx.getChild(1)
         if child is None:
@@ -82,8 +76,6 @@ class NopeCompiler(NOPEVisitor):
 
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#block.
     def visitBlock(self, ctx: NOPEParser.BlockContext):
         self.main_scope.append("{")
         from_i = len(self.main_scope)
@@ -100,9 +92,6 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append("}")
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#block_with_return.
-    # TODO: ujednolicić z zwykłem blokiem
     def visitBlock_with_return(self, ctx: NOPEParser.Block_with_returnContext):
         self.main_scope.append("{\n")
         if ctx.code() is not None:
@@ -118,9 +107,6 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append("}\n")
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#if_stmt.
-    # TODO: DODAĆ TOKEN ELSE
     def visitIf_stmt(self, ctx: NOPEParser.If_stmtContext):
         if ctx.logic_expr() is None:
             raise NopeCompilationError("IF statement requires a logical expression.")
@@ -141,8 +127,6 @@ class NopeCompiler(NOPEVisitor):
 
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#rep_loop.
     def visitRep_loop(self, ctx: NOPEParser.Rep_loopContext):
         iterator_name = ctx.ID().getText() if ctx.ID() is not None else "i"
 
@@ -165,16 +149,12 @@ class NopeCompiler(NOPEVisitor):
             upper_bound = str(self.visit(expr_list[1]))
             step = str(self.visit(expr_list[2]))
 
-        # --- ZAAWANSOWANA MAGIA C: Dynamiczny kierunek pętli ---
-        # Jeżeli step > 0, używamy < (liczenie w górę).
-        # Jeżeli step <= 0, używamy > (liczenie w dół).
         loop_str = (
             f"for (int {iterator_name} = {lower_bound}; "
             f"(({step}) > 0 ? ({iterator_name} < {upper_bound}) : ({iterator_name} > {upper_bound})); "
             f"{iterator_name} += ({step})) "
         )
-        # --------------------------------------------------------
-
+    
         self.main_scope.append(loop_str)
 
         had_iter = iterator_name in self.defined_vars
@@ -191,84 +171,52 @@ class NopeCompiler(NOPEVisitor):
 
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#def.
     def visitDef(self, ctx: NOPEParser.DefContext):
         func_name = ctx.ID(0).getText()
-
-        # 1. Zapisujemy obecny stan (pozwala wrócić do main() po przetworzeniu funkcji)
         old_scope = self.main_scope
         old_vars = self.defined_vars.copy()
-
-        # 2. Tworzymy nowy, pusty scope na kod wewnątrz definicji funkcji
         self.main_scope = []
-
-        # 3. Parsowanie parametrów funkcji
         params_str_list = []
 
-        # ctx.ID() zwraca listę identyfikatorów. Od indeksu 1 zaczynają się parametry.
         for i in range(len(ctx.ID()) - 1):
             param_name = ctx.ID(i + 1).getText()
-
-            # W gramatyce dla każdego parametru (ID) występuje (opcjonalny) typ opt_type
             param_type_ctx = ctx.opt_type(i)
             param_type_str = param_type_ctx.getText().strip() if param_type_ctx else ""
-
             c_type, dims, is_array = self._parse_type(param_type_str)
-
-            # W języku C argumenty tablicowe wyglądają tak: int grid[10][10]
             params_str_list.append(f"{c_type} {param_name}{dims}")
-
-            # Rejestrujemy argument w pamięci jako lokalną zmienną, aby VAR wewnątrz funkcji go "widział"
             self.defined_vars[param_name] = f"{c_type} array" if is_array else c_type
 
-        # 4. Parsowanie zwracanego typu (rtype)
         ret_c_type = "void"
         if ctx.rtype() is not None:
-            # ctx.rtype().getText() zwróci np. '->INT'. Wycinamy strzałkę.
             ret_type_str = ctx.rtype().getText().replace("->", "").strip()
             ret_c_type, _, _ = self._parse_type(ret_type_str)
 
-        # 5. Generowanie sygnatury i dorzucenie jej na start nowego scope'a
         signature = f"{ret_c_type} {func_name}({', '.join(params_str_list)}) "
         self.main_scope.append(signature)
 
-        # 6. Odwiedzenie bloku kodu (wygeneruje to klamry {} i kod wewnętrzny prosto do self.main_scope)
         if ctx.block() is not None:
             self.visit(ctx.block())
         elif ctx.block_with_return() is not None:
             self.visit(ctx.block_with_return())
 
-        # 7. Złączenie całego wygenerowanego kodu i wyrzucenie do przestrzeni globalnej!
         function_code = "\n".join(self.main_scope)
         self.global_scope.append(function_code + "\n\n")
 
-        # 8. Przywrócenie głównego środowiska (koniec zamrożenia)
         self.main_scope = old_scope
         self.defined_vars = old_vars
 
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#rtype.
     def visitRtype(self, ctx: NOPEParser.RtypeContext):
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#any_expr.
     def visitAny_expr(self, ctx: NOPEParser.Any_exprContext):
-        # TODO: done
-        # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?
-        # znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał pylance
-        # te metody powinny zwracać None a nie str
         if ctx.expr() is not None:
             return str(self.visit(ctx.expr()))
         if ctx.logic_expr() is not None:
             return str(self.visit(ctx.logic_expr()))
         raise NopeCompilationError("Unrecognized expression")
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#expr.
     def visitExpr(self, ctx: NOPEParser.ExprContext):
         if ctx.getTypedRuleContext(NOPEParser.InputContext, 0) is not None:
             return ctx.getTypedRuleContext(NOPEParser.InputContext, 0).getText()
@@ -304,14 +252,7 @@ class NopeCompiler(NOPEVisitor):
 
         raise NopeCompilationError("Unrecognized mathematical expression format.")
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#logic_expr.
-    # TODO: nie może zwracać str
     def visitLogic_expr(self, ctx: NOPEParser.Logic_exprContext):
-        # TODO: done
-        # czy to nie powinien być if else z wyrzuceniem jakiegoś vustomowego błędu przy braku dopasowania?
-        # znowu ctx.expr() - może zwrócić None - poprawić żeby nie czepiał pylance
-        # te metody powinny zwracać None a nie str
         logic_exprs = ctx.logic_expr()
 
         if ctx.LP() is not None and logic_exprs is not None and len(logic_exprs) > 0:
@@ -350,20 +291,13 @@ class NopeCompiler(NOPEVisitor):
 
         raise NopeCompilationError("Unrecognized logical expression format.")
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#opt_type.
     def visitOpt_type(self, ctx: NOPEParser.Opt_typeContext):
         return self.visitChildren(ctx)
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#macro_call.
     def visitMacro_call(self, ctx: NOPEParser.Macro_callContext):
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#range_macro.
     def visitRange_macro(self, ctx: NOPEParser.Range_macroContext):
-        # TODO: te metody powinny zwracać None a nie str | done
         exprs = ctx.expr()
         if exprs is None or len(exprs) < 2:
             raise NopeCompilationError("RANGE macro requires exactly 2 expressions.")
@@ -378,8 +312,6 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append(f"{range_fn}({read_fn}(), {min_val}, {max_val});")
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#match_macro.
     def visitMatch_macro(self, ctx: NOPEParser.Match_macroContext):
         if ctx.expr() is None:
             raise NopeCompilationError("MATCH macro requires a pattern expression.")
@@ -391,10 +323,7 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append(f"nope_match({self._to_c_string(pattern)});")
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#anyof_macro.
     def visitAnyof_macro(self, ctx: NOPEParser.Anyof_macroContext):
-        # TODO: te metody powinny zwracać None a nie str | done
         exprs = ctx.expr()
         if not exprs:
             raise NopeCompilationError("ANYOF macro requires at least one expression.")
@@ -412,8 +341,6 @@ class NopeCompiler(NOPEVisitor):
         )
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#var_macro.
     def visitVar_macro(self, ctx: NOPEParser.Var_macroContext):
         var_name = ctx.ID().getText()
 
@@ -423,49 +350,34 @@ class NopeCompiler(NOPEVisitor):
 
         index_suffix = "".join(f"[{idx}]" for idx in indices)
 
-        # Sprawdzamy czy to zupełnie nowa zmienna/tablica
         is_new_var = var_name not in self.defined_vars
 
         if is_new_var:
             var_type_raw = "INT"
             if ctx.opt_type() is not None and ctx.opt_type().getText().strip() != "":
                 var_type_raw = ctx.opt_type().getText().strip()
-
-            # Oddzielamy typ bazowy od wymiarów (np. "FLOAT[size][10]" -> "FLOAT" i "[size][10]")
             base_nope_type = var_type_raw.split("[")[0].strip()
 
             dims = ""
             if "[" in var_type_raw:
                 dims = var_type_raw[var_type_raw.index("[") :].strip()
-
             is_array = len(dims) > 0
 
-            # Mapowanie na C
             c_type = "int"
             if "FLOAT" in base_nope_type:
                 c_type = "float"
             elif "STR" in base_nope_type:
                 c_type = "char*"
 
-            # Zapisujemy typ w pamięci (z flagą "array", jeśli to tablica)
             self.defined_vars[var_name] = f"{c_type} array" if is_array else c_type
-
-            # Generowanie deklaracji. Dla tablic będzie to tzw. VLA (Variable Length Array)
             self.main_scope.append(f"{c_type} {var_name}{dims};")
-
-            # Zgodnie z dokumentacją: całych tablic NIE wczytujemy niejawnie ze stdout!
             if is_array:
                 return None
 
-        # 2. W tym miejscu wiemy, że chcemy wykonać odczyt ze stdout lub przypisanie <<
-        # Działa to dla zwykłych zmiennych oraz dla pojedynczych elementów tablicy
         stored_type = self.defined_vars[var_name]
         base_c_type = stored_type.replace(" array", "")
-
         assign_target = f"{var_name}{index_suffix}"
-
         if ctx.ASSIGN() is not None:
-            # Przypisanie jawne: VAR(buffer[i]) << current_val
             expr_val = str(self.visit(ctx.any_expr()))
             if (
                 len(expr_val) >= 2
@@ -475,7 +387,6 @@ class NopeCompiler(NOPEVisitor):
                 expr_val = self._to_c_string(expr_val[1:-1])
             self.main_scope.append(f"{assign_target} = {expr_val};")
         else:
-            # Wczytanie z potoku na wskazane miejsce: VAR(buffer[i])
             if base_c_type == "char*":
                 self.main_scope.append(f"{assign_target} = nope_read_str();")
             elif base_c_type == "int":
@@ -485,11 +396,7 @@ class NopeCompiler(NOPEVisitor):
 
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#check_macro.
-    # TODO: korzystaj z funki z nope_runtime.h - między innymi z nope_match, to samo dla innych
     def visitCheck_macro(self, ctx: NOPEParser.Check_macroContext):
-        # TODO: pylance wskazuje na możliwośc None
         if ctx.logic_expr() is None:
             raise NopeCompilationError("CHECK macro requires a logical expression.")
 
@@ -503,8 +410,6 @@ class NopeCompiler(NOPEVisitor):
         self.main_scope.append("}")
         return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#custom_macro.
     def visitCustom_macro(self, ctx: NOPEParser.Custom_macroContext):
         if ctx.ID() is None:
             raise NopeCompilationError("Custom macro must have an identifier.")
@@ -514,28 +419,15 @@ class NopeCompiler(NOPEVisitor):
         args = []
         if ctx.expr() is not None:
             for expr_ctx in ctx.expr():
-                # Pobieramy wartość argumentu odwiedzając drzewo
                 val = str(self.visit(expr_ctx))
-
-                # --- MAGICZNY TRIK DLA C ---
-                # Jeśli wartość to string otoczony apostrofami (jak w NOPE),
-                # zamieniamy go na string w podwójnych cudzysłowach (dla C).
                 if len(val) >= 2 and val.startswith("'") and val.endswith("'"):
-                    # Odcinamy skrajne apostrofy, escapujemy ew. wewnętrzne cudzysłowy
                     inner_text = val[1:-1].replace('"', '\\"')
                     val = f'"{inner_text}"'
-                # ---------------------------
-
                 args.append(val)
-
         args_str = ", ".join(args)
-
-        # Dodałem 4 spacje wcięcia, żeby wygenerowany kod C wyglądał jeszcze estetyczniej!
         self.main_scope.append(f"    {func_name}({args_str});")
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#ignore_ws.
     def visitIgnore_ws(self, ctx: NOPEParser.Ignore_wsContext):
         before = self.ignore_ws_active
         self.ignore_ws_active = True
@@ -598,8 +490,6 @@ class NopeCompiler(NOPEVisitor):
         )
         return f'"{escaped}"'
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#input.
     def visitInput(self, ctx: NOPEParser.InputContext):
         if ctx.expl_ws() is not None:
             return self.visit(ctx.expl_ws())
@@ -611,7 +501,10 @@ class NopeCompiler(NOPEVisitor):
 
             for char in text:
                 c_char = self._char_to_c_char(char)
-                self.main_scope.append(f"nope_expect_char({c_char});")
+                if ord(char) < 128: #UTF-encoding
+                    self.main_scope.append(f"nope_expect_char('{c_char}');")
+                else:
+                    self.main_scope.append(f'nope_expect_str("{char}");')
             return None
 
         if ctx.ID() is not None:
@@ -638,37 +531,25 @@ class NopeCompiler(NOPEVisitor):
                 self.main_scope.append(f"nope_expect_char({c_char});")
             return None
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#comment.
     def visitComment(self, ctx: NOPEParser.CommentContext):
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#single_ws.
     def visitSingle_ws(self, ctx: NOPEParser.Single_wsContext):
         return self.visitChildren(ctx)
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#ws.
     def visitWs(self, ctx: NOPEParser.WsContext):
         if self.ignore_ws_active:
             return None
         text = ctx.getText()
         for char in text:
             if char == "\n":
-                # Zamiast twardego sprawdzania, używamy naszej pobłażliwej funkcji
                 self.main_scope.append("    nope_match_endl();")
             elif char == "\r":
-                # Ignorujemy surowe \r w Pythonie,
-                # ponieważ nope_match_endl() w C samo potrafi połknąć \r\n
                 continue
             else:
-                # Przepuszczamy spacje i tabulatory normalnym trybem
                 c_char = self._char_to_c_char(char)
                 self.main_scope.append(f"    nope_expect_char({c_char});")
 
-    # JK
-    # Visit a parse tree produced by NOPEParser#expl_ws.
     def visitExpl_ws(self, ctx: NOPEParser.Expl_wsContext):
         text = ctx.getText()
         if text == "SPACE":
@@ -677,12 +558,8 @@ class NopeCompiler(NOPEVisitor):
             self.main_scope.append("nope_match_endl();")
         return None
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#type.
     def visitType(self, ctx: NOPEParser.TypeContext):
         return self.visitChildren(ctx)
 
-    # SK
-    # Visit a parse tree produced by NOPEParser#comparator.
     def visitComparator(self, ctx: NOPEParser.ComparatorContext):
         return self.visitChildren(ctx)
